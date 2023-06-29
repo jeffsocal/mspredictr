@@ -1,0 +1,46 @@
+---
+title: "rmstandem"
+author: Jeff Jones
+output:
+  md_document:
+    variant: markdown_github
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+A simple tool for calculating peptide sequence and fragment masses.
+
+## Installation
+
+To install, open R and type:
+
+``` r
+install.packages("devtools")
+devtools::install_github("jeffsocal/rmstandem")
+```
+
+## Get Started
+
+Calculate the mass of a peptide sequence
+```{r}
+library(rmstandem)
+
+peptide_mass("SAMPLE")
+```
+
+Calculate the mass of a peptide sequence with a mass modification
+```{r}
+peptide_mass("SA[M15.998]PLE")
+```
+
+Generate a table of expected fragment masses
+Calculate the mass of a peptide sequence
+```{r}
+fragments("SAMPLE", charge = 1)
+```

@@ -1,0 +1,11 @@
+[package]
+name = 'rmstandem'
+version = '0.1.0'
+edition = '2018'
+
+[lib]
+crate-type = [ 'staticlib' ]
+
+[dependencies]
+regex = "1"
+extendr-api = '0.2'
