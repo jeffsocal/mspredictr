@@ -28,3 +28,27 @@ mass_residue <- function(s) .Call(wrap__mass_residue, s)
 #' @export
 peptide_len <- function(s) .Call(wrap__peptide_len, s)
 
+#' Return the charged mass
+#' @export
+mass_charged <- function(mass, z) .Call(wrap__mass_charged, mass, z)
+
+#' Return the neutral mass
+#' @export
+mass_neutral <- function(mz, z) .Call(wrap__mass_neutral, mz, z)
+
+#' Return the mass ladder vector
+#' @export
+mass_ladder <- function(seq) .Call(wrap__mass_ladder, seq)
+
+#' Return the fragment mz vector
+#' @export
+mass_fragments <- function(seq) .Call(wrap__mass_fragments, seq)
+
+#' Return the fragment mz vector
+#' @export
+index_fragments <- function(seq) .Call(wrap__index_fragments, seq)
+
+#' Return the fragment mz vector
+#' @export
+index_peptide <- function(seq) .Call(wrap__index_peptide, seq)
+

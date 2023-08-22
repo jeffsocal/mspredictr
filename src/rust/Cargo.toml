@@ -8,4 +8,4 @@ crate-type = [ 'staticlib' ]
 
 [dependencies]
 regex = "1"
-extendr-api = '0.2'
+extendr-api = '*'

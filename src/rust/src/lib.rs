@@ -149,6 +149,117 @@ fn mass_residue(s: &str) -> f32 {
     return m;
 }
 
+/// Return the charged mass
+/// @export
+#[extendr]
+fn mass_charged(mass: f32, z: i8) -> f32 {
+    if z == 0 {
+      return mass;
+    }
+    let z = z as f32;
+    let m = (mass / z) + mass_proton();
+    return m;
+}
+
+/// Return the neutral mass
+/// @export
+#[extendr]
+fn mass_neutral(mz: f32, z: i8) -> f32 {
+    if z == 0 {
+      return mz;
+    }
+    let z = z as f32;
+    let m = (mz - mass_proton()) * z;
+    return m;
+}
+
+/// Return the mass ladder vector
+/// @export
+#[extendr]
+pub fn mass_ladder(seq: &str) -> Vec<f32> {
+
+    let rpoly = Regex::new(r"[A-Z]|\[.+?\]").unwrap();
+    let rptms = Regex::new(r"[A-Z]|\-*\+*\d+\.*\d*").unwrap();
+
+    // convert the REGEX to a string vector
+    let mut seg_mass: Vec<f32> = vec![];
+    for segment in rpoly.captures_iter(&seq) {
+        let segment_this = segment.get(0).unwrap().as_str().to_string();
+
+        if segment_this.len() == 1 {
+            seg_mass.push(mass_letter(&segment_this.chars().next().expect("no amino acid found")));
+        } else {
+            let mut ptm_mass = 0.0;
+            for ptms in rptms.captures_iter(&segment_this) {
+                let ptms_this = ptms.get(0).unwrap().as_str().to_string();
+                if ptms_this.len() == 1 {
+                    ptm_mass += mass_letter(&ptms_this.chars().next().expect("no amino acid found"));
+                } else {
+                    ptm_mass += &ptms_this.as_str().parse().unwrap();
+                    seg_mass.push(ptm_mass);
+                }
+            }
+        }
+    }
+  return seg_mass;
+}
+
+/// Return the fragment mz vector
+/// @export
+#[extendr]
+pub fn mass_fragments(seq: &str) -> Vec<f32> {
+
+    let mass_h: f32 = mass_atomic("H");
+    // let mass_n: f32 = mass_atomic("N");
+    let mass_o: f32 = mass_atomic("O");
+    // let mass_c: f32 = mass_atomic("C");
+    let mass_water: f32 = mass_h * 2.0 + mass_o;
+    // let mass_amine: f32 = mass_h * 3.0 + mass_n;
+
+    let mut mz_frags = vec![];
+
+    // push the precursor onto the struct
+    let pep_ladder = mass_ladder(&seq);
+    let pep_n: Vec<_> = (0..(pep_ladder.len() - 1)).collect();
+
+    for i in pep_n.iter() {
+
+        // create the xyz ion series
+        let ion_y: f32 = pep_ladder.iter().rev().take(*i+1).sum();
+
+        // create the abc ion series
+        let ion_b: f32 = pep_ladder.iter().take(*i+1).sum();
+
+        mz_frags.push((ion_y + mass_water) / 1.0 + mass_proton());
+        if i > &0 {
+          mz_frags.push((ion_b) / 1.0 + mass_proton());
+        }
+
+    }
+
+    return mz_frags;
+}
+
+/// Return the fragment mz vector
+/// @export
+#[extendr]
+pub fn index_fragments(seq: &str) -> Vec<i32> {
+    let i_frag = mass_fragments(&seq)
+                 .iter()
+                 .map(|x| x * 0.999_521_6 + 0.98)
+                 .map(|x| x.round() as i32)
+                 .collect::<Vec<_>>();
+    return i_frag;
+}
+
+/// Return the fragment mz vector
+/// @export
+#[extendr]
+pub fn index_peptide(seq: &str) -> i32 {
+    let i_pep = peptide_mass(seq) * 0.999_521_6 + 0.98;
+    return i_pep.round() as i32;
+}
+
 // Macro to generate exports.
 // This ensures exported functions are registered with R.
 // See corresponding C code in `entrypoint.c`.
@@ -159,4 +270,10 @@ extendr_module! {
     fn mass_proton;
     fn mass_residue;
     fn peptide_len;
+    fn mass_charged;
+    fn mass_neutral;
+    fn mass_ladder;
+    fn mass_fragments;
+    fn index_fragments;
+    fn index_peptide;
 }
