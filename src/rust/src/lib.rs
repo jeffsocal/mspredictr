@@ -1,12 +1,9 @@
 use extendr_api::prelude::*;
 use regex::Regex;
 
-/// Return the mass of a peptide sequence
-/// @export
-#[extendr]
-fn peptide_mass(s: &str) -> f32 {
+fn peptide_mass_single(s: &str) -> f64 {
     let re = Regex::new(r"([A-Z])(\-*\d*\.*\d*)").unwrap();
-    let mut m: f32 = 0.0;
+    let mut m: f64 = 0.0;
     let cap: Vec<_> = re.captures_iter(&s).collect();
     for c in &cap {
         let ai = &c[1].chars().as_str();
@@ -22,16 +19,30 @@ fn peptide_mass(s: &str) -> f32 {
     return m + mass_atomic("O") + mass_atomic("H") * 2.0;
 }
 
-/// Return the length of a peptide sequence
+/// Return the mass of a peptide sequence
 /// @export
 #[extendr]
-fn peptide_len(s: &str) -> usize {
-    let re = Regex::new(r"([A-Z])(\-*\d*\.*\d*)").unwrap();
-    let cap: Vec<_> = re.captures_iter(&s).collect();
-    return cap.len();
+fn peptide_mass(sequences: Strings) -> Vec<f64> {
+   let masses = sequences.iter().map(|x| peptide_mass_single(&x)).collect();
+   return masses;
 }
 
-fn mass_letter(r: &char) -> f32 {
+fn peptide_length_single(s: &str) -> usize {
+    let re = Regex::new(r"([A-Z])(\-*\d*\.*\d*)").unwrap();
+    let cap: Vec<_> = re.captures_iter(&s).collect();
+    let n = cap.iter().count();
+    return n;
+}
+
+/// Return the mass of a peptide sequence
+/// @export
+#[extendr]
+fn peptide_length(sequences: Strings) -> Vec<usize> {
+   let masses = sequences.iter().map(|x| peptide_length_single(&x)).collect();
+   return masses;
+}
+
+fn mass_letter(r: &char) -> f64 {
     match r {
         'A' =>  71.037_12,
         'R' => 156.101_1,
@@ -62,7 +73,7 @@ fn mass_letter(r: &char) -> f32 {
 /// Return the mass of an atom
 /// @export
 #[extendr]
-fn mass_atomic(r: &str) -> f32 {
+fn mass_atomic(r: &str) -> f64 {
     match r {
         "H"  =>   1.007825032,
         "He" =>   4.00260325,
@@ -134,14 +145,14 @@ fn mass_atomic(r: &str) -> f32 {
 /// Return the mass of a proton
 /// @export
 #[extendr]
-fn mass_proton() -> f32 {
+fn mass_proton() -> f64 {
     return 1.00727646688;
 }
 
 /// Return the mass of a amino acid residue
 /// @export
 #[extendr]
-fn mass_residue(s: &str) -> f32 {
+fn mass_residue(s: &str) -> f64 {
     let mut m = 0.0;
     for ch in s.chars() {
         m += mass_letter(&ch);
@@ -152,11 +163,11 @@ fn mass_residue(s: &str) -> f32 {
 /// Return the charged mass
 /// @export
 #[extendr]
-fn mass_charged(mass: f32, z: i8) -> f32 {
+fn mass_charged(mass: f64, z: i8) -> f64 {
     if z == 0 {
       return mass;
     }
-    let z = z as f32;
+    let z = z as f64;
     let m = (mass / z) + mass_proton();
     return m;
 }
@@ -164,11 +175,11 @@ fn mass_charged(mass: f32, z: i8) -> f32 {
 /// Return the neutral mass
 /// @export
 #[extendr]
-fn mass_neutral(mz: f32, z: i8) -> f32 {
+fn mass_neutral(mz: f64, z: i8) -> f64 {
     if z == 0 {
       return mz;
     }
-    let z = z as f32;
+    let z = z as f64;
     let m = (mz - mass_proton()) * z;
     return m;
 }
@@ -176,13 +187,13 @@ fn mass_neutral(mz: f32, z: i8) -> f32 {
 /// Return the mass ladder vector
 /// @export
 #[extendr]
-pub fn mass_ladder(seq: &str) -> Vec<f32> {
+pub fn mass_ladder(seq: &str) -> Vec<f64> {
 
     let rpoly = Regex::new(r"[A-Z]|\[.+?\]").unwrap();
     let rptms = Regex::new(r"[A-Z]|\-*\+*\d+\.*\d*").unwrap();
 
     // convert the REGEX to a string vector
-    let mut seg_mass: Vec<f32> = vec![];
+    let mut seg_mass: Vec<f64> = vec![];
     for segment in rpoly.captures_iter(&seq) {
         let segment_this = segment.get(0).unwrap().as_str().to_string();
 
@@ -207,13 +218,13 @@ pub fn mass_ladder(seq: &str) -> Vec<f32> {
 /// Return the fragment mz vector
 /// @export
 #[extendr]
-pub fn mass_fragments(seq: &str) -> Vec<f32> {
+pub fn mass_fragments(seq: &str) -> Vec<f64> {
 
-    let mass_h: f32 = mass_atomic("H");
+    let mass_h: f64 = mass_atomic("H");
     // let mass_n: f32 = mass_atomic("N");
-    let mass_o: f32 = mass_atomic("O");
+    let mass_o: f64 = mass_atomic("O");
     // let mass_c: f32 = mass_atomic("C");
-    let mass_water: f32 = mass_h * 2.0 + mass_o;
+    let mass_water: f64 = mass_h * 2.0 + mass_o;
     // let mass_amine: f32 = mass_h * 3.0 + mass_n;
 
     let mut mz_frags = vec![];
@@ -225,10 +236,10 @@ pub fn mass_fragments(seq: &str) -> Vec<f32> {
     for i in pep_n.iter() {
 
         // create the xyz ion series
-        let ion_y: f32 = pep_ladder.iter().rev().take(*i+1).sum();
+        let ion_y: f64 = pep_ladder.iter().rev().take(*i+1).sum();
 
         // create the abc ion series
-        let ion_b: f32 = pep_ladder.iter().take(*i+1).sum();
+        let ion_b: f64 = pep_ladder.iter().take(*i+1).sum();
 
         mz_frags.push((ion_y + mass_water) / 1.0 + mass_proton());
         if i > &0 {
@@ -243,37 +254,51 @@ pub fn mass_fragments(seq: &str) -> Vec<f32> {
 /// Return the fragment mz vector
 /// @export
 #[extendr]
-pub fn index_fragments(seq: &str) -> Vec<i32> {
+pub fn index_fragments(seq: &str, tolerance: f64) -> Vec<i64> {
     let i_frag = mass_fragments(&seq)
                  .iter()
-                 .map(|x| x * 0.999_521_6 + 0.98)
-                 .map(|x| x.round() as i32)
+                 .map(|x| indexr(x, tolerance))
                  .collect::<Vec<_>>();
     return i_frag;
 }
 
-/// Return the fragment mz vector
+/// Return a mass index.
 /// @export
 #[extendr]
-pub fn index_peptide(seq: &str) -> i32 {
-    let i_pep = peptide_mass(seq) * 0.999_521_6 + 0.98;
-    return i_pep.round() as i32;
+fn index_mass(masses: Vec<f64>, tolerance: f64) -> Vec<i64> {
+  let indexes:Vec<i64> = masses
+                         .iter()
+                         .map(|x| indexr(x, tolerance))
+                         .collect();
+  return indexes;
 }
+
+fn indexr(mass: &f64, tolerance: f64) -> i64 {
+  // let m_int = 0.98;
+  // let m_slp = 0.999_521_6;
+  // let out = mass * m_slp + m_int;
+  let out = mass / ( tolerance / 3.0 );
+  return out.round() as i64;
+}
+
 
 // Macro to generate exports.
 // This ensures exported functions are registered with R.
 // See corresponding C code in `entrypoint.c`.
 extendr_module! {
     mod rmstandem;
-    fn peptide_mass;
     fn mass_atomic;
     fn mass_proton;
     fn mass_residue;
-    fn peptide_len;
     fn mass_charged;
     fn mass_neutral;
+
+    fn peptide_mass;
+    fn peptide_length;
+
     fn mass_ladder;
     fn mass_fragments;
+
     fn index_fragments;
-    fn index_peptide;
+    fn index_mass;
 }

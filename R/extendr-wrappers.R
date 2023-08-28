@@ -8,10 +8,6 @@
 #' @useDynLib rmstandem, .registration = TRUE
 NULL
 
-#' Return the mass of a peptide sequence
-#' @export
-peptide_mass <- function(s) .Call(wrap__peptide_mass, s)
-
 #' Return the mass of an atom
 #' @export
 mass_atomic <- function(r) .Call(wrap__mass_atomic, r)
@@ -24,10 +20,6 @@ mass_proton <- function() .Call(wrap__mass_proton)
 #' @export
 mass_residue <- function(s) .Call(wrap__mass_residue, s)
 
-#' Return the length of a peptide sequence
-#' @export
-peptide_len <- function(s) .Call(wrap__peptide_len, s)
-
 #' Return the charged mass
 #' @export
 mass_charged <- function(mass, z) .Call(wrap__mass_charged, mass, z)
@@ -35,6 +27,14 @@ mass_charged <- function(mass, z) .Call(wrap__mass_charged, mass, z)
 #' Return the neutral mass
 #' @export
 mass_neutral <- function(mz, z) .Call(wrap__mass_neutral, mz, z)
+
+#' Return the mass of a peptide sequence
+#' @export
+peptide_mass <- function(sequences) .Call(wrap__peptide_mass, sequences)
+
+#' Return the mass of a peptide sequence
+#' @export
+peptide_length <- function(sequences) .Call(wrap__peptide_length, sequences)
 
 #' Return the mass ladder vector
 #' @export
@@ -46,9 +46,9 @@ mass_fragments <- function(seq) .Call(wrap__mass_fragments, seq)
 
 #' Return the fragment mz vector
 #' @export
-index_fragments <- function(seq) .Call(wrap__index_fragments, seq)
+index_fragments <- function(seq, tolerance) .Call(wrap__index_fragments, seq, tolerance)
 
-#' Return the fragment mz vector
+#' Return a mass index.
 #' @export
-index_peptide <- function(seq) .Call(wrap__index_peptide, seq)
+index_mass <- function(masses, tolerance) .Call(wrap__index_mass, masses, tolerance)
 

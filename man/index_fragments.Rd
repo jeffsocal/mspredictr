@@ -4,7 +4,7 @@
 \alias{index_fragments}
 \title{Return the fragment mz vector}
 \usage{
-index_fragments(seq)
+index_fragments(seq, tolerance)
 }
 \description{
 Return the fragment mz vector
