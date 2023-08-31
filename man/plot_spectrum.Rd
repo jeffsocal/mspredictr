@@ -6,10 +6,10 @@
 \usage{
 plot_spectrum(
   spectrum = NULL,
-  sequence = NULL,
-  charge = 1,
+  peptide = NULL,
   label_size = 3,
-  tolerance = 0.1
+  tolerance = 0.1,
+  ...
 )
 }
 \arguments{

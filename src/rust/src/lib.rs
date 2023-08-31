@@ -265,7 +265,7 @@ pub fn mass_fragments(seq: &str) -> Vec<f64> {
 pub fn index_fragments(seq: &str, tolerance: f64) -> Vec<i64> {
     let i_frag = mass_fragments(&seq)
                  .iter()
-                 .map(|x| indexr(x, tolerance))
+                 .map(|x| (x / tolerance) as i64)
                  .collect::<Vec<_>>();
     return i_frag;
 }
@@ -276,19 +276,10 @@ pub fn index_fragments(seq: &str, tolerance: f64) -> Vec<i64> {
 fn index_mass(masses: Vec<f64>, tolerance: f64) -> Vec<i64> {
   let indexes:Vec<i64> = masses
                          .iter()
-                         .map(|x| indexr(x, tolerance))
+                         .map(|x| (x / tolerance) as i64)
                          .collect();
   return indexes;
 }
-
-fn indexr(mass: &f64, tolerance: f64) -> i64 {
-  // let m_int = 0.98;
-  // let m_slp = 0.999_521_6;
-  // let out = mass * m_slp + m_int;
-  let out = mass / ( tolerance / 3.0 );
-  return out.round() as i64;
-}
-
 
 // Macro to generate exports.
 // This ensures exported functions are registered with R.

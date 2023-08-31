@@ -4,14 +4,14 @@
 \alias{assign_spectrum}
 \title{assign a table of fragment masses to a spectrum data object}
 \usage{
-assign_spectrum(spectrum = NULL, table_fragments = NULL, tolerance = 0.1)
+assign_spectrum(spectrum = NULL, peptide = NULL, tolerance = 0.1, ...)
 }
 \arguments{
 \item{spectrum}{a spectrum data object}
 
-\item{table_fragments}{a fragment data object}
-
 \item{tolerance}{a numeric}
+
+\item{table_fragments}{a fragment data object}
 }
 \value{
 a tibble
