@@ -16,8 +16,8 @@ pairwise_delta <- function(x = NULL,
                            col_values = NULL,
                            col_names = NULL){
 
-  x <- as_tibble(x)
-  y <- as_tibble(y)
+  x <- tibble::as_tibble(x)
+  y <- tibble::as_tibble(y)
 
   x_vals <- x %>%
     dplyr::select(all_of(col_values)) %>%
@@ -54,7 +54,7 @@ pairwise_delta <- function(x = NULL,
   x_row <- array(x_names, c(x_vals_n, y_vals_n)) %>% t() %>% as.character()
   y_row <- array(y_names, c(y_vals_n, x_vals_n)) %>% as.character()
 
-  df <- tibble(
+  df <- tibble::tibble(
     ref=t(xy_matrix) %>% as.numeric(),
     dif=xy_dif,
     cluster_id=x_row,

@@ -22,6 +22,14 @@ fn peptide_mass_single(s: &str) -> f64 {
 /// Return the mass of a peptide sequence
 /// @export
 #[extendr]
+fn peptide_xleucine(s: &str) -> String {
+    let out  = str::replace(s, "I", "L");
+    return out;
+}
+
+/// Return the mass of a peptide sequence
+/// @export
+#[extendr]
 fn peptide_mass(sequences: Strings) -> Vec<f64> {
    let masses = sequences.iter().map(|x| peptide_mass_single(&x)).collect();
    return masses;
@@ -301,4 +309,6 @@ extendr_module! {
 
     fn index_fragments;
     fn index_mass;
+
+    fn peptide_xleucine;
 }

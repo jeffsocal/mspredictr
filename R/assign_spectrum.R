@@ -13,34 +13,44 @@
 #'
 assign_spectrum <- function(
     spectrum = NULL,
-    table_fragments = NULL,
-    tolerance = 0.1){
+    peptide = NULL,
+    tolerance = 0.1,
+    ...){
 
-  if(!is.numeric(tolerance)) { cli::cli_abort("`tolerance` must be a numeric")}
 
+  if(is.null(spectrum)) { cli::cli_abort("`spectrum` must not be null")}
+  if(is.null(peptide)) { cli::cli_abort("`peptide` must not be null")}
+
+  table_fragments <- fragments(sequence = peptide, ...)
   # spectrum <- spc
   # table_fragments <- table_predicted %>% unite(ion, ion, z, sep="_")
 
+  cn <- colnames(spectrum)
+  w_mz <- which(grepl("^m", cn))
+  w_int <- which(grepl("^i", cn))
+  colnames(spectrum)[w_mz] <- 'mz'
+  colnames(spectrum)[w_int] <- 'int'
+
   spectrum <- spectrum %>%
-    mutate(rid = row_number() %>% as.character(),
+    dplyr::mutate(rid = dplyr::row_number() %>% as.character(),
            ion = rid)
 
   out <- pairwise_delta(spectrum, table_fragments, 'mz', 'ion') %>%
-    filter(abs(dif) <= tolerance) %>%
+    dplyr::filter(abs(dif) <= tolerance) %>%
     dplyr::rename(rid = cluster_id,
                   ion = feature_id) %>%
-    inner_join(spectrum %>% select(mz, i, rid), by='rid') %>%
-    inner_join(table_fragments %>% select(-mz), by=c('ion')) %>%
-    select(
-      mz, i, ion, type, z,
-      error = dif, seq, pos
+    dplyr::inner_join(spectrum %>% dplyr::select(mz, int, rid), by='rid') %>%
+    dplyr::inner_join(table_fragments %>% dplyr::select(-mz), by=c('ion')) %>%
+    dplyr::select(
+      mz, int, ion, type, z,
+      error = dif, seq, pos, pair
     ) %>%
-    group_by(mz) %>%
-    slice_min(abs(error), n=1, with_ties = F) %>%
-    ungroup() %>%
-    group_by(ion) %>%
-    slice_max(i, n=1, with_ties = F) %>%
-    ungroup()
+    dplyr::group_by(mz) %>%
+    dplyr::slice_min(abs(error), n=1, with_ties = F) %>%
+    dplyr::ungroup() %>%
+    dplyr::group_by(ion) %>%
+    dplyr::slice_max(int, n=1, with_ties = F) %>%
+    dplyr::ungroup()
 
   return(out)
 }

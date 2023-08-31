@@ -52,3 +52,7 @@ index_fragments <- function(seq, tolerance) .Call(wrap__index_fragments, seq, to
 #' @export
 index_mass <- function(masses, tolerance) .Call(wrap__index_mass, masses, tolerance)
 
+#' Return the mass of a peptide sequence
+#' @export
+peptide_xleucine <- function(s) .Call(wrap__peptide_xleucine, s)
+
