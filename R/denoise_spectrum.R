@@ -49,6 +49,8 @@ denoise_spectrum <- function(
     if(length(dim(spectrum)) <= 1) break;
   }
 
-  return(new_spec |> dplyr::bind_rows() |> dplyr::arrange(mz))
+  new_spec <- new_spec |> dplyr::bind_rows()
+
+  return(new_spec[order(new_spec[,1]),])
 
 }
