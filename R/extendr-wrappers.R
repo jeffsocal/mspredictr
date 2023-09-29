@@ -16,6 +16,10 @@ mass_atomic <- function(r) .Call(wrap__mass_atomic, r)
 #' @export
 mass_proton <- function() .Call(wrap__mass_proton)
 
+#' Return the mass of a neutron
+#' @export
+mass_neutron <- function() .Call(wrap__mass_neutron)
+
 #' Return the mass of a amino acid residue
 #' @export
 mass_residue <- function(s) .Call(wrap__mass_residue, s)

@@ -12,7 +12,7 @@
 #'
 plot_spectrum <- function(
     spectrum = NULL,
-    peptide = NULL,
+    peptides = NULL,
     label_size = 3,
     tolerance = 0.1,
     ...
@@ -29,27 +29,36 @@ plot_spectrum <- function(
   plot <- spectrum |>
     ggplot2::ggplot(ggplot2::aes(mz, int)) +
     ggplot2::geom_segment(ggplot2::aes(xend = mz, yend = 0)) +
-    ggplot2::theme_classic()
+    ggplot2::geom_hline(yintercept = max(spectrum$int) * 1.1, color = NA) +
+    ggplot2::theme_classic() +
+    ggplot2::scale_y_continuous(n.breaks = 4)
 
-  if(is.null(peptide)) { return(plot) }
+  if(is.null(peptides)) { return(plot) }
 
-  if(!is.character(peptide)) { cli::cli_abort("`sequence` must be a character string") }
-  tbl_assn <- assign_spectrum(spectrum, peptide,
-                              tolerance = tolerance,
-                              ...)
+  plots <- list()
+  for(i in 1:length(peptides)){
 
-  plot <- plot +
-    ggplot2::geom_text(data = tbl_assn,
-                       ggplot2::aes(label = ion, color = type),
-                       size = label_size,
-                       hjust = 0, vjust = 0) +
-    ggplot2::labs(title = peptide) +
-    ggplot2::theme(legend.position = 'none') +
-    ggplot2::scale_color_manual(values = c(
-      'y' = 'blue',
-      'b' = 'red',
-      'precursor' = 'forestgreen')) +
-    ggplot2::scale_x_continuous(n.breaks = 7)
+    peptide <- peptides[i]
+    if(!is.character(peptide)) { cli::cli_abort("`sequence` must be a character string") }
 
-  return(plot)
+    tbl_assn <- assign_spectrum(spectrum, peptide,
+                                tolerance = tolerance,
+                                ...)
+
+    plots[[i]] <- plot +
+      ggplot2::geom_text(data = tbl_assn,
+                         ggplot2::aes(label = ion, color = type),
+                         size = label_size,
+                         hjust = 0, vjust = 0) +
+      ggplot2::labs(title = peptide) +
+      ggplot2::theme(legend.position = 'none') +
+      ggplot2::scale_color_manual(values = c(
+        'y' = 'blue',
+        'b' = 'red',
+        'precursor' = 'forestgreen')) +
+      ggplot2::scale_x_continuous(n.breaks = 10)
+
+  }
+
+  return(gridExtra::grid.arrange(grobs = plots))
 }

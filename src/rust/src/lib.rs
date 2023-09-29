@@ -157,6 +157,13 @@ fn mass_proton() -> f64 {
     return 1.00727646688;
 }
 
+/// Return the mass of a neutron
+/// @export
+#[extendr]
+fn mass_neutron() -> f64 {
+  return 1.00866491588;
+}
+
 /// Return the mass of a amino acid residue
 /// @export
 #[extendr]
@@ -288,6 +295,7 @@ extendr_module! {
     mod rmstandem;
     fn mass_atomic;
     fn mass_proton;
+    fn mass_neutron;
     fn mass_residue;
     fn mass_charged;
     fn mass_neutral;

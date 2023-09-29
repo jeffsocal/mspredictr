@@ -6,7 +6,7 @@
 \usage{
 plot_spectrum(
   spectrum = NULL,
-  peptide = NULL,
+  peptides = NULL,
   label_size = 3,
   tolerance = 0.1,
   ...

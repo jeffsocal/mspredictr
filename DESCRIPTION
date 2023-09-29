@@ -15,6 +15,7 @@ Imports:
     cli,
     dplyr,
     ggplot2,
+    gridExtra,
     httr,
     magrittr,
     readr,
