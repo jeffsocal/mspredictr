@@ -38,8 +38,8 @@ denoise_spectrum <- function(
 
     w_keep <- which(int == max(int))[1]
     # test for monoisotope
-    w_mono <- which(abs(mz - (mz[w_keep] - 1)) < 0.1)
-    if(length(w_mono) > 1){ w_keep <- w_mono[1] }
+    w_mono <- which(abs(mz - (mz[w_keep] - 1.002)) < 0.025)
+    if(length(w_mono) > 0){ w_keep <- w_mono[1] }
     w_trim <- which(abs(mz - mz[w_keep]) > hedge)
 
     if(length(w_trim) == 0) break;

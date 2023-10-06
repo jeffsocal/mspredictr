@@ -257,9 +257,7 @@ pub fn mass_fragments(seq: &str) -> Vec<f64> {
         let ion_b: f64 = pep_ladder.iter().take(*i+1).sum();
 
         mz_frags.push((ion_y + mass_water) / 1.0 + mass_proton());
-        if i > &0 {
-          mz_frags.push((ion_b) / 1.0 + mass_proton());
-        }
+        mz_frags.push((ion_b) / 1.0 + mass_proton());
 
     }
 
