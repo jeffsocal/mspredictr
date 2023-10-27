@@ -15,8 +15,8 @@ read_spectra <- function(
 
   cli::cli_div(theme = list(span.info = list(color = "#ff4500")))
   if(is.null(path)){ cli::cli_abort("no path to a mzML file given") }
-  if(!is.character(path)) { cli::cli_abort("`data_file` must be a character string")}
-  if(!file.exists(path)) { cli::cli_abort("Not Found! `config:` {data_file}")}
+  if(!is.character(path)) { cli::cli_abort("`path` must be a character string")}
+  if(!file.exists(path)) { cli::cli_abort("Not Found! `config:` {path}")}
   if(!is.logical(include_spectra)) { cli::cli_abort("`include_spectra` is not a boolean")}
 
   ######################################################################
@@ -29,8 +29,8 @@ read_spectra <- function(
     dplyr::mutate(precursorCharge = ifelse(precursorCharge == 0, 2, precursorCharge)) |>
     tibble::as_tibble() |>
     dplyr::select(
-      ms_event = acquisitionNum,
       spectrum_num = seqNum,
+      ms_event = acquisitionNum,
       ms_event_level = msLevel,
       ms_event_info = filterString,
       precursor_rt = retentionTime,
@@ -42,7 +42,7 @@ read_spectra <- function(
     ) |>
     ## Get the spectra a list of mz and intensity
     dplyr::mutate(peaks = mzR::spectra(obj_mzml)) |>
-    dplyr::filter(scan_level == 2) |>
+    dplyr::filter(ms_event_level == 2) |>
     dplyr::mutate(precursor_nm = purrr::map2(precursor_mz, precursor_z, rmstandem::mass_neutral) |> unlist(),
                   file = sub("\\.mzML", "", basename(path))) |>
     dplyr::relocate(precursor_nm, .before = 'peaks') |>
