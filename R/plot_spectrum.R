@@ -44,21 +44,24 @@ plot_spectrum <- function(
     tbl_assn <- assign_spectrum(spectrum, peptide,
                                 tolerance = tolerance,
                                 ...)
+    tbl_poss <- peptide |> fragments(...)
 
     v_err <- 1 - abs(tbl_assn$error)/tolerance
     v_int <- tbl_assn$int / sum(spectrum$int)
-    score_01 <- sum(v_err * v_int * 20)
-    score_02 <- sum(v_err) * sum(v_int)
+    score_01 <- sum(v_err) * sum(v_int)
+    score_02 <- sum(v_err * v_int * 20)
+
+    dotp <- round(nrow(tbl_assn |> dplyr::filter(type != 'precursor')) / nrow(tbl_poss |> dplyr::filter(type != 'precursor')),2)
 
     plots[[i]] <- plot +
       ggplot2::geom_text(data = tbl_assn,
                          ggplot2::aes(label = ion, color = type),
                          size = label_size,
-                         hjust = 0, vjust = 0) +
-      ggplot2::labs(title = glue::glue("{peptide} | score {round(score_01,2)}  {round(score_02,2)}")) +
-      # ggplot2::annotate('text', x = -Inf, y = Inf,
-      #                   vjust = 1, hjust = -0.1,
-      #                   label = glue::glue("{peptide} | score {round(score,2)}")) +
+                         hjust = 0, vjust = -0.1) +
+      ggplot2::labs(title = glue::glue("{peptide}")) +
+      ggplot2::annotate('text', x = -Inf, y = Inf,
+                        vjust = 1, hjust = -0.1, size = 3,
+                        label = glue::glue("s:{round(score_01,2)}  x:{round(score_02,2)}  e:{round(sum(v_err),3)}  i:{round(sum(v_int),3)}  dp:{dotp}")) +
       ggplot2::theme(legend.position = 'none') +
       ggplot2::scale_color_manual(values = c(
         'y' = 'blue',

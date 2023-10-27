@@ -13,10 +13,6 @@ munge_seq <- function(
 
   if(!is.character(sequence)) { cli::cli_abort("`sequence` must be a character string")}
 
-  sequence <- sub("^.\\.", "", sequence)
-  sequence <- sub("^n", "", sequence)
-  sequence <- sub("\\..$", "", sequence)
-
   seq_regex <- "[a-zA-Z]|\\[.+?\\]";
   mod_regex <- "[a-zA-Z]|[\\-\\+]*[0-9]+\\.*[0-9]*";
   seq_array <- stringr::str_extract_all(sequence, seq_regex)[[1]]
@@ -62,7 +58,29 @@ munge_seq <- function(
 str_peptide <- function(
     sequences = NULL
 ){
+  sequences |> str_clean() |> lapply(munge_seq) |> unlist()
+}
 
-  sequences |> lapply(munge_seq) |> unlist()
-
+#' iteratable function to clean up comet sequence strings
+#'
+#' @description
+#' `str_peptide()` get the mass of a poly amino acid
+#'
+#' @param sequence as character string
+#'
+#' @return a string vector
+#' @export
+#'
+str_clean <- function(
+    sequences = NULL
+){
+  sequences |> lapply(
+    function(sequence){
+      sequence <- sub("^.\\.", "", sequence)
+      sequence <- sub("^n", "", sequence)
+      sequence <- sub("\\..$", "", sequence)
+      sequence <- sequence |> stringr::str_to_upper()
+      return(sequence)
+    }
+  ) |> unlist()
 }
