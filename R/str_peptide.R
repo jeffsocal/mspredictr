@@ -35,19 +35,18 @@ munge_seq <- function(
 
   if(length(w_ptm) != 0) {
     for(i_ptm in w_ptm){
+      seq_array[i_ptm] <- gsub("\\[|\\]", "", seq_array[i_ptm]) |> as.numeric() |> num_trunc()
+
       if(i_ptm == 1){
-        seq_array[i_ptm] <- sub("\\[", "", seq_array[i_ptm])
-        seq_array[i_ptm + 1] <- paste0("[", seq_array[i_ptm + 1], seq_array[i_ptm])
-        seq_array[i_ptm] <- ''
+        seq_array[i_ptm + 1] <- paste0("[", seq_array[i_ptm + 1], seq_array[i_ptm], "]")
       } else {
-      seq_array[i_ptm] <- sub("\\[", "", seq_array[i_ptm])
-      seq_array[i_ptm - 1] <- paste0("[", seq_array[i_ptm - 1], seq_array[i_ptm])
-      seq_array[i_ptm] <- ''
+        seq_array[i_ptm - 1] <- paste0("[", seq_array[i_ptm - 1], seq_array[i_ptm], "]")
       }
+      seq_array[i_ptm] <- ''
     }
   }
 
-  return(paste(seq_array, collapse = ''))
+  return(paste(seq_array, collapse = '') |> stringr::str_to_upper())
 }
 
 #' iteratable function to clean up comet sequence strings
