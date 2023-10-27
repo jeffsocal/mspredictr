@@ -22,7 +22,7 @@ read_spectra <- function(
   ######################################################################
   # read in the data file
   # - this allows us to cut peptides out of our search window based on what was collected
-  obj_mzml <- data_file |> mzR::openMSfile()
+  obj_mzml <- path |> mzR::openMSfile()
 
   ## Get the header a data frame of attributes
   tbl_hdr <- mzR::header(obj_mzml) |>
@@ -43,8 +43,10 @@ read_spectra <- function(
     ## Get the spectra a list of mz and intensity
     dplyr::mutate(peaks = mzR::spectra(obj_mzml)) |>
     dplyr::filter(scan_level == 2) |>
-    dplyr::mutate(precursor_nm = purrr::map2(precursor_mz, precursor_z, rmstandem::mass_neutral) |> unlist()) |>
-    dplyr::relocate(precursor_nm, .before = 'peaks')
+    dplyr::mutate(precursor_nm = purrr::map2(precursor_mz, precursor_z, rmstandem::mass_neutral) |> unlist(),
+                  file = sub("\\.mzML", "", basename(path))) |>
+    dplyr::relocate(precursor_nm, .before = 'peaks') |>
+    dplyr::relocate(file)
 
   if(include_spectra == FALSE){
     tbl_hdr <- tbl_hdr |> dplyr::select(-peaks)
