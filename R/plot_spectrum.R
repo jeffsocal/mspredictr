@@ -45,14 +45,17 @@ plot_spectrum <- function(
                                 tolerance = tolerance,
                                 ...)
 
-    score <- sum(1 - abs(tbl_assn$error)/tolerance) * (sum(tbl_assn$int) / sum(spectrum$int))
+    v_err <- 1 - abs(tbl_assn$error)/tolerance
+    v_int <- tbl_assn$int / sum(spectrum$int)
+    score_01 <- sum(v_err * v_int * 20)
+    score_02 <- sum(v_err) * sum(v_int)
 
     plots[[i]] <- plot +
       ggplot2::geom_text(data = tbl_assn,
                          ggplot2::aes(label = ion, color = type),
                          size = label_size,
                          hjust = 0, vjust = 0) +
-      ggplot2::labs(title = glue::glue("{peptide} | score {round(score,2)}")) +
+      ggplot2::labs(title = glue::glue("{peptide} | score {round(score_01,2)}  {round(score_02,2)}")) +
       # ggplot2::annotate('text', x = -Inf, y = Inf,
       #                   vjust = 1, hjust = -0.1,
       #                   label = glue::glue("{peptide} | score {round(score,2)}")) +
@@ -61,7 +64,8 @@ plot_spectrum <- function(
         'y' = 'blue',
         'b' = 'red',
         'precursor' = 'forestgreen')) +
-      ggplot2::scale_x_continuous(n.breaks = 10)
+      ggplot2::scale_x_continuous(n.breaks = 10) +
+      ggplot2::theme(plot.title = ggplot2::element_text(size = 10))
 
   }
 

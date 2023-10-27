@@ -19,6 +19,7 @@ spec <- "~/Local/data/project_jester/mzml/human_Q15149_180-peptides.mzML" |>
   jester::spectra()
 
 
-spec[1,] |>
+spec[6,] |>
   xspec() |>
-  rmstandem::plot_spectrum(peptides = 'QQQQMEQER', charge = 1:2, tolerance = 0.1)
+  rmstandem::plot_spectrum(peptides = c('SNAEDTLR','SNAEATLR'),
+                           charge = 1:2, tolerance = 0.1)
