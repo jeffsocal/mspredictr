@@ -14,13 +14,13 @@ read_sage <- function(
     dplyr::rename(
       ms_event = scannr,
       psm_rank = rank,
-      # 1Th correction to get [M+H]+
-      psm_mh = calcmass + proton_mass,
       psm_score = sage_discriminant_score,
       psm_peptide = peptide,
       psm_protein = proteins
     ) |>
     dplyr::mutate(ms_event = stringr::str_remove(ms_event, ".+scan\\=") |> as.numeric(),
+                  # 1Th correction to get [M+H]+
+                  psm_mh = calcmass + proton_mass,
                   psm_dp = matched_peaks / (peptide_len * 2 * charge)) |>
     dplyr::select(dplyr::matches('file|ms_event|origin|decoy|psm')) |>
     dplyr::select(!filename)

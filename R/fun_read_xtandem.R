@@ -26,6 +26,7 @@ read_xtandem <- function(
       unlist() |> t() |>
       as.data.frame() |>
       tidyr::separate(id, into = c('spectrum_num', 'a' , 'b')) |>
+      dplyr::mutate(spectrum_num = spectrum_num |> as.numeric()) |>
       dplyr::rename(psm_sequence = seq) |>
       dplyr::mutate(psm_peptide = psm_sequence)
 

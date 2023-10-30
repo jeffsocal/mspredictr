@@ -18,9 +18,4 @@ tbl <- list(
 
   glue::glue("{path}/peptides10000_simPTM_ecoli-BL21DE3-4156_1.t.xml") |>
     read_psms(platform = 'xtandem', cpus = 1)
-) |>
-  dplyr::bind_rows()
-
-
-tbl <-   glue::glue("{path}/peptides10000_simPTM_ecoli-BL21DE3-4156_1.comet.txt") |>
-  read_psms(platform = 'comet', cpus = 1)
+)

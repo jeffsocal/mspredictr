@@ -15,10 +15,10 @@ read_omssa <- function(
   out <- x |> readr::read_csv(show_col_types = FALSE) |>
     dplyr::mutate(psm_dp = NA,
                   psm_peptide = NA,
+                  # 1Th correction to get [M+H]+
+                  psm_mh = Mass + proton_mass,
                   psm_score = `E-value` |> log10() * -1) |>
     dplyr::rename(
-      # 1Th correction to get [M+H]+
-      psm_mh = Mass + proton_mass,
       ms_event = `Filename/id`,
       psm_sequence = Peptide,
       psm_protein = Defline
