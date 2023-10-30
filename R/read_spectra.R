@@ -47,7 +47,7 @@ read_spectra <- function(
     dplyr::filter(ms_event_level == 2) |>
     dplyr::mutate(precursor_mh = purrr::map2(precursor_mz, precursor_z, rmstandem::mass_neutral) |> unlist() + proton_mass,
                   file = sub("\\.mzML", "", basename(path))) |>
-    dplyr::relocate(precursor_nm, .before = 'peaks') |>
+    dplyr::relocate(precursor_mh, .before = 'peaks') |>
     dplyr::relocate(file)
 
   if(include_spectra == FALSE){
