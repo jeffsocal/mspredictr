@@ -18,12 +18,12 @@ read_comet <- function(
   ) |>
     dplyr::mutate(
       psm_score = -log10(`e-value`),
+      # 1Th correction to get [M+H]+
+      psm_mh = calc_neutral_mass + proton_mass,
       psm_dp = ions_matched / ions_total
     ) |>
     dplyr::rename(
       ms_event = scan,
-      # 1Th correction to get [M+H]+
-      psm_mh = calc_neutral_mass + proton_mass,
       psm_rank = num,
       psm_peptide = modified_peptide,
       psm_sequence = plain_peptide,
