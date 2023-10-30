@@ -9,11 +9,13 @@ read_sage <- function(
     cpus = 1
 ){
   # scannr contains experiment scan level (eg ms1, ms2 included)
+  proton_mass <- mass_proton()
   out <- x |> readr::read_tsv(show_col_types = FALSE) |>
     dplyr::rename(
       ms_event = scannr,
       psm_rank = rank,
-      psm_nmass = calcmass,
+      # 1Th correction to get [M+H]+
+      psm_mh = calcmass + proton_mass,
       psm_score = sage_discriminant_score,
       psm_peptide = peptide,
       psm_protein = proteins

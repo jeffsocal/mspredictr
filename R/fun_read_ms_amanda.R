@@ -29,7 +29,8 @@ read_ms_amanda <- function(
     dplyr::mutate(psm_peptide = purrr::map2(psm_sequence, `Modifications`, ms_amanda_peptide) |> unlist()) |>
     dplyr::select(!c('Filename','Scan Number'))
   # compute psm mass
-  out$psm_nmass <- out$psm_peptide |> lapply(peptide_mass) |> unlist()
+  proton_mass <- mass_proton()
+  out$psm_mh <- out$psm_peptide |> lapply(peptide_mass) |> unlist() + proton_mass
 
   return(out)
 }
