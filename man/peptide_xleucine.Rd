@@ -2,10 +2,10 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{peptide_xleucine}
 \alias{peptide_xleucine}
-\title{Return the mass of a peptide sequence}
+\title{Return a I/L substituted sequence}
 \usage{
 peptide_xleucine(s)
 }
 \description{
-Return the mass of a peptide sequence
+Return a I/L substituted sequence
 }

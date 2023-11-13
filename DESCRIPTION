@@ -23,3 +23,4 @@ Imports:
     stringr,
     tibble
 RoxygenNote: 7.2.1
+Config/rextendr/version: 0.3.1

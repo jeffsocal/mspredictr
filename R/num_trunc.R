@@ -9,4 +9,4 @@
 #' @return a numeric vector
 #' @export
 #'
-num_trunc <- function(x, d = 2){floor(x * 10^d)/(10^d)}
+num_trunc <- function(x, d = 4){floor(x * 10^d)/(10^d)}

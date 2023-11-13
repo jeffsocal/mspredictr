@@ -19,7 +19,7 @@ fn peptide_mass_single(s: &str) -> f64 {
     return m + mass_atomic("O") + mass_atomic("H") * 2.0;
 }
 
-/// Return the mass of a peptide sequence
+/// Return a I/L substituted sequence
 /// @export
 #[extendr]
 fn peptide_xleucine(s: &str) -> String {

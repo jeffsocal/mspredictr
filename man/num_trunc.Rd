@@ -4,7 +4,7 @@
 \alias{num_trunc}
 \title{truncate a number to a given decimal value}
 \usage{
-num_trunc(x, d = 2)
+num_trunc(x, d = 4)
 }
 \arguments{
 \item{x}{the number to truncate}
