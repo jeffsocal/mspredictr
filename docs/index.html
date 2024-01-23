@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Easy Proteomics Tandem MS: a lightweight framework for peptide-to-spectrum matching • rmstandem</title>
+<title>R MS Tandem: a lightweight framework for protemic tandem mass spectrometry.  • mspredictr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Easy Proteomics Tandem MS: a lightweight framework for peptide-to-spectrum matching">
+<script src="pkgdown.js"></script><meta property="og:title" content="R MS Tandem: a lightweight framework for protemic tandem mass spectrometry. ">
 <meta property="og:description" content="
     A simple tool for calculating peptide sequence and fragment mass values.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -33,8 +33,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">rmstandem</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <a class="navbar-link" href="index.html">mspredictr</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -64,37 +64,46 @@
 <p>To install, open R and type:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jeffsocal/rmstandem"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jeffsocal/mspredictr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="get-started">Get Started<a class="anchor" aria-label="anchor" href="#get-started"></a>
 </h2>
 <p>Calculate the mass of a peptide sequence</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">rmstandem</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mspredictr</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/sequence_mass.html">sequence_mass</a></span><span class="op">(</span><span class="st">"SAMPLE"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 647.3069</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/peptide_mass.html">peptide_mass</a></span><span class="op">(</span><span class="st">"SAMPLER"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 802.4007</span></span></code></pre></div>
 <p>Calculate the mass of a peptide sequence with a mass modification</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/sequence_mass.html">sequence_mass</a></span><span class="op">(</span><span class="st">"SA[M15.998]PLE"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 663.3049</span></span></code></pre></div>
-<p>Generate a table of expected fragment masses Calculate the mass of a peptide sequence</p>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/peptide_mass.html">peptide_mass</a></span><span class="op">(</span><span class="st">"SA[M15.998]PLER"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 818.3987</span></span></code></pre></div>
+<p>Generate a table of expected fragment masses</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/fragments.html">fragments</a></span><span class="op">(</span><span class="st">"SAMPLE"</span>, charge <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     ion        mz z    seq pair pos      type</span></span>
-<span><span class="co">#&gt; 1   b1+  88.03928 1      S  p01   1         b</span></span>
-<span><span class="co">#&gt; 2   y1+ 148.06044 1      E  p05   1         y</span></span>
-<span><span class="co">#&gt; 3   b2+ 159.07638 1     SA  p02   2         b</span></span>
-<span><span class="co">#&gt; 4   y2+ 261.14454 1     LE  p04   2         y</span></span>
-<span><span class="co">#&gt; 5   b3+ 290.11688 1    SAM  p03   3         b</span></span>
-<span><span class="co">#&gt; 6  MH++ 324.15711 2 SAMPLE  p00  NA precursor</span></span>
-<span><span class="co">#&gt; 7   y3+ 358.19734 1    PLE  p03   3         y</span></span>
-<span><span class="co">#&gt; 8   b4+ 387.16968 1   SAMP  p04   4         b</span></span>
-<span><span class="co">#&gt; 9   y4+ 489.23784 1   MPLE  p02   4         y</span></span>
-<span><span class="co">#&gt; 10  b5+ 500.25378 1  SAMPL  p05   5         b</span></span>
-<span><span class="co">#&gt; 11  y5+ 560.27494 1  AMPLE  p01   5         y</span></span>
-<span><span class="co">#&gt; 12  MH+ 647.30694 1 SAMPLE  p00  NA precursor</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/fragments.html">fragments</a></span><span class="op">(</span><span class="st">"SA[M15.998]PLER"</span>, charge <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     ion        mz z             seq pair pos      type</span></span>
+<span><span class="co">#&gt; 1   b1+  88.03931 1               S  p01   1         b</span></span>
+<span><span class="co">#&gt; 2   b2+ 159.07643 1              SA  p02   2         b</span></span>
+<span><span class="co">#&gt; 3   y1+ 175.11894 1               R  p06   1         y</span></span>
+<span><span class="co">#&gt; 4   y2+ 304.16153 1              ER  p05   2         y</span></span>
+<span><span class="co">#&gt; 5   b3+ 306.11491 1     SA[M15.998]  p03   3         b</span></span>
+<span><span class="co">#&gt; 6   b4+ 403.16767 1    SA[M15.998]P  p04   4         b</span></span>
+<span><span class="co">#&gt; 7  MH++ 410.20663 2 SA[M15.998]PLER  p00  NA precursor</span></span>
+<span><span class="co">#&gt; 8   y3+ 417.24559 1             LER  p04   3         y</span></span>
+<span><span class="co">#&gt; 9   y4+ 514.29836 1            PLER  p03   4         y</span></span>
+<span><span class="co">#&gt; 10  b5+ 516.25173 1   SA[M15.998]PL  p05   5         b</span></span>
+<span><span class="co">#&gt; 11  b6+ 645.29432 1  SA[M15.998]PLE  p06   6         b</span></span>
+<span><span class="co">#&gt; 12  y5+ 661.33684 1   [M15.998]PLER  p02   5         y</span></span>
+<span><span class="co">#&gt; 13  y6+ 732.37396 1  A[M15.998]PLER  p01   6         y</span></span>
+<span><span class="co">#&gt; 14  MH+ 819.40599 1 SA[M15.998]PLER  p00  NA precursor</span></span></code></pre></div>
+<p>Read in spectra</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ms2data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/path_to_example.html">path_to_example</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/read_spectra.html">read_spectra</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Plot spectrum with peak matching</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ms2data</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/plot_spectrum.html">plot_spectrum</a></span><span class="op">(</span>peptides <span class="op">=</span> <span class="st">'HAVSEGTK'</span><span class="op">)</span></span></code></pre></div>
+<p><img src="README-unnamed-chunk-7-1.png"></p>
 </div>
 
   </div>
@@ -113,7 +122,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing rmstandem</a></li>
+<li><a href="authors.html#citation">Citing mspredictr</a></li>
 </ul>
 </div>
 
@@ -137,7 +146,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

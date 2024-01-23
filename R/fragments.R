@@ -30,7 +30,7 @@ fragments <- function(
   type <- rlang::arg_match(type)
   charge <- match(charge, 1:4)
 
-  ml <- mass_ladder(sequence)
+  ml <- mass_ladder_named(sequence)
 
   mass_isotope <- 1.0025
   mass_p <- mass_proton()

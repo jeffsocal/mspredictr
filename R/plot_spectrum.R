@@ -12,11 +12,14 @@
 #'
 plot_spectrum <- function(
     spectrum = NULL,
+    filter = FALSE,
     peptides = NULL,
     label_size = 3,
     tolerance = 0.1,
     ...
 ){
+
+  spectrum <- spectrum |> prep_spectrum(filter)
 
   if(!is.data.frame(spectrum)) { cli::cli_abort("spectrum is not a data table object") }
 
@@ -31,7 +34,7 @@ plot_spectrum <- function(
     ggplot2::geom_segment(ggplot2::aes(xend = mz, yend = 0)) +
     ggplot2::geom_hline(yintercept = max(spectrum$int) * 1.1, color = NA) +
     ggplot2::theme_classic() +
-    ggplot2::scale_y_continuous(n.breaks = 4)
+    ggplot2::scale_y_continuous(n.breaks = 5)
 
   if(is.null(peptides)) { return(plot) }
 
@@ -49,7 +52,6 @@ plot_spectrum <- function(
     v_err <- 1 - abs(tbl_assn$error)/tolerance
     v_int <- tbl_assn$int / sum(spectrum$int)
     score_01 <- sum(v_err) * sum(v_int)
-    score_02 <- sum(v_err * v_int)
 
     hits <- nrow(tbl_assn |> dplyr::filter(type != 'precursor'))
     dotp <- round(hits / nrow(tbl_poss |> dplyr::filter(type != 'precursor')),2)
@@ -62,7 +64,7 @@ plot_spectrum <- function(
       ggplot2::labs(title = glue::glue("{peptide}")) +
       ggplot2::annotate('text', x = -Inf, y = Inf,
                         vjust = 1, hjust = -0.1, size = 3,
-                        label = glue::glue("s:{round(score_01,2)}  x:{round(score_02,4)}  dp:{dotp}  n:{hits}")) +
+                        label = glue::glue("score:{round(score_01,2)} ndp:{dotp}  n:{hits}")) +
       ggplot2::theme(legend.position = 'none') +
       ggplot2::scale_color_manual(values = c(
         'y' = 'blue',

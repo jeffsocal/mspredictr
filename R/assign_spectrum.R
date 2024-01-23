@@ -21,6 +21,11 @@ assign_spectrum <- function(
   if(is.null(spectrum)) { cli::cli_abort("`spectrum` must not be null")}
   if(is.null(peptide)) { cli::cli_abort("`peptide` must not be null")}
 
+  # convert to a dataframe for tidyverse
+  if(is.matrix(spectrum)) {
+    spectrum <- spectrum |> as.data.frame()
+  }
+
   table_fragments <- fragments(sequence = peptide, ...)
   # spectrum <- spc
   # table_fragments <- table_predicted %>% unite(ion, ion, z, sep="_")

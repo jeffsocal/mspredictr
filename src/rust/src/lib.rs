@@ -290,7 +290,7 @@ fn index_mass(masses: Vec<f64>, tolerance: f64) -> Vec<i64> {
 // This ensures exported functions are registered with R.
 // See corresponding C code in `entrypoint.c`.
 extendr_module! {
-    mod rmstandem;
+    mod mspredictr;
     fn mass_atomic;
     fn mass_proton;
     fn mass_neutron;

@@ -1,5 +1,5 @@
 ---
-title: "rmstandem"
+title: "mspredictr"
 author: Jeff Jones
 output:
   md_document:
@@ -22,25 +22,38 @@ To install, open R and type:
 
 ``` r
 install.packages("devtools")
-devtools::install_github("jeffsocal/rmstandem")
+devtools::install_github("jeffsocal/mspredictr")
 ```
 
 ## Get Started
 
 Calculate the mass of a peptide sequence
 ```{r}
-library(rmstandem)
+library(mspredictr)
 
-peptide_mass("SAMPLE")
+peptide_mass("SAMPLER")
 ```
 
 Calculate the mass of a peptide sequence with a mass modification
 ```{r}
-peptide_mass("SA[M15.998]PLE")
+peptide_mass("SA[M15.998]PLER")
 ```
 
 Generate a table of expected fragment masses
-Calculate the mass of a peptide sequence
 ```{r}
-fragments("SAMPLE", charge = 1)
+fragments("SA[M15.998]PLER", charge = 1)
+```
+
+Read in spectra
+```{r, eval=FALSE}
+ms2data <- path_to_example() |> read_spectra()
+```
+```{r, echo=FALSE, warning=FALSE}
+# ms2data <- path_to_example() |> read_spectra()
+ms2data <- "inst/extdata/example.ms2.mzML" |> read_spectra()
+```
+
+Plot spectrum with peak matching
+```{r}
+ms2data[1,] |> plot_spectrum(peptides = 'HAVSEGTK')
 ```

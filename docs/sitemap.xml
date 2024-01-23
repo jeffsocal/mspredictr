@@ -19,6 +19,9 @@
     <loc>/reference/assign_string.html</loc>
   </url>
   <url>
+    <loc>/reference/denoise_spectrum.html</loc>
+  </url>
+  <url>
     <loc>/reference/fragments.html</loc>
   </url>
   <url>
@@ -28,18 +31,108 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
+    <loc>/reference/index_fragments.html</loc>
+  </url>
+  <url>
+    <loc>/reference/index_mass.html</loc>
+  </url>
+  <url>
     <loc>/reference/mass_amino.html</loc>
   </url>
   <url>
     <loc>/reference/mass_atomic.html</loc>
   </url>
   <url>
+    <loc>/reference/mass_charged.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mass_fragments.html</loc>
+  </url>
+  <url>
     <loc>/reference/mass_ladder.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mass_ladder_named.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mass_neutral.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mass_neutron.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mass_proton.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mass_residue.html</loc>
+  </url>
+  <url>
+    <loc>/reference/ms_amanda_peptide.html</loc>
+  </url>
+  <url>
+    <loc>/reference/munge_seq.html</loc>
+  </url>
+  <url>
+    <loc>/reference/num_trunc.html</loc>
+  </url>
+  <url>
+    <loc>/reference/omssa_peptide.html</loc>
   </url>
   <url>
     <loc>/reference/pairwise_delta.html</loc>
   </url>
   <url>
+    <loc>/reference/path_to_example.html</loc>
+  </url>
+  <url>
+    <loc>/reference/peptide_length.html</loc>
+  </url>
+  <url>
+    <loc>/reference/peptide_mass.html</loc>
+  </url>
+  <url>
+    <loc>/reference/peptide_xleucine.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_spectrum.html</loc>
+  </url>
+  <url>
+    <loc>/reference/prep_spectrum.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_comet.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_ms_amanda.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_omssa.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_psms.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_sage.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_spectra.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_xtandem.html</loc>
+  </url>
+  <url>
     <loc>/reference/sequence_mass.html</loc>
+  </url>
+  <url>
+    <loc>/reference/str_clean.html</loc>
+  </url>
+  <url>
+    <loc>/reference/str_peptide.html</loc>
+  </url>
+  <url>
+    <loc>/reference/str_sequence.html</loc>
+  </url>
+  <url>
+    <loc>/reference/xtandem_peptide.html</loc>
   </url>
 </urlset>

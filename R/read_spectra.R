@@ -7,6 +7,7 @@
 #' @param include_spectra boolean to keep/drop the nested MSn spectrum
 #'
 #' @return a tibble
+#' @export
 #'
 read_spectra <- function(
     path = NULL,
@@ -45,7 +46,7 @@ read_spectra <- function(
     ## Get the spectra a list of mz and intensity
     dplyr::mutate(peaks = mzR::spectra(obj_mzml)) |>
     dplyr::filter(ms_event_level == 2) |>
-    dplyr::mutate(precursor_mh = purrr::map2(precursor_mz, precursor_z, rmstandem::mass_neutral) |> unlist() + proton_mass,
+    dplyr::mutate(precursor_mh = purrr::map2(precursor_mz, precursor_z, mspredictr::mass_neutral) |> unlist() + proton_mass,
                   file = sub("\\.mzML", "", basename(path))) |>
     dplyr::relocate(precursor_mh, .before = 'peaks') |>
     dplyr::relocate(file)

@@ -4,11 +4,11 @@
 
 #
 # This file was created with the following call:
-#   .Call("wrap__make_rmstandem_wrappers", use_symbols = TRUE, package_name = "rmstandem")
+#   .Call("wrap__make_mspredictr_wrappers", use_symbols = TRUE, package_name = "mspredictr")
 
 #' @docType package
 #' @usage NULL
-#' @useDynLib rmstandem, .registration = TRUE
+#' @useDynLib mspredictr, .registration = TRUE
 NULL
 
 #' Return the mass of an atom
