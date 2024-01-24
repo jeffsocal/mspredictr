@@ -60,4 +60,4 @@ Plot spectrum with peak matching
 ms2data[1,] |> plot_spectrum(peptides = 'HAVSEGTK')
 ```
 
-![](README-unnamed-chunk-7-1.png)
+![](docs/README-unnamed-chunk-7-1.png)
