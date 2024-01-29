@@ -52,9 +52,59 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9">
-
-    A simple tool for calculating peptide sequence and fragment mass values.
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="msreadr-">msreadr <img src="docs/mspredictr_logo.png" align="right" height="139"><a class="anchor" aria-label="anchor" href="#msreadr-"></a>
+</h1></div>
+<p>A simple tool for calculating peptide sequence and fragment masses.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>To install, open R and type:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jeffsocal/mspredictr"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="get-started">Get Started<a class="anchor" aria-label="anchor" href="#get-started"></a>
+</h2>
+<p>Calculate the mass of a peptide sequence</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jeffsocal.github.io/mspredictr/">mspredictr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/peptide_mass.html">peptide_mass</a></span><span class="op">(</span><span class="st">"SAMPLER"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 802.4007</span></span></code></pre></div>
+<p>Calculate the mass of a peptide sequence with a mass modification</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/peptide_mass.html">peptide_mass</a></span><span class="op">(</span><span class="st">"SA[M15.998]PLER"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 818.3987</span></span></code></pre></div>
+<p>Generate a table of expected fragment masses</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/fragments.html">fragments</a></span><span class="op">(</span><span class="st">"SA[M15.998]PLER"</span>, charge <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     ion        mz z             seq pair pos      type</span></span>
+<span><span class="co">#&gt; 1   b1+  88.03931 1               S  p01   1         b</span></span>
+<span><span class="co">#&gt; 2   b2+ 159.07643 1              SA  p02   2         b</span></span>
+<span><span class="co">#&gt; 3   y1+ 175.11894 1               R  p06   1         y</span></span>
+<span><span class="co">#&gt; 4   y2+ 304.16153 1              ER  p05   2         y</span></span>
+<span><span class="co">#&gt; 5   b3+ 306.11491 1     SA[M15.998]  p03   3         b</span></span>
+<span><span class="co">#&gt; 6   b4+ 403.16767 1    SA[M15.998]P  p04   4         b</span></span>
+<span><span class="co">#&gt; 7  MH++ 410.20663 2 SA[M15.998]PLER  p00  NA precursor</span></span>
+<span><span class="co">#&gt; 8   y3+ 417.24559 1             LER  p04   3         y</span></span>
+<span><span class="co">#&gt; 9   y4+ 514.29836 1            PLER  p03   4         y</span></span>
+<span><span class="co">#&gt; 10  b5+ 516.25173 1   SA[M15.998]PL  p05   5         b</span></span>
+<span><span class="co">#&gt; 11  b6+ 645.29432 1  SA[M15.998]PLE  p06   6         b</span></span>
+<span><span class="co">#&gt; 12  y5+ 661.33684 1   [M15.998]PLER  p02   5         y</span></span>
+<span><span class="co">#&gt; 13  y6+ 732.37396 1  A[M15.998]PLER  p01   6         y</span></span>
+<span><span class="co">#&gt; 14  MH+ 819.40599 1 SA[M15.998]PLER  p00  NA precursor</span></span></code></pre></div>
+<p>Read in spectra using the <code>msreadr</code> package</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">msreadr</span><span class="op">)</span></span>
+<span><span class="va">ms2data</span> <span class="op">&lt;-</span> <span class="fu">msreadr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/msreadr/man/path_to_example.html" class="external-link">path_to_example</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/msreadr/man/read_spectra.html" class="external-link">read_spectra</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Plot spectrum with peak matching</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ms2data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/msreadr/man/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">spectrum_num</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/plot_spectrum.html">plot_spectrum</a></span><span class="op">(</span>peptides <span class="op">=</span> <span class="st">'HAVSEGTK'</span><span class="op">)</span></span></code></pre></div>
+<p><img src="README-unnamed-chunk-6-1.png"></p>
+</div>
+</div>
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
