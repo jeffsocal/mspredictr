@@ -19,7 +19,7 @@ plot_spectrum <- function(
     ...
 ){
 
-  spectrum <- spectrum |> prep_spectrum(filter)
+  spectrum <- spectrum |> spectrum_extract(filter)
 
   if(!is.data.frame(spectrum)) { cli::cli_abort("spectrum is not a data table object") }
 

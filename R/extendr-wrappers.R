@@ -63,5 +63,9 @@ index_mass <- function(masses, tolerance) .Call(wrap__index_mass, masses, tolera
 #' @export
 peptide_xleucine <- function(s) .Call(wrap__peptide_xleucine, s)
 
+which_top_n <- function(f, n) .Call(wrap__which_top_n, f, n)
+
+which_xprecursor <- function(f, mz) .Call(wrap__which_xprecursor, f, mz)
+
 
 # nolint end

@@ -1,11 +1,19 @@
 test_that("import and match peaks in spectra", {
 
   expect_no_error(
-    mzml <- "../../inst/extdata/example.ms2.mzML" |> read_spectra()
+    suppressMessages(
+      mzml <- msreadr::path_to_example() |>
+        msreadr::read_spectra()
+    )
   )
 
   expect_no_error(
-    match <- mzml$peaks[[1]] |> assign_spectrum('HAVSEGTK')
+    suppressMessages(
+      match <- mzml |>
+        msreadr::subset(spectrum_num == 1) |>
+        spectrum_extract() |>
+        spectrum_assign('HAVSEGTK')
+    )
   )
 
   expect_equal(round(match$mz, 4),

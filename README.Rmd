@@ -44,16 +44,13 @@ Generate a table of expected fragment masses
 fragments("SA[M15.998]PLER", charge = 1)
 ```
 
-Read in spectra
-```{r, eval=FALSE}
-ms2data <- path_to_example() |> read_spectra()
-```
-```{r, echo=FALSE, warning=FALSE}
-# ms2data <- path_to_example() |> read_spectra()
-ms2data <- "inst/extdata/example.ms2.mzML" |> read_spectra()
+Read in spectra using the `msreadr` package
+```{r, message=FALSE, warning=FALSE}
+library(msreadr)
+ms2data <- msreadr::path_to_example() |> read_spectra()
 ```
 
 Plot spectrum with peak matching
-```{r}
-ms2data[1,] |> plot_spectrum(peptides = 'HAVSEGTK')
+```{r, message=FALSE}
+ms2data |> subset(spectrum_num == 1) |> plot_spectrum(peptides = 'HAVSEGTK')
 ```

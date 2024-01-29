@@ -286,6 +286,35 @@ fn index_mass(masses: Vec<f64>, tolerance: f64) -> Vec<i64> {
   return indexes;
 }
 
+// Top N in vector
+// @export
+#[extendr]
+fn which_top_n(f: Vec<f64>, n: i32) -> Vec<bool> {
+    let fl = f.len();
+    if fl <= n as usize {
+      let ft = f.iter().map(|_x| 1 == 1 ).collect::<Vec<_>>();
+      return ft;
+    }
+
+    let mut fs = f.clone();
+    // sort
+    fs.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    // find the n-th value
+    let fi = fs[fl - n as usize];
+    let ft = f.iter().map(|x| x >= &fi ).collect::<Vec<_>>();
+
+    return ft.to_vec();
+}
+
+// Expand fragments by precursor z
+// @export
+#[extendr]
+fn which_xprecursor(f: Vec<f64>, mz: f64) -> Vec<bool> {
+    let g = f.iter().map(|x| (x - mz).abs() > 2.5 ).collect::<Vec<_>>();
+    return g;
+}
+
+
 // Macro to generate exports.
 // This ensures exported functions are registered with R.
 // See corresponding C code in `entrypoint.c`.
@@ -308,4 +337,7 @@ extendr_module! {
     fn index_mass;
 
     fn peptide_xleucine;
+
+    fn which_top_n;
+    fn which_xprecursor;
 }
