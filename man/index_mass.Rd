@@ -2,10 +2,18 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{index_mass}
 \alias{index_mass}
-\title{Return a mass index.}
+\title{Return a mass indexes.}
 \usage{
 index_mass(masses, tolerance)
 }
+\arguments{
+\item{masses}{A vecrtor of mass sequences}
+
+\item{tolerance}{The numerical float for mass tolerance in Th}
+}
 \description{
-Return a mass index.
+Return a mass indexes.
+}
+\examples{
+index_mass(c(123.45, 234.56, 345.67), 0.05)
 }

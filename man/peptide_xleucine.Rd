@@ -6,6 +6,12 @@
 \usage{
 peptide_xleucine(s)
 }
+\arguments{
+\item{s}{The peptide sequence string.}
+}
 \description{
 Return a I/L substituted sequence
+}
+\examples{
+peptide_xleucine('SILLY')
 }

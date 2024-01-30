@@ -2,20 +2,36 @@
 % Please edit documentation in R/spectrum_assign.R
 \name{spectrum_assign}
 \alias{spectrum_assign}
-\title{assign a table of fragment masses to a spectrum data object}
+\title{Match peptide predicted fragments with a spectrum.}
 \usage{
 spectrum_assign(spectrum = NULL, peptide = NULL, tolerance = 0.1, ...)
 }
 \arguments{
-\item{spectrum}{a spectrum data object}
+\item{spectrum}{A spectrum data object.}
 
-\item{tolerance}{a numeric}
+\item{peptide}{The character string representing a peptide, or poly amino acid. The canonical
+20 amino acids are encoded in and chemical modifications can be represented by
+and floating point numerical value enclosed by square brackets. If a canonical
+amino acid is also enclosed in the square brackets \verb{[M15.99]} it is assumed that
+the numerical value is in addition to the mass of the residue, and thus represents
+a post-translational modification (PTM).}
 
-\item{table_fragments}{a fragment data object}
-}
-\value{
-a tibble
+\item{tolerance}{The tolerance in Th to allow predicted fragments to match observed values.}
+
+\item{...}{Flow-through parameters to \code{fragments()}}
 }
 \description{
-\code{assign_spectrum()} converts an amino acid character to a numeric
+\code{assign_spectrum()} assigns the predicted fragment masses of a given peptide
+sequence with the mass spectrum.
+}
+\examples{
+ # using the supplied spectrum from the msreadr package
+ library(msreadr)
+ mzml <- path_to_example() |>
+         read_spectra()
+ mzml |>
+   subset(spectrum_num == 1) |>
+   spectrum_extract() |>
+   spectrum_assign(peptide = 'HAVSEGTK')
+
 }

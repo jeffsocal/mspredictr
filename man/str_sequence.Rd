@@ -2,16 +2,22 @@
 % Please edit documentation in R/str_sequence.R
 \name{str_sequence}
 \alias{str_sequence}
-\title{iteratable function to clean up comet sequence strings}
+\title{A function to extract the plain amino acid sequence}
 \usage{
 str_sequence(sequences = NULL)
 }
 \arguments{
-\item{sequence}{a vector of character string}
-}
-\value{
-a string vector
+\item{sequences}{The character string representing a peptide, or poly amino acid. The canonical
+20 amino acids are encoded in and chemical modifications can be represented by
+and floating point numerical value enclosed by square brackets. If a canonical
+amino acid is also enclosed in the square brackets \verb{[M15.99]} it is assumed that
+the numerical value is in addition to the mass of the residue, and thus represents
+a post-translational modification (PTM).}
 }
 \description{
-\code{str_sequence()} get the mass of a poly amino acid
+\code{str_sequence()} Get just the amino acid sequence of a peptide
+}
+\examples{
+str_sequence('SA[M15.99]PLER')
+
 }

@@ -6,6 +6,14 @@
 \usage{
 mass_neutral(mz, z)
 }
+\arguments{
+\item{mz}{The floating point mass value}
+
+\item{z}{The integer charge value}
+}
 \description{
 Return the neutral mass
+}
+\examples{
+mass_neutral(1234.567, 2)
 }

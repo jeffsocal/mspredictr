@@ -1,15 +1,20 @@
-#' Get the mass of an amino acid
+#' A helper function to determine the closest value pairs between two vectors
+#' in one dimensional space.
 #'
 #' @description
-#' `pairwise_delta()` converts an amino acid character to a numeric
+#' `pairwise_delta()` determine the closest values
 #'
-#' @param x a data frame
-#' @param y a data frame
-#' @param col_values a character string
-#' @param col_names a character string
+#' @param x
+#' A data frame of values.
 #'
-#' @return a tibble
+#' @param y
+#' A data frame of values.
 #'
+#' @param col_values
+#' A numeric column of values in both x and y to cluster.
+#'
+#' @param col_names
+#' A character string column of unique values in both x and y to cluster.
 #'
 pairwise_delta <- function(x = NULL,
                            y = NULL,
@@ -20,19 +25,19 @@ pairwise_delta <- function(x = NULL,
   y <- tibble::as_tibble(y)
 
   x_vals <- x %>%
-    dplyr::select(all_of(col_values)) %>%
+    dplyr::select(dplyr::all_of(col_values)) %>%
     unlist()
 
   y_vals <- y %>%
-    dplyr::select(all_of(col_values)) %>%
+    dplyr::select(dplyr::all_of(col_values)) %>%
     unlist()
 
   x_names <- x %>%
-    dplyr::select(all_of(col_names)) %>%
+    dplyr::select(dplyr::all_of(col_names)) %>%
     unlist()
 
   y_names <- y %>%
-    dplyr::select(all_of(col_names)) %>%
+    dplyr::select(dplyr::all_of(col_names)) %>%
     unlist()
 
   x_vals_n <- x %>% nrow()

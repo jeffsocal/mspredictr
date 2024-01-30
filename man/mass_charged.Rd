@@ -6,6 +6,14 @@
 \usage{
 mass_charged(mass, z)
 }
+\arguments{
+\item{mass}{The floating point mass value}
+
+\item{z}{The integer charge value}
+}
 \description{
 Return the charged mass
+}
+\examples{
+mass_charged(1234.567, 2)
 }

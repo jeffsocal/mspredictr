@@ -1,21 +1,66 @@
-#' Get a table of fragments
+#' Get a table of fragments based on a peptide sequence.
 #'
 #' @description
-#' `fragments()` Generates a table of fragments from a given peptide character string
+#' `fragments()` Generates a table of fragments from a given peptide character string.
 #'
-#' @param sequence a character string
-#' @param type a character
-#' @param charge an integer
-#' @param loss a character string
+#' @param sequence
+#' The character string representing a peptide, or poly amino acid. The canonical
+#' 20 amino acids are encoded in and chemical modifications can be represented by
+#' and floating point numerical value enclosed by square brackets. If a canonical
+#' amino acid is also enclosed in the square brackets `[M15.99]` it is assumed that
+#' the numerical value is in addition to the mass of the residue, and thus represents
+#' a post-translational modification (PTM). Any value, in a square bracket is assumed
+#' to represent a monomer in the chain `[57.021]`, and reflected in the fragment ion
+#' series.
 #'
-#' @return a tibble
+#' Example: `SAMPLER`, `SA[M15.99]PLER`
+#'
+#' @param type
+#' The ion fragmentation type to calculate the mass values for.
+#'
+#' Allowable: `y`, `b`
+#'
+#' Default: `c("y", "b")`
+#'
+#' @param charge
+#' The specified fragment ion charges to calculate.
+#'
+#' Allowable: `1:4`
+#'
+#' Default: `c(1, 2, 3, 4)`
+#'
+#' @param loss
+#' The specified neutral mass loss experienced in some mass spectrometers.
+#'
+#' Allowable: `water`, `amine`
+#'
+#' Default: none
+#'
+#' @return
+#' The output is a tibble of predicted mass values based on the input parameters.
+#' The table consists of the columns
+#' ```
+#'    `ion`: the ion type (y,b) and the charge represented by +
+#'
+#'    `mz`: the calculated m/z value of the ion
+#'
+#'    `z`: the charge state of the ion
+#'
+#'    `seq`: the partial sequence represented by the fragmentation
+#'
+#'    `pair`: a tag use to identify which ions originated from the y/b ion split
+#'
+#'    `pos`: the position at which the fragmentation occurred
+#'
+#'    `type`: the ion type
+#' ```
+#'
 #' @export
 #'
 #' @importFrom magrittr %>%
 #'
 #' @examples
-#' library(rpsm)
-#' fragments("SAMPLER")
+#' fragments("SAMPLER", charge = 1)
 #'
 fragments <- function(
     sequence = 'SAMPLE',
@@ -23,6 +68,9 @@ fragments <- function(
     charge = c(1,2,3,4),
     loss = NULL
 ){
+
+  # visible bindings
+  ion <- mz <- NULL
 
   if(!is.character(sequence)) {cli::cli_abort("`sequence` must be a character string")}
   if(!is.numeric(charge)) { cli::cli_abort("`charge` must be an integer")}

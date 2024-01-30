@@ -2,10 +2,16 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{mass_ladder}
 \alias{mass_ladder}
-\title{Return the mass ladder vector}
+\title{Return the vector of mass values for each peptide unit}
 \usage{
 mass_ladder(seq)
 }
+\arguments{
+\item{seq}{The peptide sequence string}
+}
 \description{
-Return the mass ladder vector
+Return the vector of mass values for each peptide unit
+}
+\examples{
+mass_ladder('SA[M15.99]PLER')
 }

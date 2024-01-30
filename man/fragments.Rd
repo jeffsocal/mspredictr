@@ -2,7 +2,7 @@
 % Please edit documentation in R/fragments.R
 \name{fragments}
 \alias{fragments}
-\title{Get a table of fragments}
+\title{Get a table of fragments based on a peptide sequence.}
 \usage{
 fragments(
   sequence = "SAMPLE",
@@ -12,22 +12,58 @@ fragments(
 )
 }
 \arguments{
-\item{sequence}{a character string}
+\item{sequence}{The character string representing a peptide, or poly amino acid. The canonical
+20 amino acids are encoded in and chemical modifications can be represented by
+and floating point numerical value enclosed by square brackets. If a canonical
+amino acid is also enclosed in the square brackets \verb{[M15.99]} it is assumed that
+the numerical value is in addition to the mass of the residue, and thus represents
+a post-translational modification (PTM). Any value, in a square bracket is assumed
+to represent a monomer in the chain \verb{[57.021]}, and reflected in the fragment ion
+series.
 
-\item{type}{a character}
+Example: \code{SAMPLER}, \verb{SA[M15.99]PLER}}
 
-\item{charge}{an integer}
+\item{type}{The ion fragmentation type to calculate the mass values for.
 
-\item{loss}{a character string}
+Allowable: \code{y}, \code{b}
+
+Default: \code{c("y", "b")}}
+
+\item{charge}{The specified fragment ion charges to calculate.
+
+Allowable: \code{1:4}
+
+Default: \code{c(1, 2, 3, 4)}}
+
+\item{loss}{The specified neutral mass loss experienced in some mass spectrometers.
+
+Allowable: \code{water}, \code{amine}
+
+Default: none}
 }
 \value{
-a tibble
+The output is a tibble of predicted mass values based on the input parameters.
+The table consists of the columns
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{   `ion`: the ion type (y,b) and the charge represented by +
+
+   `mz`: the calculated m/z value of the ion
+
+   `z`: the charge state of the ion
+
+   `seq`: the partial sequence represented by the fragmentation
+
+   `pair`: a tag use to identify which ions originated from the y/b ion split
+
+   `pos`: the position at which the fragmentation occurred
+
+   `type`: the ion type
+}\if{html}{\out{</div>}}
 }
 \description{
-\code{fragments()} Generates a table of fragments from a given peptide character string
+\code{fragments()} Generates a table of fragments from a given peptide character string.
 }
 \examples{
-library(rpsm)
-fragments("SAMPLER")
+fragments("SAMPLER", charge = 1)
 
 }

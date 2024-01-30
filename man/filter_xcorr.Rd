@@ -2,19 +2,16 @@
 % Please edit documentation in R/spectrum_filter.R
 \name{filter_xcorr}
 \alias{filter_xcorr}
-\title{Return a spectrum normalized according to xcorr publication}
+\title{Xcorr normalized spectrum}
 \usage{
-filter_xcorr(df, chunk = 10, norm = 50)
+filter_xcorr(spectrum = NULL, chunk = 10, norm = 50)
 }
 \arguments{
-\item{df}{dataframe}
+\item{spectrum}{The spectra data object}
 
-\item{chunk}{number of divisions to normalize across}
+\item{chunk}{The number of divisions to normalize across}
 
-\item{norm}{the value to normalize to}
-}
-\value{
-vector
+\item{norm}{The value to normalize to}
 }
 \description{
 \code{filter_xcorr()} get the top n values from a vector

@@ -2,16 +2,18 @@
 % Please edit documentation in R/mass_ladder_named.R
 \name{mass_ladder_named}
 \alias{mass_ladder_named}
-\title{Convert a peptide string to a named variable}
+\title{Generate a named mass ladder vector.}
 \usage{
 mass_ladder_named(sequence = NULL)
 }
 \arguments{
-\item{sequence}{as character string}
-}
-\value{
-a vector
+\item{sequence}{The character string representing a peptide, or poly amino acid. The canonical
+20 amino acids are encoded in and chemical modifications can be represented by
+and floating point numerical value enclosed by square brackets. If a canonical
+amino acid is also enclosed in the square brackets \verb{[M15.99]} it is assumed that
+the numerical value is in addition to the mass of the residue, and thus represents
+a post-translational modification (PTM).}
 }
 \description{
-\code{mass_ladder()} Generates a named variable
+\code{mass_ladder()} Generates the lass ladder from a peptide sequence.
 }

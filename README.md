@@ -1,6 +1,6 @@
-# msreadr <img src="docs/mspredictr_logo.png" align="right" height="139"/>
+# mspredictr <img src="man/figures/mspredictr_logo.png" align="right" width="120"/>
 
-A simple tool for calculating peptide sequence and fragment masses.
+An R package for calculating peptide sequence and fragment masses relevant to mass spectrometry, along with some peptide string manipulation tools. Some of the functions with mass calculations and string manipulations have been written in `Rust` for a speed advantage.
 
 ## Installation
 
@@ -54,7 +54,7 @@ Read in spectra using the `msreadr` package
 
 ``` r
 library(msreadr)
-ms2data <- msreadr::path_to_example() |> read_spectra()
+ms2data <- path_to_example() |> read_spectra()
 ```
 
 Plot spectrum with peak matching
@@ -63,4 +63,4 @@ Plot spectrum with peak matching
 ms2data |> subset(spectrum_num == 1) |> plot_spectrum(peptides = 'HAVSEGTK')
 ```
 
-![](README-unnamed-chunk-6-1.png)
+![](man/figures/README_spectrum.png)

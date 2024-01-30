@@ -1,12 +1,23 @@
-#' truncate a number to a given decimal value
+#' Truncate a number to a given decimal value
 #'
 #' @description
-#' `num_trunc()` truncate a decimal to a given precision
+#' `num_trunc()` truncates a float without rounding, floor or ceiling
 #'
-#' @param x the number to truncate
-#' @param d decimals to truncate
+#' @param x
+#' The input number, or number vector, to truncate. Values must be smaller than 1000.
 #'
-#' @return a numeric vector
+#' @param d
+#' The number of decimals to truncate to.
+#'
 #' @export
 #'
-num_trunc <- function(x, d = 4){floor(x * 10^d)/(10^d)}
+#' @examples
+#' num_trunc(1.234567, 3)
+#'
+num_trunc <- function(
+    x,
+    d = 4
+){
+  if(x > 1000) return(x)
+  floor(x * 10^d)/(10^d)
+}

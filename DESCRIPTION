@@ -1,24 +1,24 @@
 Package: mspredictr
 Type: Package
-Title: R MS Tandem: a lightweight framework for protemic tandem mass spectrometry. 
+Title: mspredictr: a lightweight package for predicting peptide fragment mass values 
 Version: 0.2.0
 Authors@R: 
     person("Jeff", "Jones", , "jeffj@caltech.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7142-2222"))
 Description: 
-    A simple tool for calculating peptide sequence and fragment mass values.
+    A lightweight package for predicting peptide fragment mass values.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 LazyData: true
 Imports: 
+    BRAIN,
     cli,
     dplyr,
     ggplot2,
+    glue,
     gridExtra,
-    httr,
     magrittr,
-    readr,
     rlang,
     stringr,
     tibble

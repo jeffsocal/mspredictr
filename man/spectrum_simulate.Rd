@@ -2,7 +2,7 @@
 % Please edit documentation in R/spectrum_simulate.R
 \name{spectrum_simulate}
 \alias{spectrum_simulate}
-\title{Convert a peptide string to a named variable}
+\title{Create a synthetic fragment mass spectrum.}
 \usage{
 spectrum_simulate(
   peptide = NULL,
@@ -14,11 +14,20 @@ spectrum_simulate(
 )
 }
 \arguments{
-\item{data}{file path}
-}
-\value{
-data object
+\item{peptide}{The peptide string to simulate a spectrum for}
+
+\item{charge}{The charges expected in the fragment mass spectrum}
+
+\item{accuracy}{The floating point mass value to use for calculating mass accuracy}
+
+\item{noise_mean}{The mean of the normal distribution to sample from}
+
+\item{noise_quantile}{The Nth quantile used to assess noise}
+
+\item{f_peaks}{The proportion of peaks to keep. However, if a peak is randomly below the noise
+threashold then it will be dropped.}
 }
 \description{
-\code{generate()} Generates a named variable
+\code{spectrum_simulate()} generates a synthetic fragment mass spectrum, based on
+a peptide string, using normally-distributed random processes.
 }

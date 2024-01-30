@@ -2,22 +2,20 @@
 % Please edit documentation in R/pairwise_delta.R
 \name{pairwise_delta}
 \alias{pairwise_delta}
-\title{Get the mass of an amino acid}
+\title{A helper function to determine the closest value pairs between two vectors
+in one dimensional space.}
 \usage{
 pairwise_delta(x = NULL, y = NULL, col_values = NULL, col_names = NULL)
 }
 \arguments{
-\item{x}{a data frame}
+\item{x}{A data frame of values.}
 
-\item{y}{a data frame}
+\item{y}{A data frame of values.}
 
-\item{col_values}{a character string}
+\item{col_values}{A numeric column of values in both x and y to cluster.}
 
-\item{col_names}{a character string}
-}
-\value{
-a tibble
+\item{col_names}{A character string column of unique values in both x and y to cluster.}
 }
 \description{
-\code{pairwise_delta()} converts an amino acid character to a numeric
+\code{pairwise_delta()} determine the closest values
 }

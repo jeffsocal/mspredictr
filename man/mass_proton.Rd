@@ -9,3 +9,6 @@ mass_proton()
 \description{
 Return the mass of a proton
 }
+\examples{
+mass_proton()
+}

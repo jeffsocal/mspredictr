@@ -1,19 +1,26 @@
-#' Convert a peptide string to a named variable
+#' Simulate isotope peaks
 #'
 #' @description
-#' `spectrum_isotopes()` Generates a named variable
+#' `spectrum_isotopes()` is a helper function to generate isotope peaks in
+#' synthetic spectra.
 #'
-#' @param df a dataframe of monoisotopic peaks
-#' @param isotope_model a model of isotopes for a given polypeptide
-#' @param charge proton charge to assume for the isotope profile
+#' @param spectrum
+#' A dataframe of monoisotopic peaks
 #'
-#' @return data object
+#' @param isotope_model
+#' A model of isotopes for a given polypeptide
+#'
+#' @param charge
+#' The proton charge to assume for the isotope profile
 #'
 spectrum_isotopes <- function(
-    df = NULL,
+    spectrum = NULL,
     isotope_model = NULL,
     charge = 1
 ){
+
+  # visible bindings
+  mz <- NULL
 
   averagene <- 'N'
   if(is.null(isotope_model)) {
@@ -23,28 +30,30 @@ spectrum_isotopes <- function(
   n_mass <- mass_neutron()
   p_mass <- mass_proton()
 
-  df_new <- list()
-  for(i in 1:nrow(df)){
-    index <- ceiling(df[i,1] / a_mass)
+  spectrum_new <- list()
+  for(i in 1:nrow(spectrum)){
+    index <- ceiling(spectrum[i,1] / a_mass)
     iso <- isotope_model[[index]]
 
-    df_new[[i]] <- data.frame(
-      mz = (n_mass * (1:length(iso) - 1) + df[i,1] + (p_mass * (charge - 1))) / charge,
-      intensity = iso * df[i,2]
+    spectrum_new[[i]] <- data.frame(
+      mz = (n_mass * (1:length(iso) - 1) + spectrum[i,1] + (p_mass * (charge - 1))) / charge,
+      intensity = iso * spectrum[i,2]
     )
   }
 
-  return(df_new |> dplyr::bind_rows() |> dplyr::arrange(mz))
+  return(spectrum_new |> dplyr::bind_rows() |> dplyr::arrange(mz))
 }
 
-#' Convert a peptide string to a named variable
+#' An isotope model using the BRAIN algorithm
 #'
 #' @description
-#' `model_isotopes()` Generates a named variable
+#' `model_isotopes()` a helper function to generate isotopes
 #'
-#' @param averagene amino acid to use for a base polypeptide
+#' @param averagene
+#' The amino acid to use for a base polypeptide
 #'
-#' @return data list
+#' @param max_n
+#' The maximum number of isotopes to account for
 #'
 model_isotopes <- function(
     averagene = c('N','A','R','D','C','E','Q','G','H','I',

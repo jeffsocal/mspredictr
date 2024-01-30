@@ -2,10 +2,18 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{index_fragments}
 \alias{index_fragments}
-\title{Return the fragment mz vector}
+\title{Return the fragment indexes}
 \usage{
 index_fragments(seq, tolerance)
 }
+\arguments{
+\item{seq}{The peptide sequence string}
+
+\item{tolerance}{The numerical float for mass tolerance in Th}
+}
 \description{
-Return the fragment mz vector
+Return the fragment indexes
+}
+\examples{
+index_fragments('SA[M15.99]PLER', 0.05)
 }

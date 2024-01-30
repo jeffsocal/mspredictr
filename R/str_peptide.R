@@ -1,11 +1,15 @@
-#' non-iteratable helper function to clean up comet sequence strings
+#' A non-iterable helper function to clean up comet sequence strings
 #'
 #' @description
-#' `munge_seq()` get the mass of a poly amino acid
+#' `munge_seq()` Get a normalized peptide sequence string
 #'
-#' @param sequence as character string
+#' @param sequence
+#' The character string representing a peptide, or poly amino acid. The canonical
+#' 20 amino acids are encoded in and chemical modifications can be represented by
+#' and floating point numerical value enclosed by square brackets. This function
+#' takes a string input and capitalizes all letters and creates a square bracket
+#' containg any mass values along with the immediate-left letter.
 #'
-#' @return a string
 #'
 munge_seq <- function(
     sequence = NULL
@@ -45,15 +49,26 @@ munge_seq <- function(
   return(paste(seq_array, collapse = '') |> stringr::str_to_upper())
 }
 
-#' iteratable function to clean up comet sequence strings
+#' An iterable function to clean up peptide sequence strings.
 #'
 #' @description
-#' `str_peptide()` get the mass of a poly amino acid
+#' `str_peptide()` Get a normalized peptide sequence string
 #'
-#' @param sequence as character string
+#' @param sequences
+#' The character string representing a peptide, or poly amino acid. The canonical
+#' 20 amino acids are encoded in and chemical modifications can be represented by
+#' and floating point numerical value enclosed by square brackets. This function
+#' takes a string input and capitalizes all letters and creates a square bracket
+#' containg any mass values along with the immediate-left letter.
 #'
-#' @return a string vector
 #' @export
+#'
+#' @examples
+#' str_peptide('sam[15.99]ple')
+#'
+#' str_peptide('[47.89]sample')
+#'
+#' str_peptide('n[47.89]SAMPLE')
 #'
 str_peptide <- function(
     sequences = NULL
@@ -61,15 +76,17 @@ str_peptide <- function(
   sequences |> str_clean() |> lapply(munge_seq) |> unlist()
 }
 
-#' iteratable function to clean up comet sequence strings
+#' An iterable helper function to clean up comet sequence strings
 #'
 #' @description
-#' `str_peptide()` get the mass of a poly amino acid
+#' `str_peptide()` Get a normalized peptide sequence string
 #'
-#' @param sequence as character string
-#'
-#' @return a string vector
-#' @export
+#' @param sequences
+#' The character string representing a peptide, or poly amino acid. The canonical
+#' 20 amino acids are encoded in and chemical modifications can be represented by
+#' and floating point numerical value enclosed by square brackets. This function
+#' takes a string input and capitalizes all letters and creates a square bracket
+#' containg any mass values along with the immediate-left letter.
 #'
 str_clean <- function(
     sequences = NULL

@@ -1,17 +1,19 @@
-#' Convert a peptide string to a named variable
+#' A helper function used to simulate the accuracy of synthetic spectra.
 #'
 #' @description
-#' `spectrum_accuracy()` Generates a named variable
+#' `spectrum_accuracy()` Adds the noise to the accuracy of a synthetic spectrum.
 #'
-#' @param df a dataframe of monoisotopic peaks
+#' @param df
+#' A dataframe of monoisotopic peaks.
+#'
 #' @param accuracy the targeted mass accuracy defined as the mean of the absolute
 #' mass differences from predicted. Note, that a median mass measurement
 #' accuracy (MMA) of 0.1Th will contain 95% of all peaks within +/-0.3Th, and
 #' 99% of all peaks within +/-0.4Th, therefor with any given MMA, tolerances
 #' should account for 3x or 4x, to capture 95% or 99% of all peaks, respectively.
-#' @param model the statistical sampling method
 #'
-#' @return data object
+#' @param model
+#' A the statistical sampling method to use of assessing the match accuracy
 #'
 spectrum_accuracy <- function(
     df = NULL,

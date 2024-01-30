@@ -2,19 +2,20 @@
 % Please edit documentation in R/spectrum_denoise.R
 \name{spectrum_denoise}
 \alias{spectrum_denoise}
-\title{Clean up a mass spectrum to expose only the most abundant peaks}
+\title{A helper function used to clean up a mass spectrum to expose only the most abundant peaks}
 \usage{
 spectrum_denoise(spectrum = NULL, precursor = NULL, hedge = 5, n = 30)
 }
 \arguments{
-\item{spectrum}{a spectrum data object}
+\item{spectrum}{A spectrum data object.}
 
-\item{precursor}{the precursor mass to remove}
+\item{precursor}{The floating point value of precursor mass to remove.}
 
-\item{hedge}{the mz space to remove on either side of a tall peak}
+\item{hedge}{The mz space to remove on either side of a tall peak when filtering.}
 
-\item{n}{the number of peaks to retain}
+\item{n}{The number of peaks to retain, ranked by abundance.}
 }
 \description{
-\code{denoise_spectrum()} Removes the noise from a given mass spectrum
+\code{denoise_spectrum()} Removes peaks from a given mass spectrum filtered to remove residual
+precursor peaks, isotopes peaks and any low-level noise.
 }

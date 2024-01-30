@@ -2,12 +2,12 @@
 % Please edit documentation in R/spectrum_accuracy.R
 \name{spectrum_accuracy}
 \alias{spectrum_accuracy}
-\title{Convert a peptide string to a named variable}
+\title{A helper function used to simulate the accuracy of synthetic spectra.}
 \usage{
 spectrum_accuracy(df = NULL, accuracy = 0.1, model = stats::rnorm)
 }
 \arguments{
-\item{df}{a dataframe of monoisotopic peaks}
+\item{df}{A dataframe of monoisotopic peaks.}
 
 \item{accuracy}{the targeted mass accuracy defined as the mean of the absolute
 mass differences from predicted. Note, that a median mass measurement
@@ -15,11 +15,8 @@ accuracy (MMA) of 0.1Th will contain 95\% of all peaks within +/-0.3Th, and
 99\% of all peaks within +/-0.4Th, therefor with any given MMA, tolerances
 should account for 3x or 4x, to capture 95\% or 99\% of all peaks, respectively.}
 
-\item{model}{the statistical sampling method}
-}
-\value{
-data object
+\item{model}{A the statistical sampling method to use of assessing the match accuracy}
 }
 \description{
-\code{spectrum_accuracy()} Generates a named variable
+\code{spectrum_accuracy()} Adds the noise to the accuracy of a synthetic spectrum.
 }

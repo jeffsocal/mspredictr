@@ -2,10 +2,16 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{peptide_length}
 \alias{peptide_length}
-\title{Return the mass of a peptide sequence}
+\title{Return the unit length of a peptide sequence}
 \usage{
 peptide_length(sequences)
 }
+\arguments{
+\item{sequences}{A vector of peptide sequence strings.}
+}
 \description{
-Return the mass of a peptide sequence
+Return the unit length of a peptide sequence
+}
+\examples{
+peptide_mass(c('SA[M15.99]PLE', 'SAM[15.99]PLE'))
 }

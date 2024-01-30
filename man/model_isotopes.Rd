@@ -2,7 +2,7 @@
 % Please edit documentation in R/spectrum_isotopes.R
 \name{model_isotopes}
 \alias{model_isotopes}
-\title{Convert a peptide string to a named variable}
+\title{An isotope model using the BRAIN algorithm}
 \usage{
 model_isotopes(
   averagene = c("N", "A", "R", "D", "C", "E", "Q", "G", "H", "I", "K", "M", "F", "P",
@@ -11,11 +11,10 @@ model_isotopes(
 )
 }
 \arguments{
-\item{averagene}{amino acid to use for a base polypeptide}
-}
-\value{
-data list
+\item{averagene}{The amino acid to use for a base polypeptide}
+
+\item{max_n}{The maximum number of isotopes to account for}
 }
 \description{
-\code{model_isotopes()} Generates a named variable
+\code{model_isotopes()} a helper function to generate isotopes
 }

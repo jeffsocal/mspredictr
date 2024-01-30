@@ -1,4 +1,71 @@
 url: https://jeffsocal.github.io/mspredictr/
+navbar:
+  components:
+    home: ~
+
 template:
   bootstrap: 5
+reference:
+- title: Mass Calculations
+  description: |
+    Calculate the mass and m/z values for various molecules.
+  contents:
+  - mass_charged
+  - mass_neutral
+  - mass_atomic
+  - mass_residue
+  - mass_proton
+  - mass_neutron
+
+- title: Peptide Mass Calculations
+  description: |
+    Calculate the mass and m/z values for various molecules.
+  contents:
+  - peptide_length
+  - peptide_mass
+
+- title: Peptide String Manipulation
+  description: |
+    Calculate the mass and m/z values for various molecules.
+  contents:
+  - peptide_xleucine
+  - str_peptide
+  - str_sequence
+
+- title: Spectrum
+  description: |
+    Predict fragment mass spectrum values
+  contents:
+  - plot_spectrum
+  - spectrum_denoise
+  - spectrum_simulate
+
+- title: Fragmentation
+  description: |
+    Predict fragment mass spectrum values
+  contents:
+  - fragments
+
+- title: internal
+  contents:
+  - filter_precursor
+  - filter_topn
+  - filter_xcorr
+  - index_fragments
+  - index_mass
+  - mass_ladder
+  - mass_ladder_named
+  - mass_fragments
+  - model_isotopes
+  - munge_seq
+  - num_trunc
+  - pairwise_delta
+  - spectrum_accuracy
+  - spectrum_assign
+  - spectrum_extract
+  - spectrum_isotopes
+  - spectrum_noise
+  - str_clean
+  - which_top_n
+  - which_xprecursor
 

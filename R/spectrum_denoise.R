@@ -1,15 +1,22 @@
-#' Clean up a mass spectrum to expose only the most abundant peaks
+#' A helper function used to clean up a mass spectrum to expose only the most abundant peaks
 #'
 #' @description
-#' `denoise_spectrum()` Removes the noise from a given mass spectrum
+#' `denoise_spectrum()` Removes peaks from a given mass spectrum filtered to remove residual
+#' precursor peaks, isotopes peaks and any low-level noise.
 #'
-#' @param spectrum a spectrum data object
-#' @param precursor the precursor mass to remove
-#' @param hedge the mz space to remove on either side of a tall peak
-#' @param n the number of peaks to retain
+#' @param spectrum
+#' A spectrum data object.
+#'
+#' @param precursor
+#' The floating point value of precursor mass to remove.
+#'
+#' @param hedge
+#' The mz space to remove on either side of a tall peak when filtering.
+#'
+#' @param n
+#' The number of peaks to retain, ranked by abundance.
 #'
 #' @export
-#'
 #'
 spectrum_denoise <- function(
     spectrum = NULL,

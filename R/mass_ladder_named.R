@@ -1,11 +1,15 @@
-#' Convert a peptide string to a named variable
+#' Generate a named mass ladder vector.
 #'
 #' @description
-#' `mass_ladder()` Generates a named variable
+#' `mass_ladder()` Generates the lass ladder from a peptide sequence.
 #'
-#' @param sequence as character string
-#'
-#' @return a vector
+#' @param sequence
+#' The character string representing a peptide, or poly amino acid. The canonical
+#' 20 amino acids are encoded in and chemical modifications can be represented by
+#' and floating point numerical value enclosed by square brackets. If a canonical
+#' amino acid is also enclosed in the square brackets `[M15.99]` it is assumed that
+#' the numerical value is in addition to the mass of the residue, and thus represents
+#' a post-translational modification (PTM).
 #'
 mass_ladder_named <- function(
     sequence = NULL

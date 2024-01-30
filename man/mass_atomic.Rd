@@ -4,8 +4,15 @@
 \alias{mass_atomic}
 \title{Return the mass of an atom}
 \usage{
-mass_atomic(r)
+mass_atomic(atom)
+}
+\arguments{
+\item{atom}{The IUPAC amomic letter designation}
 }
 \description{
 Return the mass of an atom
+}
+\examples{
+mass_atomic('C')
+mass_atomic('Na')
 }

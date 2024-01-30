@@ -2,10 +2,16 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{mass_fragments}
 \alias{mass_fragments}
-\title{Return the fragment mz vector}
+\title{Return a simplified fragment mz vector}
 \usage{
 mass_fragments(seq)
 }
+\arguments{
+\item{seq}{The peptide sequence string}
+}
 \description{
-Return the fragment mz vector
+Return a simplified fragment mz vector
+}
+\examples{
+mass_fragments('SA[M15.99]PLER')
 }

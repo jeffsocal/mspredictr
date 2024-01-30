@@ -2,18 +2,19 @@
 % Please edit documentation in R/num_trunc.R
 \name{num_trunc}
 \alias{num_trunc}
-\title{truncate a number to a given decimal value}
+\title{Truncate a number to a given decimal value}
 \usage{
 num_trunc(x, d = 4)
 }
 \arguments{
-\item{x}{the number to truncate}
+\item{x}{The input number, or number vector, to truncate. Values must be smaller than 1000.}
 
-\item{d}{decimals to truncate}
-}
-\value{
-a numeric vector
+\item{d}{The number of decimals to truncate to.}
 }
 \description{
-\code{num_trunc()} truncate a decimal to a given precision
+\code{num_trunc()} truncates a float without rounding, floor or ceiling
+}
+\examples{
+num_trunc(1.234567, 3)
+
 }

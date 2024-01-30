@@ -20,7 +20,11 @@ fn peptide_mass_single(s: &str) -> f64 {
 }
 
 /// Return a I/L substituted sequence
+/// @param s
+/// The peptide sequence string.
 /// @export
+/// @examples
+/// peptide_xleucine('SILLY')
 #[extendr]
 fn peptide_xleucine(s: &str) -> String {
     let out  = str::replace(s, "I", "L");
@@ -28,7 +32,11 @@ fn peptide_xleucine(s: &str) -> String {
 }
 
 /// Return the mass of a peptide sequence
+/// @param sequences
+/// A vector of peptide sequence strings.
 /// @export
+/// @examples
+/// peptide_mass(c('SAMPLE', 'SILLY'))
 #[extendr]
 fn peptide_mass(sequences: Strings) -> Vec<f64> {
    let masses = sequences.iter().map(|x| peptide_mass_single(&x)).collect();
@@ -42,8 +50,12 @@ fn peptide_length_single(s: &str) -> usize {
     return n;
 }
 
-/// Return the mass of a peptide sequence
+/// Return the unit length of a peptide sequence
+/// @param sequences
+/// A vector of peptide sequence strings.
 /// @export
+/// @examples
+/// peptide_mass(c('SA[M15.99]PLE', 'SAM[15.99]PLE'))
 #[extendr]
 fn peptide_length(sequences: Strings) -> Vec<usize> {
    let masses = sequences.iter().map(|x| peptide_length_single(&x)).collect();
@@ -79,10 +91,15 @@ fn mass_letter(r: &char) -> f64 {
 }
 
 /// Return the mass of an atom
+/// @param atom
+/// The IUPAC amomic letter designation
 /// @export
+/// @examples
+/// mass_atomic('C')
+/// mass_atomic('Na')
 #[extendr]
-fn mass_atomic(r: &str) -> f64 {
-    match r {
+fn mass_atomic(atom: &str) -> f64 {
+    match atom {
         "H"  =>   1.007825032,
         "He" =>   4.00260325,
         "Li" =>   7.01600405,
@@ -152,6 +169,8 @@ fn mass_atomic(r: &str) -> f64 {
 
 /// Return the mass of a proton
 /// @export
+/// @examples
+/// mass_proton()
 #[extendr]
 fn mass_proton() -> f64 {
     return 1.00727646688;
@@ -159,13 +178,20 @@ fn mass_proton() -> f64 {
 
 /// Return the mass of a neutron
 /// @export
+/// @examples
+/// mass_neutron()
 #[extendr]
 fn mass_neutron() -> f64 {
   return 1.00866491588;
 }
 
 /// Return the mass of a amino acid residue
+/// @param s
+/// The single letter designation for an amino acid
 /// @export
+/// @examples
+/// mass_residue('G')
+/// mass_residue('Y')
 #[extendr]
 fn mass_residue(s: &str) -> f64 {
     let mut m = 0.0;
@@ -176,7 +202,13 @@ fn mass_residue(s: &str) -> f64 {
 }
 
 /// Return the charged mass
+/// @param mass
+/// The floating point mass value
+/// @param z
+/// The integer charge value
 /// @export
+/// @examples
+/// mass_charged(1234.567, 2)
 #[extendr]
 fn mass_charged(mass: f64, z: i8) -> f64 {
     if z == 0 {
@@ -188,7 +220,13 @@ fn mass_charged(mass: f64, z: i8) -> f64 {
 }
 
 /// Return the neutral mass
+/// @param mz
+/// The floating point mass value
+/// @param z
+/// The integer charge value
 /// @export
+/// @examples
+/// mass_neutral(1234.567, 2)
 #[extendr]
 fn mass_neutral(mz: f64, z: i8) -> f64 {
     if z == 0 {
@@ -199,8 +237,12 @@ fn mass_neutral(mz: f64, z: i8) -> f64 {
     return m;
 }
 
-/// Return the mass ladder vector
+/// Return the vector of mass values for each peptide unit
+/// @param seq
+/// The peptide sequence string
 /// @export
+/// @examples
+/// mass_ladder('SA[M15.99]PLER')
 #[extendr]
 pub fn mass_ladder(seq: &str) -> Vec<f64> {
 
@@ -230,8 +272,12 @@ pub fn mass_ladder(seq: &str) -> Vec<f64> {
   return seg_mass;
 }
 
-/// Return the fragment mz vector
+/// Return a simplified fragment mz vector
+/// @param seq
+/// The peptide sequence string
 /// @export
+/// @examples
+/// mass_fragments('SA[M15.99]PLER')
 #[extendr]
 pub fn mass_fragments(seq: &str) -> Vec<f64> {
 
@@ -264,8 +310,14 @@ pub fn mass_fragments(seq: &str) -> Vec<f64> {
     return mz_frags;
 }
 
-/// Return the fragment mz vector
+/// Return the fragment indexes
+/// @param seq
+/// The peptide sequence string
+/// @param tolerance
+/// The numerical float for mass tolerance in Th
 /// @export
+/// @examples
+/// index_fragments('SA[M15.99]PLER', 0.05)
 #[extendr]
 pub fn index_fragments(seq: &str, tolerance: f64) -> Vec<i64> {
     let i_frag = mass_fragments(&seq)
@@ -275,8 +327,14 @@ pub fn index_fragments(seq: &str, tolerance: f64) -> Vec<i64> {
     return i_frag;
 }
 
-/// Return a mass index.
+/// Return a mass indexes.
+/// @param masses
+/// A vecrtor of mass sequences
+/// @param tolerance
+/// The numerical float for mass tolerance in Th
 /// @export
+/// @examples
+/// index_mass(c(123.45, 234.56, 345.67), 0.05)
 #[extendr]
 fn index_mass(masses: Vec<f64>, tolerance: f64) -> Vec<i64> {
   let indexes:Vec<i64> = masses
@@ -286,8 +344,14 @@ fn index_mass(masses: Vec<f64>, tolerance: f64) -> Vec<i64> {
   return indexes;
 }
 
-// Top N in vector
-// @export
+/// Returns the boolean index of the top N largest values
+/// @param f
+/// A vecrtor of numerical floats
+/// @param n
+/// The number of top values to keep
+/// @export
+/// @examples
+/// which_top_n(c(123.45, 234.56, 345.67), 2)
 #[extendr]
 fn which_top_n(f: Vec<f64>, n: i32) -> Vec<bool> {
     let fl = f.len();
@@ -306,8 +370,14 @@ fn which_top_n(f: Vec<f64>, n: i32) -> Vec<bool> {
     return ft.to_vec();
 }
 
-// Expand fragments by precursor z
-// @export
+/// Returns the boolean index of values that are in proximity to mz
+/// @param f
+/// A vecrtor of numerical floats
+/// @param mz
+/// The the value to look for
+/// @export
+/// @examples
+/// which_xprecursor(c(123.45, 234.56, 345.67), 233.61)
 #[extendr]
 fn which_xprecursor(f: Vec<f64>, mz: f64) -> Vec<bool> {
     let g = f.iter().map(|x| (x - mz).abs() > 2.5 ).collect::<Vec<_>>();

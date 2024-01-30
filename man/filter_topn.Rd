@@ -2,18 +2,15 @@
 % Please edit documentation in R/spectrum_filter.R
 \name{filter_topn}
 \alias{filter_topn}
-\title{Return the top n values from a vector}
+\title{Get the top most abundant peaks from a spectrum}
 \usage{
-filter_topn(df, n)
+filter_topn(spectrum = NULL, n = 30)
 }
 \arguments{
-\item{df}{dataframe}
+\item{spectrum}{The spectra data object}
 
-\item{n}{n indexes}
-}
-\value{
-vector
+\item{n}{The n number of top peaks to return}
 }
 \description{
-\code{filter_topn()} get the top n values from a vector
+\code{filter_topn()} is a helper function to get the top n values from a vector
 }

@@ -2,16 +2,17 @@
 % Please edit documentation in R/str_peptide.R
 \name{munge_seq}
 \alias{munge_seq}
-\title{non-iteratable helper function to clean up comet sequence strings}
+\title{A non-iterable helper function to clean up comet sequence strings}
 \usage{
 munge_seq(sequence = NULL)
 }
 \arguments{
-\item{sequence}{as character string}
-}
-\value{
-a string
+\item{sequence}{The character string representing a peptide, or poly amino acid. The canonical
+20 amino acids are encoded in and chemical modifications can be represented by
+and floating point numerical value enclosed by square brackets. This function
+takes a string input and capitalizes all letters and creates a square bracket
+containg any mass values along with the immediate-left letter.}
 }
 \description{
-\code{munge_seq()} get the mass of a poly amino acid
+\code{munge_seq()} Get a normalized peptide sequence string
 }

@@ -1,14 +1,39 @@
-#' GGplot2 object of a ms2 spectrum
+#' GGplot2 object of a ms2 spectrum.
 #'
 #' @description
-#' `plot_spectrum()` get the mass of a poly amino acid
+#' `plot_spectrum()` generates a plot of a given mass spectrum, w/o matching
+#' peptide(s) sequences.
 #'
-#' @param spectrum as data frame cols = `[mz, i]`
-#' @param sequence as character string
-#' @param charge as integer
+#' @param spectrum
+#' as data frame cols = `[mz, i]`
 #'
-#' @return a string
+#' @param filter
+#' A boolean to determine if the spectrum should be filtered to remove residual
+#' precursor peaks, isotopes peaks and any low-level noise.
+#'
+#' @param peptides
+#' An optional vector of peptide sequences that will result in plotting each in
+#' separate facets for comparison.
+#'
+#' @param label_size
+#' A value used to increase or decrease the assigned labels.
+#'
+#' @param tolerance
+#' The tolerance in Th to allow predicted fragments to match observed values.
+#'
+#' @param ...
+#' Flow-through parameters to `assign_sepectrum()`
+#'
 #' @export
+#'
+#' @examples
+#'  # using the supplied spectrum from the msreadr package
+#'  library(msreadr)
+#'  mzml <- path_to_example() |>
+#'          read_spectra()
+#'  mzml |>
+#'    subset(spectrum_num == 1) |>
+#'    plot_spectrum('HAVSEGTK')
 #'
 plot_spectrum <- function(
     spectrum = NULL,
@@ -18,6 +43,9 @@ plot_spectrum <- function(
     tolerance = 0.1,
     ...
 ){
+
+  # visible bindings
+  mz <- int <- type <- ion <- NULL
 
   spectrum <- spectrum |> spectrum_extract(filter)
 
@@ -44,7 +72,7 @@ plot_spectrum <- function(
     peptide <- peptides[i]
     if(!is.character(peptide)) { cli::cli_abort("`sequence` must be a character string") }
 
-    tbl_assn <- assign_spectrum(spectrum, peptide,
+    tbl_assn <- spectrum_assign(spectrum, peptide,
                                 tolerance = tolerance,
                                 ...)
     tbl_poss <- peptide |> fragments(...)

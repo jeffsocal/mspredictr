@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_spectrum.R
 \name{plot_spectrum}
 \alias{plot_spectrum}
-\title{GGplot2 object of a ms2 spectrum}
+\title{GGplot2 object of a ms2 spectrum.}
 \usage{
 plot_spectrum(
   spectrum = NULL,
@@ -16,13 +16,29 @@ plot_spectrum(
 \arguments{
 \item{spectrum}{as data frame cols = \verb{[mz, i]}}
 
-\item{sequence}{as character string}
+\item{filter}{A boolean to determine if the spectrum should be filtered to remove residual
+precursor peaks, isotopes peaks and any low-level noise.}
 
-\item{charge}{as integer}
-}
-\value{
-a string
+\item{peptides}{An optional vector of peptide sequences that will result in plotting each in
+separate facets for comparison.}
+
+\item{label_size}{A value used to increase or decrease the assigned labels.}
+
+\item{tolerance}{The tolerance in Th to allow predicted fragments to match observed values.}
+
+\item{...}{Flow-through parameters to \code{assign_sepectrum()}}
 }
 \description{
-\code{plot_spectrum()} get the mass of a poly amino acid
+\code{plot_spectrum()} generates a plot of a given mass spectrum, w/o matching
+peptide(s) sequences.
+}
+\examples{
+ # using the supplied spectrum from the msreadr package
+ library(msreadr)
+ mzml <- path_to_example() |>
+         read_spectra()
+ mzml |>
+   subset(spectrum_num == 1) |>
+   plot_spectrum('HAVSEGTK')
+
 }

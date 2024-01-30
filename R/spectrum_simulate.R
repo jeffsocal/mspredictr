@@ -1,11 +1,28 @@
-#' Convert a peptide string to a named variable
+#' Create a synthetic fragment mass spectrum.
 #'
 #' @description
-#' `generate()` Generates a named variable
+#' `spectrum_simulate()` generates a synthetic fragment mass spectrum, based on
+#' a peptide string, using normally-distributed random processes.
 #'
-#' @param data file path
+#' @param peptide
+#' The peptide string to simulate a spectrum for
 #'
-#' @return data object
+#' @param charge
+#' The charges expected in the fragment mass spectrum
+#'
+#' @param accuracy
+#' The floating point mass value to use for calculating mass accuracy
+#'
+#' @param noise_mean
+#' The mean of the normal distribution to sample from
+#'
+#' @param noise_quantile
+#' The Nth quantile used to assess noise
+#'
+#' @param f_peaks
+#' The proportion of peaks to keep. However, if a peak is randomly below the noise
+#' threashold then it will be dropped.
+#'
 #' @export
 #'
 spectrum_simulate <- function(
@@ -16,6 +33,9 @@ spectrum_simulate <- function(
     noise_quantile = .33,
     f_peaks = 0.67
 ){
+
+  # visible bindings
+  mz <- intensity <- NULL
 
   peaks_new <- list()
   for(z in charge){

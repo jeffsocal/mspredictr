@@ -9,3 +9,6 @@ mass_neutron()
 \description{
 Return the mass of a neutron
 }
+\examples{
+mass_neutron()
+}

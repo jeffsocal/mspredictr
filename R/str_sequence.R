@@ -1,12 +1,20 @@
-#' iteratable function to clean up comet sequence strings
+#' A function to extract the plain amino acid sequence
 #'
 #' @description
-#' `str_sequence()` get the mass of a poly amino acid
+#' `str_sequence()` Get just the amino acid sequence of a peptide
 #'
-#' @param sequence a vector of character string
+#' @param sequences
+#' The character string representing a peptide, or poly amino acid. The canonical
+#' 20 amino acids are encoded in and chemical modifications can be represented by
+#' and floating point numerical value enclosed by square brackets. If a canonical
+#' amino acid is also enclosed in the square brackets `[M15.99]` it is assumed that
+#' the numerical value is in addition to the mass of the residue, and thus represents
+#' a post-translational modification (PTM).
 #'
-#' @return a string vector
 #' @export
+#'
+#' @examples
+#' str_sequence('SA[M15.99]PLER')
 #'
 str_sequence <- function(
     sequences = NULL

@@ -19,6 +19,9 @@ spectrum_noise <- function(
     noise_sd = .75
 ){
 
+  # visible bindings
+  quantile <- rnorm <- NULL
+
   if(is.null(df)){ cli::cli_abort("`df` is null!") }
   if(!is.data.frame(df)){ cli::cli_abort("`df` is not a data.frame!") }
 

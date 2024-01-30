@@ -2,16 +2,15 @@
 % Please edit documentation in R/spectrum_extract.R
 \name{spectrum_extract}
 \alias{spectrum_extract}
-\title{helper function to read in platform specific results}
+\title{A helper function to extract just the spectrum of the spectra data object}
 \usage{
-spectrum_extract(x, filter = FALSE)
+spectrum_extract(spectra = NULL, filter = FALSE)
 }
 \arguments{
-\item{x}{location of file to parse}
-}
-\value{
-a tibble
+\item{spectra}{A spectra data object}
+
+\item{filter}{A boolean to indicate spectrum filtering should happen}
 }
 \description{
-helper function to read in platform specific results
+A helper function to extract just the spectrum of the spectra data object
 }

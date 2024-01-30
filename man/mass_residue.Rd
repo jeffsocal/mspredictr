@@ -6,6 +6,13 @@
 \usage{
 mass_residue(s)
 }
+\arguments{
+\item{s}{The single letter designation for an amino acid}
+}
 \description{
 Return the mass of a amino acid residue
+}
+\examples{
+mass_residue('G')
+mass_residue('Y')
 }

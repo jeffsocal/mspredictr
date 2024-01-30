@@ -4,16 +4,14 @@
 \alias{filter_precursor}
 \title{Return the top n values from a vector}
 \usage{
-filter_precursor(df, mz)
+filter_precursor(spectrum = NULL, mz = 30)
 }
 \arguments{
-\item{df}{dataframe}
+\item{spectrum}{The spectra data object}
 
-\item{n}{n indexes}
-}
-\value{
-vector
+\item{mz}{The m/z value of the precursor to remove}
 }
 \description{
-\code{filter_topn()} get the top n values from a vector
+\code{filter_precursor()} is a helper function to remove residual precursor from
+the spectrum
 }

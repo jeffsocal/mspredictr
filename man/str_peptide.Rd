@@ -2,16 +2,25 @@
 % Please edit documentation in R/str_peptide.R
 \name{str_peptide}
 \alias{str_peptide}
-\title{iteratable function to clean up comet sequence strings}
+\title{An iterable function to clean up peptide sequence strings.}
 \usage{
 str_peptide(sequences = NULL)
 }
 \arguments{
-\item{sequence}{as character string}
-}
-\value{
-a string vector
+\item{sequences}{The character string representing a peptide, or poly amino acid. The canonical
+20 amino acids are encoded in and chemical modifications can be represented by
+and floating point numerical value enclosed by square brackets. This function
+takes a string input and capitalizes all letters and creates a square bracket
+containg any mass values along with the immediate-left letter.}
 }
 \description{
-\code{str_peptide()} get the mass of a poly amino acid
+\code{str_peptide()} Get a normalized peptide sequence string
+}
+\examples{
+str_peptide('sam[15.99]ple')
+
+str_peptide('[47.89]sample')
+
+str_peptide('n[47.89]SAMPLE')
+
 }

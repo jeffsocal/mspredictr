@@ -12,59 +12,133 @@
 NULL
 
 #' Return the mass of an atom
+#' @param atom
+#' The IUPAC amomic letter designation
 #' @export
-mass_atomic <- function(r) .Call(wrap__mass_atomic, r)
+#' @examples
+#' mass_atomic('C')
+#' mass_atomic('Na')
+mass_atomic <- function(atom) .Call(wrap__mass_atomic, atom)
 
 #' Return the mass of a proton
 #' @export
+#' @examples
+#' mass_proton()
 mass_proton <- function() .Call(wrap__mass_proton)
 
 #' Return the mass of a neutron
 #' @export
+#' @examples
+#' mass_neutron()
 mass_neutron <- function() .Call(wrap__mass_neutron)
 
 #' Return the mass of a amino acid residue
+#' @param s
+#' The single letter designation for an amino acid
 #' @export
+#' @examples
+#' mass_residue('G')
+#' mass_residue('Y')
 mass_residue <- function(s) .Call(wrap__mass_residue, s)
 
 #' Return the charged mass
+#' @param mass
+#' The floating point mass value
+#' @param z
+#' The integer charge value
 #' @export
+#' @examples
+#' mass_charged(1234.567, 2)
 mass_charged <- function(mass, z) .Call(wrap__mass_charged, mass, z)
 
 #' Return the neutral mass
+#' @param mz
+#' The floating point mass value
+#' @param z
+#' The integer charge value
 #' @export
+#' @examples
+#' mass_neutral(1234.567, 2)
 mass_neutral <- function(mz, z) .Call(wrap__mass_neutral, mz, z)
 
 #' Return the mass of a peptide sequence
+#' @param sequences
+#' A vector of peptide sequence strings.
 #' @export
+#' @examples
+#' peptide_mass(c('SAMPLE', 'SILLY'))
 peptide_mass <- function(sequences) .Call(wrap__peptide_mass, sequences)
 
-#' Return the mass of a peptide sequence
+#' Return the unit length of a peptide sequence
+#' @param sequences
+#' A vector of peptide sequence strings.
 #' @export
+#' @examples
+#' peptide_mass(c('SA[M15.99]PLE', 'SAM[15.99]PLE'))
 peptide_length <- function(sequences) .Call(wrap__peptide_length, sequences)
 
-#' Return the mass ladder vector
+#' Return the vector of mass values for each peptide unit
+#' @param seq
+#' The peptide sequence string
 #' @export
+#' @examples
+#' mass_ladder('SA[M15.99]PLER')
 mass_ladder <- function(seq) .Call(wrap__mass_ladder, seq)
 
-#' Return the fragment mz vector
+#' Return a simplified fragment mz vector
+#' @param seq
+#' The peptide sequence string
 #' @export
+#' @examples
+#' mass_fragments('SA[M15.99]PLER')
 mass_fragments <- function(seq) .Call(wrap__mass_fragments, seq)
 
-#' Return the fragment mz vector
+#' Return the fragment indexes
+#' @param seq
+#' The peptide sequence string
+#' @param tolerance
+#' The numerical float for mass tolerance in Th
 #' @export
+#' @examples
+#' index_fragments('SA[M15.99]PLER', 0.05)
 index_fragments <- function(seq, tolerance) .Call(wrap__index_fragments, seq, tolerance)
 
-#' Return a mass index.
+#' Return a mass indexes.
+#' @param masses
+#' A vecrtor of mass sequences
+#' @param tolerance
+#' The numerical float for mass tolerance in Th
 #' @export
+#' @examples
+#' index_mass(c(123.45, 234.56, 345.67), 0.05)
 index_mass <- function(masses, tolerance) .Call(wrap__index_mass, masses, tolerance)
 
 #' Return a I/L substituted sequence
+#' @param s
+#' The peptide sequence string.
 #' @export
+#' @examples
+#' peptide_xleucine('SILLY')
 peptide_xleucine <- function(s) .Call(wrap__peptide_xleucine, s)
 
+#' Returns the boolean index of the top N largest values
+#' @param f
+#' A vecrtor of numerical floats
+#' @param n
+#' The number of top values to keep
+#' @export
+#' @examples
+#' which_top_n(c(123.45, 234.56, 345.67), 2)
 which_top_n <- function(f, n) .Call(wrap__which_top_n, f, n)
 
+#' Returns the boolean index of values that are in proximity to mz
+#' @param f
+#' A vecrtor of numerical floats
+#' @param mz
+#' The the value to look for
+#' @export
+#' @examples
+#' which_xprecursor(c(123.45, 234.56, 345.67), 233.61)
 which_xprecursor <- function(f, mz) .Call(wrap__which_xprecursor, f, mz)
 
 

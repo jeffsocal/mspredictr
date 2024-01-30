@@ -2,20 +2,18 @@
 % Please edit documentation in R/spectrum_isotopes.R
 \name{spectrum_isotopes}
 \alias{spectrum_isotopes}
-\title{Convert a peptide string to a named variable}
+\title{Simulate isotope peaks}
 \usage{
-spectrum_isotopes(df = NULL, isotope_model = NULL, charge = 1)
+spectrum_isotopes(spectrum = NULL, isotope_model = NULL, charge = 1)
 }
 \arguments{
-\item{df}{a dataframe of monoisotopic peaks}
+\item{spectrum}{A dataframe of monoisotopic peaks}
 
-\item{isotope_model}{a model of isotopes for a given polypeptide}
+\item{isotope_model}{A model of isotopes for a given polypeptide}
 
-\item{charge}{proton charge to assume for the isotope profile}
-}
-\value{
-data object
+\item{charge}{The proton charge to assume for the isotope profile}
 }
 \description{
-\code{spectrum_isotopes()} Generates a named variable
+\code{spectrum_isotopes()} is a helper function to generate isotope peaks in
+synthetic spectra.
 }

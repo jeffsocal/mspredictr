@@ -1,50 +1,69 @@
-#' Return the top n values from a vector
+#' Get the top most abundant peaks from a spectrum
 #'
 #' @description
-#' `filter_topn()` get the top n values from a vector
+#' `filter_topn()` is a helper function to get the top n values from a vector
 #'
-#' @param df dataframe
-#' @param n n indexes
+#' @param spectrum
+#' The spectra data object
 #'
-#' @return vector
+#' @param n
+#' The n number of top peaks to return
 #'
-filter_topn <- function(df, n) {
-  if(!is.data.frame(df)) {cli::cli_abort("`df` not a data.frame object")}
-  w_keep <- which(which_top_n(df[,2], n))
-  return(df[w_keep,])
+filter_topn <- function(
+    spectrum = NULL,
+    n = 30
+) {
+  if(!is.data.frame(spectrum)) {cli::cli_abort("`spectrum` not a data.frame object")}
+  w_keep <- which(which_top_n(spectrum[,2], n))
+  return(spectrum[w_keep,])
 }
 
 
 #' Return the top n values from a vector
 #'
 #' @description
-#' `filter_topn()` get the top n values from a vector
+#' `filter_precursor()` is a helper function to remove residual precursor from
+#' the spectrum
 #'
-#' @param df dataframe
-#' @param n n indexes
+#' @param spectrum
+#' The spectra data object
 #'
-#' @return vector
+#' @param mz
+#' The m/z value of the precursor to remove
 #'
-filter_precursor <- function(df, mz) {
-  if(!is.data.frame(df)) {cli::cli_abort("`df` not a data.frame object")}
-  w_keep <- which_xprecursor(df[,1], mz)
-  return(df[w_keep,])
+filter_precursor <- function(
+    spectrum = NULL,
+    mz = 30
+) {
+  if(!is.data.frame(spectrum)) {cli::cli_abort("`spectrum` not a data.frame object")}
+  w_keep <- which_xprecursor(spectrum[,1], mz)
+  return(spectrum[w_keep,])
 }
 
-#' Return a spectrum normalized according to xcorr publication
+#' Xcorr normalized spectrum
 #'
 #' @description
 #' `filter_xcorr()` get the top n values from a vector
 #'
-#' @param df dataframe
-#' @param chunk number of divisions to normalize across
-#' @param norm the value to normalize to
+#' @param spectrum
+#' The spectra data object
 #'
-#' @return vector
+#' @param chunk
+#' The number of divisions to normalize across
 #'
-filter_xcorr <- function(df, chunk = 10, norm = 50) {
+#' @param norm
+#' The value to normalize to
+#'
+#'
+filter_xcorr <- function(
+    spectrum = NULL,
+    chunk = 10,
+    norm = 50
+) {
+  # visible bindings
+  mz <- NULL
   # mz divided into 10 chunks, normalized to 50
-  df |>
+  spectrum |>
     dplyr::arrange(mz) |>
     split(1:chunk) |>
     lapply(function(x){ x[,2] <- (x[,2] / max(x[,2])) * norm; return(x) }) |>

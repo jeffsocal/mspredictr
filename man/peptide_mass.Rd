@@ -6,6 +6,12 @@
 \usage{
 peptide_mass(sequences)
 }
+\arguments{
+\item{sequences}{A vector of peptide sequence strings.}
+}
 \description{
 Return the mass of a peptide sequence
+}
+\examples{
+peptide_mass(c('SAMPLE', 'SILLY'))
 }
