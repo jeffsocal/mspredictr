@@ -43,11 +43,36 @@ fn peptide_mass(sequences: Strings) -> Vec<f64> {
    return masses;
 }
 
-fn peptide_length_single(s: &str) -> usize {
-    let re = Regex::new(r"([A-Z])(\-*\d*\.*\d*)").unwrap();
-    let cap: Vec<_> = re.captures_iter(&s).collect();
-    let n = cap.iter().count();
-    return n;
+/// Return the peptide sequence reversed
+/// @param sequences
+/// A vector of peptide sequence strings.
+/// @export
+/// @examples
+/// peptide_mass(c('THINK', 'SAM[15.99]PLER'))
+#[extendr]
+fn peptide_reverse(sequences: Strings) -> Vec<String> {
+   let out = sequences.iter().map(|x| peptide_reverse_single(&x)).collect();
+   return out;
+}
+
+fn peptide_reverse_single(seq: &str) -> String {
+
+    let peptide = Regex::new(r"[A-Z]|\[.+?\]").unwrap();
+    // convert the REGEX to a string vector
+    let mut residues: Vec<_> = peptide
+                            .captures_iter(&seq)
+                            .map(|a| a[0].to_string())
+                            .collect();
+
+    // Reverse the vector
+    residues.reverse();
+    let residue_first = residues.get(0).unwrap();
+
+    residues.push(residue_first.to_string());
+    residues.remove(0);
+    let str_peptide = residues.into_iter().collect::<String>();
+
+  return str_peptide;
 }
 
 /// Return the unit length of a peptide sequence
@@ -60,6 +85,13 @@ fn peptide_length_single(s: &str) -> usize {
 fn peptide_length(sequences: Strings) -> Vec<usize> {
    let masses = sequences.iter().map(|x| peptide_length_single(&x)).collect();
    return masses;
+}
+
+fn peptide_length_single(s: &str) -> usize {
+    let re = Regex::new(r"[A-Z]|\[.+?\]").unwrap();
+    let cap: Vec<_> = re.captures_iter(&s).collect();
+    let n = cap.iter().count();
+    return n;
 }
 
 fn mass_letter(r: &char) -> f64 {
@@ -399,6 +431,7 @@ extendr_module! {
 
     fn peptide_mass;
     fn peptide_length;
+    fn peptide_reverse;
 
     fn mass_ladder;
     fn mass_fragments;

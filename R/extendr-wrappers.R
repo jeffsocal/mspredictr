@@ -77,6 +77,14 @@ peptide_mass <- function(sequences) .Call(wrap__peptide_mass, sequences)
 #' peptide_mass(c('SA[M15.99]PLE', 'SAM[15.99]PLE'))
 peptide_length <- function(sequences) .Call(wrap__peptide_length, sequences)
 
+#' Return the peptide sequence reversed
+#' @param sequences
+#' A vector of peptide sequence strings.
+#' @export
+#' @examples
+#' peptide_mass(c('THINK', 'SAM[15.99]PLER'))
+peptide_reverse <- function(sequences) .Call(wrap__peptide_reverse, sequences)
+
 #' Return the vector of mass values for each peptide unit
 #' @param seq
 #' The peptide sequence string

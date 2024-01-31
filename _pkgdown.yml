@@ -29,6 +29,7 @@ reference:
     Calculate the mass and m/z values for various molecules.
   contents:
   - peptide_xleucine
+  - peptide_reverse
   - str_peptide
   - str_sequence
 
