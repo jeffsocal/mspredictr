@@ -1,7 +1,7 @@
 TARGET = $(subst 64,x86_64,$(subst 32,i686,$(WIN)))-pc-windows-gnu
 LIBDIR = ./rust/target/$(TARGET)/release
 STATLIB = $(LIBDIR)/libmspredictr.a
-PKG_LIBS = -L$(LIBDIR) -lmspredictr -lws2_32 -ladvapi32 -luserenv
+PKG_LIBS = -L$(LIBDIR) -lmspredictr -lws2_32 -ladvapi32 -luserenv -lntdll -lbcrypt
 
 all: C_clean
 
