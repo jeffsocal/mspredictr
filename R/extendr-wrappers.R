@@ -6,7 +6,7 @@
 # This file was created with the following call:
 #   .Call("wrap__make_mspredictr_wrappers", use_symbols = TRUE, package_name = "mspredictr")
 
-#' @docType package
+#' @docType _PACKAGE
 #' @usage NULL
 #' @useDynLib mspredictr, .registration = TRUE
 NULL

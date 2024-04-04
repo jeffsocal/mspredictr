@@ -24,24 +24,24 @@ pairwise_delta <- function(x = NULL,
   x <- tibble::as_tibble(x)
   y <- tibble::as_tibble(y)
 
-  x_vals <- x %>%
-    dplyr::select(dplyr::all_of(col_values)) %>%
+  x_vals <- x |>
+    dplyr::select(dplyr::all_of(col_values)) |>
     unlist()
 
-  y_vals <- y %>%
-    dplyr::select(dplyr::all_of(col_values)) %>%
+  y_vals <- y |>
+    dplyr::select(dplyr::all_of(col_values)) |>
     unlist()
 
-  x_names <- x %>%
-    dplyr::select(dplyr::all_of(col_names)) %>%
+  x_names <- x |>
+    dplyr::select(dplyr::all_of(col_names)) |>
     unlist()
 
-  y_names <- y %>%
-    dplyr::select(dplyr::all_of(col_names)) %>%
+  y_names <- y |>
+    dplyr::select(dplyr::all_of(col_names)) |>
     unlist()
 
-  x_vals_n <- x %>% nrow()
-  y_vals_n <- y %>% nrow()
+  x_vals_n <- x |> nrow()
+  y_vals_n <- y |> nrow()
 
   if(x_vals_n != length(unique(x_names))) {
     cli::cli_abort("Error: non-unique names for x")
@@ -54,13 +54,13 @@ pairwise_delta <- function(x = NULL,
   xy_matrix <- array(x_vals, c(x_vals_n, y_vals_n))
 
   # matrix form
-  xy_dif <- (t(xy_matrix) - y_vals) %>% as.numeric()
+  xy_dif <- (t(xy_matrix) - y_vals) |> as.numeric()
 
-  x_row <- array(x_names, c(x_vals_n, y_vals_n)) %>% t() %>% as.character()
-  y_row <- array(y_names, c(y_vals_n, x_vals_n)) %>% as.character()
+  x_row <- array(x_names, c(x_vals_n, y_vals_n)) |> t() |> as.character()
+  y_row <- array(y_names, c(y_vals_n, x_vals_n)) |> as.character()
 
   df <- tibble::tibble(
-    ref=t(xy_matrix) %>% as.numeric(),
+    ref=t(xy_matrix) |> as.numeric(),
     dif=xy_dif,
     cluster_id=x_row,
     feature_id=y_row)

@@ -1,5 +1,7 @@
 test_that("import and match peaks in spectra", {
 
+  library('msreadr')
+
   expect_no_error(
     suppressMessages(
       mzml <- msreadr::path_to_example() |>
@@ -10,7 +12,7 @@ test_that("import and match peaks in spectra", {
   expect_no_error(
     suppressMessages(
       match <- mzml |>
-        msreadr::subset(spectrum_num == 1) |>
+        subset(spectrum_num == 1) |>
         spectrum_extract() |>
         spectrum_assign('HAVSEGTK')
     )

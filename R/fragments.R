@@ -57,8 +57,6 @@
 #'
 #' @export
 #'
-#' @importFrom magrittr %>%
-#'
 #' @examples
 #' fragments("SAMPLER", charge = 1)
 #'
@@ -154,8 +152,8 @@ fragments <- function(
     }
   }
 
-  out <- dplyr::bind_rows(t) %>%
-    dplyr::arrange(mz) %>%
+  out <- dplyr::bind_rows(t) |>
+    dplyr::arrange(mz) |>
     dplyr::mutate(type = stringr::str_extract(ion, "^."),
            type = ifelse(type == 'M', 'precursor', type))
 

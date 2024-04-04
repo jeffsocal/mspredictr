@@ -66,42 +66,56 @@ plot_spectrum <- function(
 
   if(is.null(peptides)) { return(plot) }
 
-  plots <- list()
+  tbl_assn <- list()
+  tbl_score <- list()
   for(i in 1:length(peptides)){
 
     peptide <- peptides[i]
     if(!is.character(peptide)) { cli::cli_abort("`sequence` must be a character string") }
 
-    tbl_assn <- spectrum_assign(spectrum, peptide,
-                                tolerance = tolerance,
-                                ...)
+    tbl_assn[[i]] <- spectrum |>
+      spectrum_assign(peptide,
+                      tolerance = tolerance,
+                      ...) |>
+      dplyr::mutate(peptide = peptide)
+
     tbl_poss <- peptide |> fragments(...)
 
-    v_err <- 1 - abs(tbl_assn$error)/tolerance
-    v_int <- tbl_assn$int / sum(spectrum$int)
-    score_01 <- sum(v_err) * sum(v_int)
+    v_err <- 1 - abs(tbl_assn[[i]]$error)/tolerance
+    v_int <- tbl_assn[[i]]$int / sum(spectrum$int)
 
-    hits <- nrow(tbl_assn |> dplyr::filter(type != 'precursor'))
+    score <- sum(v_err) * sum(v_int)
+    hits <- nrow(tbl_assn[[i]] |> dplyr::filter(type != 'precursor'))
     dotp <- round(hits / nrow(tbl_poss |> dplyr::filter(type != 'precursor')),2)
 
-    plots[[i]] <- plot +
-      ggplot2::geom_text(data = tbl_assn,
-                         ggplot2::aes(label = ion, color = type),
-                         size = label_size,
-                         hjust = 0, vjust = -0.1) +
-      ggplot2::labs(title = glue::glue("{peptide}")) +
-      ggplot2::annotate('text', x = -Inf, y = Inf,
-                        vjust = 1, hjust = -0.1, size = 3,
-                        label = glue::glue("score:{round(score_01,2)} ndp:{dotp}  n:{hits}")) +
-      ggplot2::theme(legend.position = 'none') +
-      ggplot2::scale_color_manual(values = c(
-        'y' = 'blue',
-        'b' = 'red',
-        'precursor' = 'forestgreen')) +
-      ggplot2::scale_x_continuous(n.breaks = 10) +
-      ggplot2::theme(plot.title = ggplot2::element_text(size = 10))
-
+    tbl_score[[i]] <- data.frame(
+      score = score,
+      hits = hits,
+      dotp = dotp,
+      peptide = peptide
+    )
   }
 
-  return(gridExtra::grid.arrange(grobs = plots))
+  tbl_assn <- tbl_assn |> dplyr::bind_rows()
+  tbl_score <- tbl_score |> dplyr::bind_rows()
+
+  plot <- plot +
+    ggplot2::geom_text(data = tbl_assn,
+                       ggplot2::aes(label = ion, color = type),
+                       size = label_size,
+                       hjust = 0, vjust = -0.1) +
+    ggplot2::geom_text(data = tbl_score,
+                       x = -Inf, y = Inf,
+                       vjust = 1, hjust = -0.1, size = 3,
+                       ggplot2::aes(label = glue::glue("score:{round(score,2)} ndp:{dotp}  n:{hits}"))) +
+    ggplot2::theme(legend.position = 'none') +
+    ggplot2::scale_color_manual(values = c(
+      'y' = 'blue',
+      'b' = 'red',
+      'precursor' = 'forestgreen')) +
+    ggplot2::scale_x_continuous(n.breaks = 10) +
+    ggplot2::theme(plot.title = ggplot2::element_text(size = 10)) +
+    ggplot2::facet_wrap(~peptide, ncol = 1)
+
+  return(plot)
 }

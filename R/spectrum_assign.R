@@ -63,7 +63,7 @@ spectrum_assign <- function(
 
   table_fragments <- fragments(sequence = peptide, ...)
   # spectrum <- spc
-  # table_fragments <- table_predicted %>% unite(ion, ion, z, sep="_")
+  # table_fragments <- table_predicted |> unite(ion, ion, z, sep="_")
 
   cn <- colnames(spectrum)
   w_mz <- which(grepl("^m", cn))
@@ -71,26 +71,26 @@ spectrum_assign <- function(
   colnames(spectrum)[w_mz] <- 'mz'
   colnames(spectrum)[w_int] <- 'int'
 
-  spectrum <- spectrum %>%
+  spectrum <- spectrum |>
     dplyr::mutate(
-      rid = dplyr::row_number() %>% as.character(),
+      rid = dplyr::row_number() |> as.character(),
       ion = rid)
 
-  out <- pairwise_delta(spectrum, table_fragments, 'mz', 'ion') %>%
-    dplyr::filter(abs(dif) <= tolerance) %>%
+  out <- pairwise_delta(spectrum, table_fragments, 'mz', 'ion') |>
+    dplyr::filter(abs(dif) <= tolerance) |>
     dplyr::rename(rid = cluster_id,
-                  ion = feature_id) %>%
-    dplyr::inner_join(spectrum %>% dplyr::select(mz, int, rid), by='rid') %>%
-    dplyr::inner_join(table_fragments %>% dplyr::select(-mz), by=c('ion')) %>%
+                  ion = feature_id) |>
+    dplyr::inner_join(spectrum |> dplyr::select(mz, int, rid), by='rid') |>
+    dplyr::inner_join(table_fragments |> dplyr::select(-mz), by=c('ion')) |>
     dplyr::select(
       mz, int, ion, type, z,
       error = dif, seq, pos, pair
-    ) %>%
-    dplyr::group_by(mz) %>%
-    dplyr::slice_min(abs(error), n=1, with_ties = F) %>%
-    dplyr::ungroup() %>%
-    dplyr::group_by(ion) %>%
-    dplyr::slice_max(int, n=1, with_ties = F) %>%
+    ) |>
+    dplyr::group_by(mz) |>
+    dplyr::slice_min(abs(error), n=1, with_ties = F) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(ion) |>
+    dplyr::slice_max(int, n=1, with_ties = F) |>
     dplyr::ungroup()
 
   return(out)
