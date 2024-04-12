@@ -61,11 +61,11 @@ reference:
   - munge_seq
   - num_trunc
   - pairwise_delta
-  - spectrum_accuracy
+  - sim_spectrum_accuracy
   - spectrum_assign
   - spectrum_extract
-  - spectrum_isotopes
-  - spectrum_noise
+  - sim_spectrum_isotopes
+  - sim_spectrum_noise
   - str_clean
   - which_top_n
   - which_xprecursor

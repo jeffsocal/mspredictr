@@ -9,3 +9,4 @@ crate-type = [ 'staticlib' ]
 [dependencies]
 regex = "1"
 extendr-api = '*'
+ordered-float = "2.0"

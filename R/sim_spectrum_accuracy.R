@@ -1,7 +1,7 @@
 #' A helper function used to simulate the accuracy of synthetic spectra.
 #'
 #' @description
-#' `spectrum_accuracy()` Adds the noise to the accuracy of a synthetic spectrum.
+#' `sim_spectrum_accuracy()` Adds the noise to the accuracy of a synthetic spectrum.
 #'
 #' @param df
 #' A dataframe of monoisotopic peaks.
@@ -15,7 +15,7 @@
 #' @param model
 #' A the statistical sampling method to use of assessing the match accuracy
 #'
-spectrum_accuracy <- function(
+sim_spectrum_accuracy <- function(
     df = NULL,
     accuracy = 0.1,
     model = stats::rnorm

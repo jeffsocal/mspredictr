@@ -4,7 +4,7 @@
 \alias{spectrum_extract}
 \title{A helper function to extract just the spectrum of the spectra data object}
 \usage{
-spectrum_extract(spectra = NULL, filter = FALSE)
+spectrum_extract(spectra = NULL, filter = FALSE, isotopes = FALSE)
 }
 \arguments{
 \item{spectra}{A spectra data object}

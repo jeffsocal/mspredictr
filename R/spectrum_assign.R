@@ -53,6 +53,13 @@ spectrum_assign <- function(
   pair <- NULL
   error <- NULL
 
+  intensity <- NULL
+  isotope_id <- NULL
+  isotope_num <- NULL
+  isotope_z <- NULL
+  isotope_num <- NULL
+
+
   if(is.null(spectrum)) { cli::cli_abort("`spectrum` must not be null")}
   if(is.null(peptide)) { cli::cli_abort("`peptide` must not be null")}
 
@@ -67,31 +74,31 @@ spectrum_assign <- function(
 
   cn <- colnames(spectrum)
   w_mz <- which(grepl("^m", cn))
-  w_int <- which(grepl("^i", cn))
+  w_int <- which(grepl("^int", cn))
   colnames(spectrum)[w_mz] <- 'mz'
-  colnames(spectrum)[w_int] <- 'int'
+  colnames(spectrum)[w_int] <- 'intensity'
 
   spectrum <- spectrum |>
     dplyr::mutate(
       rid = dplyr::row_number() |> as.character(),
       ion = rid)
 
-  out <- pairwise_delta(spectrum, table_fragments, 'mz', 'ion') |>
+  out <- pairwise_delta(spectrum |> dplyr::select(mz, intensity, rid, ion),
+                        table_fragments, 'mz', 'ion') |>
     dplyr::filter(abs(dif) <= tolerance) |>
     dplyr::rename(rid = cluster_id,
                   ion = feature_id) |>
-    dplyr::inner_join(spectrum |> dplyr::select(mz, int, rid), by='rid') |>
+    dplyr::inner_join(spectrum |> dplyr::select(-ion), by='rid') |>
     dplyr::inner_join(table_fragments |> dplyr::select(-mz), by=c('ion')) |>
-    dplyr::select(
-      mz, int, ion, type, z,
-      error = dif, seq, pos, pair
-    ) |>
+    dplyr::rename(error = dif) |>
     dplyr::group_by(mz) |>
     dplyr::slice_min(abs(error), n=1, with_ties = F) |>
     dplyr::ungroup() |>
     dplyr::group_by(ion) |>
-    dplyr::slice_max(int, n=1, with_ties = F) |>
-    dplyr::ungroup()
+    dplyr::slice_max(intensity, n=1, with_ties = F) |>
+    dplyr::ungroup() |>
+    dplyr::select(mz, intensity, isotope_id, isotope_num, isotope_z,
+                  seq, ion, z, pair, pos, type, error)
 
   return(out)
 }

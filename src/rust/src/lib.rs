@@ -1,6 +1,9 @@
 use extendr_api::prelude::*;
 use regex::Regex;
 
+mod isotopes;
+mod cosine_similarity;
+
 fn peptide_mass_single(s: &str) -> f64 {
     let re = Regex::new(r"([A-Z])(\-*\d*\.*\d*)").unwrap();
     let mut m: f64 = 0.0;
@@ -417,6 +420,162 @@ fn which_xprecursor(f: Vec<f64>, mz: f64) -> Vec<bool> {
 }
 
 
+use crate::isotopes::isotopes;
+use crate::cosine_similarity::cosine_similarity;
+
+// Take mz features and derrive isotope clusters to form molecular fetaures
+//
+// 1. take the tallest unassigned peak
+// 2. find all peaks within the mz & rt window
+// 3. score against the isotope profiles from different charge states
+// 4. assign to the best fit
+// 5. repeat 1 until all peaks are assigned
+
+#[extendr]
+struct IsotopeFeature {
+    pub z: i8,
+    pub mz: f64,
+    pub intensity: f64,
+    pub cluster: i64,
+    pub isoscore: f64
+}
+
+fn build_point(mz: f64, intensity: f64) -> IsotopeFeature {
+    IsotopeFeature {
+        z: 0,
+        mz,
+        intensity,
+        cluster: 0,
+        isoscore: 0.0
+    }
+}
+
+#[derive(Debug)]
+struct IsotopicFit {
+    indexes: Vec<usize>,
+    charge: i8,
+    score: f64,
+}
+
+// take in only mz, rt, and abundance as vectors then build the Vec<Features>
+// this gets around the use of data.frame in R
+// In R
+//  - deconstruct the data.frame into vectors
+//  - run the Rust function
+//  - reconstruct the data.frame from
+#[extendr]
+fn which_isotopes(vec_mz: Vec<f64>,
+                      vec_int: Vec<f64>) -> Vec<i64> {
+
+    let mut points: Vec<IsotopeFeature> = vec_mz
+        .into_iter()
+        .zip(vec_int)
+        .map(|(mz, intensity)| build_point (
+            mz,
+            intensity
+        ))
+        .collect();
+
+    // iterate through all the points
+    for i in 0..points.len() {
+
+        if points[i].cluster != 0 {
+            continue;
+        };
+
+        let this_mz = points[i].mz;
+        let this_intensity = points[i].intensity;
+
+        let mut isotope_fits: Vec<IsotopicFit> = vec![];
+
+        // iterate over each charge state
+        for charge in vec![6,5,4,3,2,1]{
+
+            // get the expected isotopic profile
+            let isotopes = isotopes(this_mz, charge, this_intensity);
+
+            let mut matches: Vec<usize> = vec![];
+            let mut intensity_observe: Vec<f64> = vec![];
+            let mut intensity_predict: Vec<f64> = vec![];
+
+            // iterate over each isotope
+            for isotope in &isotopes {
+
+                // keep track of the matching isotopes
+                // if an isotope is not matched drop out of the loop
+                let mut has_match = false;
+
+                // iterate over every point in the vector
+                for ii in i..points.len() {
+                    let x = &points[ii];
+
+                    if x.mz < isotope.mz - 0.1 {continue;}
+                    if x.mz > isotope.mz + 0.1 {break;}
+
+                    if x.cluster == 0
+                        && x.intensity < isotope.intensity * 3.33
+                        && x.intensity > isotope.intensity * 0.33 {
+
+                        // collect the indexes that match isotopes
+                        matches.push(ii);
+
+                        // collect the abundances for regression analysis
+                        intensity_observe.push(points[ii].intensity);
+                        intensity_predict.push(isotope.intensity);
+
+                        // register the match
+                        has_match = true;
+
+                        // stop iterating on points, go to next isotope
+                        break;
+                    }
+                }
+
+                // if an isotope is not matched drop out of the loop
+                if has_match == false {
+                    break;
+                }
+            }
+
+            // perform a regression on any clusters
+            let match_len: f64 = matches.len() as f64;
+            if match_len == 1.0 {
+                isotope_fits.push(
+                    IsotopicFit{indexes: matches,
+                        charge,
+                        score: 0.0}
+                )
+            } else if match_len > 1.0 {
+                // perform a linear regression on the abundance values
+                // to determine best fit for the isotopic distribution
+                // let fit = linear_regression(abundnce_predict, abundnce_observe);
+                let fit = cosine_similarity(intensity_predict, intensity_observe);
+                isotope_fits.push(
+                    IsotopicFit{indexes: matches,
+                        charge,
+                        score: fit * match_len}
+                )
+            }
+        }
+
+        // if the feature has any matching features take the
+        // best fitting isotope pattern
+        if isotope_fits.len() > 0 {
+            isotope_fits.sort_by_key(|i| ordered_float::OrderedFloat(-i.score));
+            for m in &isotope_fits[0].indexes {
+                points[*m].isoscore = (isotope_fits[0].score).round();
+                points[*m].cluster = i as i64 + 1;
+                points[*m].z = isotope_fits[0].charge as i8;
+            }
+        }
+    }
+
+    //points.sort_by_key(|p| ordered_float::OrderedFloat(p.cluster as f64 * p.mz));
+
+    points.iter().map(|x| x.cluster).collect()
+}
+
+
 // Macro to generate exports.
 // This ensures exported functions are registered with R.
 // See corresponding C code in `entrypoint.c`.
@@ -443,4 +602,6 @@ extendr_module! {
 
     fn which_top_n;
     fn which_xprecursor;
+
+    fn which_isotopes;
 }

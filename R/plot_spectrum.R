@@ -37,8 +37,9 @@
 #'
 plot_spectrum <- function(
     spectrum = NULL,
-    filter = FALSE,
     peptides = NULL,
+    rm_precursor = FALSE,
+    rm_isotopes = FALSE,
     label_size = 3,
     tolerance = 0.1,
     ...
@@ -47,20 +48,20 @@ plot_spectrum <- function(
   # visible bindings
   mz <- int <- type <- ion <- NULL
 
-  spectrum <- spectrum |> spectrum_extract(filter)
+  spectrum <- spectrum |> spectrum_extract(rm_precursor, rm_isotopes)
 
   if(!is.data.frame(spectrum)) { cli::cli_abort("spectrum is not a data table object") }
 
   cn <- colnames(spectrum)
   w_mz <- which(grepl("^m", cn))
-  w_int <- which(grepl("^i", cn))
+  w_int <- which(grepl("^int", cn))
   colnames(spectrum)[w_mz] <- 'mz'
-  colnames(spectrum)[w_int] <- 'int'
+  colnames(spectrum)[w_int] <- 'intensity'
 
   plot <- spectrum |>
-    ggplot2::ggplot(ggplot2::aes(mz, int)) +
+    ggplot2::ggplot(ggplot2::aes(mz, intensity)) +
     ggplot2::geom_segment(ggplot2::aes(xend = mz, yend = 0)) +
-    ggplot2::geom_hline(yintercept = max(spectrum$int) * 1.1, color = NA) +
+    ggplot2::geom_hline(yintercept = max(spectrum$intensity) * 1.1, color = NA) +
     ggplot2::theme_classic() +
     ggplot2::scale_y_continuous(n.breaks = 5)
 
@@ -82,7 +83,7 @@ plot_spectrum <- function(
     tbl_poss <- peptide |> fragments(...)
 
     v_err <- 1 - abs(tbl_assn[[i]]$error)/tolerance
-    v_int <- tbl_assn[[i]]$int / sum(spectrum$int)
+    v_int <- tbl_assn[[i]]$intensity / sum(spectrum$intensity)
 
     score <- sum(v_err) * sum(v_int)
     hits <- nrow(tbl_assn[[i]] |> dplyr::filter(type != 'precursor'))

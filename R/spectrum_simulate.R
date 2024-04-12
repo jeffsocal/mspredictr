@@ -44,15 +44,15 @@ spectrum_simulate <- function(
       dplyr::slice_head(prop = f_peaks) |>
       dplyr::mutate(intensity = 10^sample(100:360/100, dplyr::n())) |>
       dplyr::select(mz, intensity) |>
-      spectrum_accuracy(accuracy = accuracy) |>
-      spectrum_isotopes(charge = z)
+      sim_spectrum_accuracy(accuracy = accuracy) |>
+      sim_spectrum_isotopes(charge = z)
   }
 
   peaks_new <- peaks_new |>
     dplyr::bind_rows() |>
     dplyr::mutate(intensity = (intensity / max(intensity)) * 1000) |>
     dplyr::mutate(intensity = intensity |> round()) |>
-    spectrum_noise(noise_mean = noise_mean,
+    sim_spectrum_noise(noise_mean = noise_mean,
                    noise_quantile = noise_quantile,
                    n_peaks = 600) |>
     filter_topn(300)

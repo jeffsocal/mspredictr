@@ -1,7 +1,7 @@
 #' Convert a peptide string to a named variable
 #'
 #' @description
-#' `spectrum_noise()` Generates a named variable
+#' `sim_spectrum_noise()` Generates a named variable
 #'
 #' @param df a data frame
 #' @param n_peaks total number of peaks, including noise, the spectrum should have
@@ -11,7 +11,7 @@
 #'
 #' @return a data frame
 #'
-spectrum_noise <- function(
+sim_spectrum_noise <- function(
     df = NULL,
     n_peaks = 300,
     noise_mean = NULL,

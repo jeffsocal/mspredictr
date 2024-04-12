@@ -4,7 +4,7 @@
 \alias{spectrum_denoise}
 \title{A helper function used to clean up a mass spectrum to expose only the most abundant peaks}
 \usage{
-spectrum_denoise(spectrum = NULL, precursor = NULL, hedge = 5, n = 30)
+spectrum_denoise(spectrum = NULL, precursor = NULL, isotopes = FALSE)
 }
 \arguments{
 \item{spectrum}{A spectrum data object.}

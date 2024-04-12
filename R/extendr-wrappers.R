@@ -6,7 +6,7 @@
 # This file was created with the following call:
 #   .Call("wrap__make_mspredictr_wrappers", use_symbols = TRUE, package_name = "mspredictr")
 
-#' @docType _PACKAGE
+#' @docType package
 #' @usage NULL
 #' @useDynLib mspredictr, .registration = TRUE
 NULL
@@ -148,6 +148,8 @@ which_top_n <- function(f, n) .Call(wrap__which_top_n, f, n)
 #' @examples
 #' which_xprecursor(c(123.45, 234.56, 345.67), 233.61)
 which_xprecursor <- function(f, mz) .Call(wrap__which_xprecursor, f, mz)
+
+which_isotopes <- function(vec_mz, vec_int) .Call(wrap__which_isotopes, vec_mz, vec_int)
 
 
 # nolint end

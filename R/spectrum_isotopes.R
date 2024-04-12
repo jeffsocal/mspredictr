@@ -1,76 +1,52 @@
-#' Simulate isotope peaks
+#' Define the isotopes within a spectrum
 #'
 #' @description
-#' `spectrum_isotopes()` is a helper function to generate isotope peaks in
-#' synthetic spectra.
+#' `spectrum_isotopes()` assigns the predicted fragment masses of a given peptide
+#' sequence with the mass spectrum.
 #'
 #' @param spectrum
-#' A dataframe of monoisotopic peaks
+#' A spectrum data object.
 #'
-#' @param isotope_model
-#' A model of isotopes for a given polypeptide
+#' @export
 #'
-#' @param charge
-#' The proton charge to assume for the isotope profile
+#' @examples
+#'  # using the supplied spectrum from the msreadr package
+#'  library(msreadr)
+#'  mzml <- path_to_example() |>
+#'          read_spectra()
+#'  mzml |>
+#'    subset(spectrum_num == 1) |>
+#'    spectrum_extract()
 #'
 spectrum_isotopes <- function(
-    spectrum = NULL,
-    isotope_model = NULL,
-    charge = 1
-){
+    spectrum = NULL){
 
   # visible bindings
+  n <- NULL
   mz <- NULL
+  intensity <- NULL
+  isotope_id <- NULL
+  isotope_num <- NULL
 
-  averagene <- 'N'
-  if(is.null(isotope_model)) {
-    isotope_model <- model_isotopes(averagene)
-  }
-  a_mass <- peptide_mass(averagene) - mass_atomic('H') * 2 - mass_atomic('0')
-  n_mass <- mass_neutron()
-  p_mass <- mass_proton()
+  if(is.null(spectrum)) { cli::cli_abort("`spectrum` must not be null")}
 
-  spectrum_new <- list()
-  for(i in 1:nrow(spectrum)){
-    index <- ceiling(spectrum[i,1] / a_mass)
-    iso <- isotope_model[[index]]
-
-    spectrum_new[[i]] <- data.frame(
-      mz = (n_mass * (1:length(iso) - 1) + spectrum[i,1] + (p_mass * (charge - 1))) / charge,
-      intensity = iso * spectrum[i,2]
-    )
+  # convert to a dataframe for tidyverse
+  if(is.matrix(spectrum)) {
+    spectrum <- spectrum |> as.data.frame()
   }
 
-  return(spectrum_new |> dplyr::bind_rows() |> dplyr::arrange(mz))
-}
+  spectrum <- spectrum |>
+    dplyr::mutate(isotope_id = which_isotopes(mz, intensity),
+                  isotope_id = isotope_id |> stringr::str_pad(width = ceiling(log10(nrow(spectrum) + 1)), pad = "0"),
+                  isotope_id = paste0("i", isotope_id)) |>
+    dplyr::group_by(isotope_id) |>
+    dplyr::mutate(isotope_num = dplyr::row_number() - 1,
+                  n = dplyr::n(),
+                  isotope_z = round(1 / mean(diff(mz))) ) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(isotope_id = ifelse(n == 1, NA, isotope_id),
+                  isotope_num = ifelse(n == 1, NA, isotope_num)) |>
+    dplyr::select(-n)
 
-#' An isotope model using the BRAIN algorithm
-#'
-#' @description
-#' `model_isotopes()` a helper function to generate isotopes
-#'
-#' @param averagene
-#' The amino acid to use for a base polypeptide
-#'
-#' @param max_n
-#' The maximum number of isotopes to account for
-#'
-model_isotopes <- function(
-    averagene = c('N','A','R','D','C','E','Q','G','H','I',
-                  'K','M','F','P','S','T','W','Y','V'),
-    max_n = 42
-){
-
-  averagene <- rlang::arg_match(averagene)
-
-  peaks <- list()
-  for(i in 1:max_n){
-    peaks[[i]] <- paste(rep(averagene, i), collapse = "") |>
-      BRAIN::getAtomsFromSeq() |>
-      BRAIN::calculateIsotopicProbabilities(nrPeaks = 12)
-
-    peaks[[i]] <- peaks[[i]][which(peaks[[i]] > 0.01)]
-  }
-
-  return(peaks)
+  return(spectrum)
 }

@@ -10,7 +10,8 @@
 #'
 spectrum_extract <- function(
     spectra = NULL,
-    filter = FALSE
+    filter = FALSE,
+    isotopes = FALSE
 ){
   spectrum <- spectra$peaks
   precursor_mz <- spectra$precursor_mz
@@ -18,15 +19,15 @@ spectrum_extract <- function(
   precursor_nm <- mass_neutral(precursor_mz, precursor_z)
 
   n_expect <- round(precursor_nm / 114.35) * 3
-  spectrum <- spectrum |> as.data.frame()
-  colnames(spectrum) <- c('mz', 'intensity')
+  spectrum <- spectrum |> as.data.frame() |> spectrum_isotopes()
+  colnames(spectrum)[1:2] <- c('mz', 'intensity')
 
   if(filter == TRUE){
     spectrum <- spectrum |>
       spectrum_denoise(
         precursor = precursor_mz,
-        n = n_expect)
+        isotopes = isotopes)
   }
 
-  return(spectrum)
+  return(spectrum |> tibble::as_tibble())
 }

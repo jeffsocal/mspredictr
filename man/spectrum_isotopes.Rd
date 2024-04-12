@@ -2,18 +2,24 @@
 % Please edit documentation in R/spectrum_isotopes.R
 \name{spectrum_isotopes}
 \alias{spectrum_isotopes}
-\title{Simulate isotope peaks}
+\title{Match peptide predicted fragments with a spectrum.}
 \usage{
-spectrum_isotopes(spectrum = NULL, isotope_model = NULL, charge = 1)
+spectrum_isotopes(spectrum = NULL)
 }
 \arguments{
-\item{spectrum}{A dataframe of monoisotopic peaks}
-
-\item{isotope_model}{A model of isotopes for a given polypeptide}
-
-\item{charge}{The proton charge to assume for the isotope profile}
+\item{spectrum}{A spectrum data object.}
 }
 \description{
-\code{spectrum_isotopes()} is a helper function to generate isotope peaks in
-synthetic spectra.
+\code{spectrum_isotopes()} assigns the predicted fragment masses of a given peptide
+sequence with the mass spectrum.
+}
+\examples{
+ # using the supplied spectrum from the msreadr package
+ library(msreadr)
+ mzml <- path_to_example() |>
+         read_spectra()
+ mzml |>
+   subset(spectrum_num == 1) |>
+   spectrum_extract()
+
 }
