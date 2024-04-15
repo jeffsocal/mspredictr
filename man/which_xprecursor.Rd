@@ -7,7 +7,7 @@
 which_xprecursor(f, mz)
 }
 \arguments{
-\item{f}{A vecrtor of numerical floats}
+\item{f}{A vector of numerical floats}
 
 \item{mz}{The the value to look for}
 }

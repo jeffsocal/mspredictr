@@ -7,7 +7,7 @@
 index_mass(masses, tolerance)
 }
 \arguments{
-\item{masses}{A vecrtor of mass sequences}
+\item{masses}{A vector of mass sequences}
 
 \item{tolerance}{The numerical float for mass tolerance in Th}
 }

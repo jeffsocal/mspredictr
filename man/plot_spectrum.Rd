@@ -6,8 +6,9 @@
 \usage{
 plot_spectrum(
   spectrum = NULL,
-  filter = FALSE,
   peptides = NULL,
+  rm_precursor = FALSE,
+  rm_isotopes = FALSE,
   label_size = 3,
   tolerance = 0.1,
   ...
@@ -15,9 +16,6 @@ plot_spectrum(
 }
 \arguments{
 \item{spectrum}{as data frame cols = \verb{[mz, i]}}
-
-\item{filter}{A boolean to determine if the spectrum should be filtered to remove residual
-precursor peaks, isotopes peaks and any low-level noise.}
 
 \item{peptides}{An optional vector of peptide sequences that will result in plotting each in
 separate facets for comparison.}
@@ -27,6 +25,9 @@ separate facets for comparison.}
 \item{tolerance}{The tolerance in Th to allow predicted fragments to match observed values.}
 
 \item{...}{Flow-through parameters to \code{assign_sepectrum()}}
+
+\item{filter}{A boolean to determine if the spectrum should be filtered to remove residual
+precursor peaks, isotopes peaks and any low-level noise.}
 }
 \description{
 \code{plot_spectrum()} generates a plot of a given mass spectrum, w/o matching

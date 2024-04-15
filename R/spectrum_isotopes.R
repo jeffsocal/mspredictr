@@ -36,12 +36,12 @@ spectrum_isotopes <- function(
   }
 
   spectrum <- spectrum |>
-    dplyr::mutate(isotope_id = which_isotopes(mz, intensity),
+    dplyr::mutate(isotope_id = group_isotopes(mz, intensity),
+                  isotope_num = label_isotopes(isotope_id),
                   isotope_id = isotope_id |> stringr::str_pad(width = ceiling(log10(nrow(spectrum) + 1)), pad = "0"),
                   isotope_id = paste0("i", isotope_id)) |>
     dplyr::group_by(isotope_id) |>
-    dplyr::mutate(isotope_num = dplyr::row_number() - 1,
-                  n = dplyr::n(),
+    dplyr::mutate(n = dplyr::n(),
                   isotope_z = round(1 / mean(diff(mz))) ) |>
     dplyr::ungroup() |>
     dplyr::mutate(isotope_id = ifelse(n == 1, NA, isotope_id),

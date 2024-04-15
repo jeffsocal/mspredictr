@@ -2,7 +2,7 @@
 % Please edit documentation in R/spectrum_isotopes.R
 \name{spectrum_isotopes}
 \alias{spectrum_isotopes}
-\title{Match peptide predicted fragments with a spectrum.}
+\title{Define the isotopes within a spectrum}
 \usage{
 spectrum_isotopes(spectrum = NULL)
 }

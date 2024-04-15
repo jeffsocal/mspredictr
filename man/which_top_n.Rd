@@ -7,7 +7,7 @@
 which_top_n(f, n)
 }
 \arguments{
-\item{f}{A vecrtor of numerical floats}
+\item{f}{A vector of numerical floats}
 
 \item{n}{The number of top values to keep}
 }

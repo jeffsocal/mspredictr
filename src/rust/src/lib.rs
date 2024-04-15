@@ -364,7 +364,7 @@ pub fn index_fragments(seq: &str, tolerance: f64) -> Vec<i64> {
 
 /// Return a mass indexes.
 /// @param masses
-/// A vecrtor of mass sequences
+/// A vector of mass sequences
 /// @param tolerance
 /// The numerical float for mass tolerance in Th
 /// @export
@@ -381,7 +381,7 @@ fn index_mass(masses: Vec<f64>, tolerance: f64) -> Vec<i64> {
 
 /// Returns the boolean index of the top N largest values
 /// @param f
-/// A vecrtor of numerical floats
+/// A vector of numerical floats
 /// @param n
 /// The number of top values to keep
 /// @export
@@ -407,7 +407,7 @@ fn which_top_n(f: Vec<f64>, n: i32) -> Vec<bool> {
 
 /// Returns the boolean index of values that are in proximity to mz
 /// @param f
-/// A vecrtor of numerical floats
+/// A vector of numerical floats
 /// @param mz
 /// The the value to look for
 /// @export
@@ -418,7 +418,6 @@ fn which_xprecursor(f: Vec<f64>, mz: f64) -> Vec<bool> {
     let g = f.iter().map(|x| (x - mz).abs() > 2.5 ).collect::<Vec<_>>();
     return g;
 }
-
 
 use crate::isotopes::isotopes;
 use crate::cosine_similarity::cosine_similarity;
@@ -457,15 +456,21 @@ struct IsotopicFit {
     score: f64,
 }
 
-// take in only mz, rt, and abundance as vectors then build the Vec<Features>
-// this gets around the use of data.frame in R
-// In R
-//  - deconstruct the data.frame into vectors
-//  - run the Rust function
-//  - reconstruct the data.frame from
+
+/// Returns the isotopic grouping for a given mass spectrum take in only mz, rt,
+/// and abundance as vectors then build the Vec<IsotopeFeature> this gets around
+/// the use of data.frame in R
+/// @param vec_mz
+/// A vector of numerical floats representing the mz component (both vectors must be sorted on this value)
+/// @param vec_int
+/// A vector of numerical floats representing the ion intensity component
+/// @export
+/// @examples
+/// group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
+///                c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741))
 #[extendr]
-fn which_isotopes(vec_mz: Vec<f64>,
-                      vec_int: Vec<f64>) -> Vec<i64> {
+fn group_isotopes(vec_mz: Vec<f64>,
+                  vec_int: Vec<f64>) -> Vec<i64> {
 
     let mut points: Vec<IsotopeFeature> = vec_mz
         .into_iter()
@@ -575,6 +580,50 @@ fn which_isotopes(vec_mz: Vec<f64>,
     points.iter().map(|x| x.cluster).collect()
 }
 
+/// A Helper function that returns the array index of the monoisotopes given group_isotopes()
+/// @param vec_iso
+/// A vector of numerical floats representing the isotopic groups
+/// @export
+/// @examples
+/// group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
+///                c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741)) |>
+///   which_monoisotopes()
+#[extendr]
+fn which_monoisotopes(vec_iso: Vec<f64>) -> Vec<i64> {
+
+    let mut points: Vec<i64> = vec![];
+    let mut isotopes: Vec<f64> = vec![];
+    for i in 0..vec_iso.len() {
+      if isotopes.contains(&vec_iso[i] as &f64)  {
+        continue;
+      }
+      isotopes.push(vec_iso[i]);
+      points.push(i as i64 + 1);
+    }
+    return points;
+}
+
+
+/// Helper function that provides the isotopic assignment given the output from group_isotopes()
+/// @param vec_iso
+/// A vector of numerical floats representing the isotopic groups
+/// @examples
+/// group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
+///                c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741)) |>
+///   label_isotopes()
+#[extendr]
+fn label_isotopes(vec_iso: Vec<f64>) -> Vec<f64> {
+
+    let mut points: Vec<f64> = vec![];
+    for i in 0..vec_iso.len() {
+      let iso_id = vec_iso[i] as f64;
+      let iso_no = vec_iso[0..i].iter().filter(|&n| *n == iso_id).count();
+      points.push(iso_no as f64);
+    }
+    return points;
+}
+
+
 
 // Macro to generate exports.
 // This ensures exported functions are registered with R.
@@ -602,6 +651,8 @@ extendr_module! {
 
     fn which_top_n;
     fn which_xprecursor;
+    fn which_monoisotopes;
 
-    fn which_isotopes;
+    fn group_isotopes;
+    fn label_isotopes;
 }
