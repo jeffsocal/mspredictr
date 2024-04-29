@@ -36,7 +36,7 @@ spectrum_isotopes <- function(
   }
 
   spectrum <- spectrum |>
-    dplyr::mutate(isotope_id = group_isotopes(mz, intensity),
+    dplyr::mutate(isotope_id = group_isotopes(mz * 1.0, intensity * 1.0),
                   isotope_num = label_isotopes(isotope_id),
                   isotope_id = isotope_id |> stringr::str_pad(width = ceiling(log10(nrow(spectrum) + 1)), pad = "0"),
                   isotope_id = paste0("i", isotope_id)) |>

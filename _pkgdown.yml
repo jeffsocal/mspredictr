@@ -69,4 +69,9 @@ reference:
   - str_clean
   - which_top_n
   - which_xprecursor
+  - group_isotopes
+  - label_isotopes
+  - mspredictr-package
+  - spectrum_isotopes
+  - which_monoisotopes
 

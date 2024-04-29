@@ -175,6 +175,7 @@ group_isotopes <- function(vec_mz, vec_int) .Call(wrap__group_isotopes, vec_mz, 
 #' Helper function that provides the isotopic assignment given the output from group_isotopes()
 #' @param vec_iso
 #' A vector of numerical floats representing the isotopic groups
+#' @export
 #' @examples
 #' group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
 #'                c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741)) |>

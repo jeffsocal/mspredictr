@@ -28,6 +28,9 @@
     <loc>https://jeffsocal.github.io/mspredictr/reference/fragments.html</loc>
   </url>
   <url>
+    <loc>https://jeffsocal.github.io/mspredictr/reference/group_isotopes.html</loc>
+  </url>
+  <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/id_unqiue.html</loc>
   </url>
   <url>
@@ -38,6 +41,9 @@
   </url>
   <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/index_mass.html</loc>
+  </url>
+  <url>
+    <loc>https://jeffsocal.github.io/mspredictr/reference/label_isotopes.html</loc>
   </url>
   <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/mass_atomic.html</loc>
@@ -70,6 +76,9 @@
     <loc>https://jeffsocal.github.io/mspredictr/reference/model_isotopes.html</loc>
   </url>
   <url>
+    <loc>https://jeffsocal.github.io/mspredictr/reference/mspredictr-package.html</loc>
+  </url>
+  <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/munge_seq.html</loc>
   </url>
   <url>
@@ -92,6 +101,15 @@
   </url>
   <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/plot_spectrum.html</loc>
+  </url>
+  <url>
+    <loc>https://jeffsocal.github.io/mspredictr/reference/sim_spectrum_accuracy.html</loc>
+  </url>
+  <url>
+    <loc>https://jeffsocal.github.io/mspredictr/reference/sim_spectrum_isotopes.html</loc>
+  </url>
+  <url>
+    <loc>https://jeffsocal.github.io/mspredictr/reference/sim_spectrum_noise.html</loc>
   </url>
   <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/spectrum_accuracy.html</loc>
@@ -122,6 +140,9 @@
   </url>
   <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/str_sequence.html</loc>
+  </url>
+  <url>
+    <loc>https://jeffsocal.github.io/mspredictr/reference/which_monoisotopes.html</loc>
   </url>
   <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/which_top_n.html</loc>

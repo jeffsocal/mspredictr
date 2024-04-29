@@ -13,8 +13,8 @@ spectrum_extract <- function(
     filter = FALSE,
     isotopes = FALSE
 ){
-  spectrum <- spectra$peaks
 
+  spectrum <- spectra$ms2$peaks
 
   if(filter == TRUE){
     precursor_mz <- spectra$precursor_mz
