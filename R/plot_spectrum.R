@@ -15,6 +15,12 @@
 #' An optional vector of peptide sequences that will result in plotting each in
 #' separate facets for comparison.
 #'
+#' @param rm_precursor
+#' A boolean to remove the precursor.
+#'
+#' @param rm_isotopes
+#' A boolean to remove isotopes.
+#'
 #' @param label_size
 #' A value used to increase or decrease the assigned labels.
 #'
@@ -82,15 +88,18 @@ plot_spectrum <- function(
 
     tbl_poss <- peptide |> fragments(...)
 
-    v_err <- 1 - abs(tbl_assn[[i]]$error)/tolerance
-    v_int <- tbl_assn[[i]]$intensity / sum(spectrum$intensity)
-
-    score <- sum(v_err) * sum(v_int)
+    # v_err <- 1 - abs(tbl_assn[[i]]$error)/tolerance
+    # v_int <- tbl_assn[[i]]$intensity / sum(spectrum$intensity)
+    # v_int_a <- tbl_assn[[i]]$intensity / median(spectrum$intensity, na.rm = TRUE)
+    #
+    # score <- sum(v_err) * sum(v_int)
+    # score_a <- sum(v_int_a * v_err)
+    score_b <- sum(tbl_assn[[i]]$ion_score)
     hits <- nrow(tbl_assn[[i]] |> dplyr::filter(type != 'precursor'))
     dotp <- round(hits / nrow(tbl_poss |> dplyr::filter(type != 'precursor')),2)
 
     tbl_score[[i]] <- data.frame(
-      score = score,
+      score = score_b,
       hits = hits,
       dotp = dotp,
       peptide = peptide
@@ -116,7 +125,7 @@ plot_spectrum <- function(
       'precursor' = 'forestgreen')) +
     ggplot2::scale_x_continuous(n.breaks = 10) +
     ggplot2::theme(plot.title = ggplot2::element_text(size = 10)) +
-    ggplot2::facet_wrap(~peptide, ncol = 1)
+    ggplot2::facet_wrap(~peptide)
 
   return(plot)
 }

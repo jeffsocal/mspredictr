@@ -1,7 +1,7 @@
 Package: mspredictr
 Type: Package
 Title: A lightweight package for predicting peptide fragment mass values 
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     person("Jeff", "Jones", , "jeffj@caltech.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7142-2222"))

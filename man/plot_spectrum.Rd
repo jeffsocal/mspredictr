@@ -20,6 +20,10 @@ plot_spectrum(
 \item{peptides}{An optional vector of peptide sequences that will result in plotting each in
 separate facets for comparison.}
 
+\item{rm_precursor}{A boolean to remove the precursor.}
+
+\item{rm_isotopes}{A boolean to remove isotopes.}
+
 \item{label_size}{A value used to increase or decrease the assigned labels.}
 
 \item{tolerance}{The tolerance in Th to allow predicted fragments to match observed values.}

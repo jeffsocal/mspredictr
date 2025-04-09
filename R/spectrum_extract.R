@@ -3,21 +3,24 @@
 #' @param spectra
 #' A spectra data object
 #'
-#' @param filter
+#' @param precursor
 #' A boolean to indicate spectrum filtering should happen
+#'
+#' @param isotopes
+#' A boolean to remove isotopes.
 #'
 #' @export
 #'
 spectrum_extract <- function(
     spectra = NULL,
-    filter = FALSE,
+    precursor = FALSE,
     isotopes = FALSE
 ){
 
   spectrum <- spectra$ms2$peaks
 
-  if(filter == TRUE){
-    precursor_mz <- spectra$precursor_mz
+  if(precursor == TRUE){
+    precursor_mz <- spectra$ms2$precursor_mz
   } else {
     precursor_mz <- 0
   }

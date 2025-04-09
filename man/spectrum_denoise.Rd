@@ -11,9 +11,7 @@ spectrum_denoise(spectrum = NULL, precursor = NULL, isotopes = FALSE)
 
 \item{precursor}{The floating point value of precursor mass to remove.}
 
-\item{hedge}{The mz space to remove on either side of a tall peak when filtering.}
-
-\item{n}{The number of peaks to retain, ranked by abundance.}
+\item{isotopes}{A boolean to remove isotopes.}
 }
 \description{
 \code{denoise_spectrum()} Removes peaks from a given mass spectrum filtered to remove residual

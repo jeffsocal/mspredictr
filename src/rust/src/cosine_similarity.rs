@@ -1,6 +1,7 @@
-pub fn cosine_similarity(x: Vec<f64>,
-          y: Vec<f64>
-         ) -> f64 {
+pub fn cosine_similarity(
+                        x: Vec<f64>,
+                        y: Vec<f64>
+                        ) -> f64 {
 
     // dot product
     let p: Vec<f64> = x.clone().into_iter().zip(y.clone()).map(|(x, y)| x * y).collect();

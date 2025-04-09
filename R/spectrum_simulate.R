@@ -41,7 +41,8 @@ spectrum_simulate <- function(
   for(z in charge){
     peaks_new[[z]] <- peptide |>
       fragments(charge = 1) |>
-      dplyr::slice_head(prop = f_peaks) |>
+      dplyr::filter(z == 1) |>
+      dplyr::slice_sample(prop = f_peaks) |>
       dplyr::mutate(intensity = 10^sample(100:360/100, dplyr::n())) |>
       dplyr::select(mz, intensity) |>
       sim_spectrum_accuracy(accuracy = accuracy) |>
@@ -54,6 +55,7 @@ spectrum_simulate <- function(
     dplyr::mutate(intensity = intensity |> round()) |>
     sim_spectrum_noise(noise_mean = noise_mean,
                    noise_quantile = noise_quantile,
+                   peak_range = c(100, peptide_mass(peptide)),
                    n_peaks = 600) |>
     filter_topn(300)
 

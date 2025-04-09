@@ -78,6 +78,8 @@ spectrum_assign <- function(
   colnames(spectrum)[w_mz] <- 'mz'
   colnames(spectrum)[w_int] <- 'intensity'
 
+  intensity_median <- median(spectrum$intensity, na.rm = TRUE)
+
   spectrum <- spectrum |>
     dplyr::mutate(
       rid = dplyr::row_number() |> as.character(),
@@ -98,7 +100,8 @@ spectrum_assign <- function(
     dplyr::slice_max(intensity, n=1, with_ties = F) |>
     dplyr::ungroup() |>
     dplyr::select(mz, intensity, isotope_id, isotope_num, isotope_z,
-                  seq, ion, z, pair, pos, type, error)
+                  seq, ion, z, pair, pos, type, error) |>
+    dplyr::mutate(ion_score = (intensity / intensity_median) * (1 - abs(error)/tolerance))
 
   return(out)
 }

@@ -6,6 +6,7 @@
 \usage{
 sim_spectrum_noise(
   df = NULL,
+  peak_range = c(1, 1000),
   n_peaks = 300,
   noise_mean = NULL,
   noise_quantile = 0.25,

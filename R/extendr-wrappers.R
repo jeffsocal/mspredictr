@@ -108,6 +108,16 @@ mass_fragments <- function(seq) .Call(wrap__mass_fragments, seq)
 #' The numerical float for mass tolerance in Th
 #' @export
 #' @examples
+#' index_fragments('SA[M15.99]PLER')
+indef_fragments <- function(seq) .Call(wrap__indef_fragments, seq)
+
+#' Return the fragment indexes
+#' @param seq
+#' The peptide sequence string
+#' @param tolerance
+#' The numerical float for mass tolerance in Th
+#' @export
+#' @examples
 #' index_fragments('SA[M15.99]PLER', 0.05)
 index_fragments <- function(seq, tolerance) .Call(wrap__index_fragments, seq, tolerance)
 

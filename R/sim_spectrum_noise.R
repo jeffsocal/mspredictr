@@ -13,6 +13,7 @@
 #'
 sim_spectrum_noise <- function(
     df = NULL,
+    peak_range = c(1, 1000),
     n_peaks = 300,
     noise_mean = NULL,
     noise_quantile = 0.25,
@@ -38,8 +39,8 @@ sim_spectrum_noise <- function(
 
   n_df <- floor(n_peaks) - nrow(df)
   if(n_df > 0){
-    mass_max <- max(df[,1]) * (1 + 0.0125)
-    mass_min <- min(df[,1]) * (1 - 0.0125)
+    mass_max <- max(peak_range, df[,1]) * (1 + 0.0125)
+    mass_min <- min(peak_range, df[,1]) * (1 - 0.0125)
     df_noise <- data.frame(
       mz = sample((mass_min * 100):(mass_max * 100), n_df) / 100,
       i = round(abs(rnorm(n_df, mean = noise_mean, sd = round(noise_mean * noise_sd))))

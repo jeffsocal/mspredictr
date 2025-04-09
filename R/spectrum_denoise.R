@@ -10,11 +10,8 @@
 #' @param precursor
 #' The floating point value of precursor mass to remove.
 #'
-#' @param hedge
-#' The mz space to remove on either side of a tall peak when filtering.
-#'
-#' @param n
-#' The number of peaks to retain, ranked by abundance.
+#' @param isotopes
+#' A boolean to remove isotopes.
 #'
 #' @export
 #'

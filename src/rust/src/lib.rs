@@ -99,27 +99,27 @@ fn peptide_length_single(s: &str) -> usize {
 
 fn mass_letter(r: &char) -> f64 {
     match r {
+        'G' =>  57.021_465,
         'A' =>  71.037_12,
-        'R' => 156.101_1,
+        'S' =>  87.032_03,
+        'P' =>  97.052_765,
+        'V' =>  99.068_41,
+        'T' => 101.047_676,
+        'C' => 103.009_186,
+        'L' => 113.084_06,
+        'I' => 113.084_06,
         'N' => 114.042_93,
         'D' => 115.026_94,
-        'C' => 103.009_186,
-        'E' => 129.042_59,
         'Q' => 128.058_58,
-        'G' =>  57.021_465,
-        'H' => 137.058_91,
-        'I' => 113.084_06,
-        'L' => 113.084_06,
         'K' => 128.094_96,
+        'E' => 129.042_59,
         'M' => 131.040_48,
+        'H' => 137.058_91,
         'F' => 147.068_42,
-        'P' =>  97.052_765,
-        'S' =>  87.032_03,
-        'T' => 101.047_676,
-        'W' => 186.079_32,
-        'Y' => 163.063_32,
-        'V' =>  99.068_41,
         'U' => 150.953_63,
+        'R' => 156.101_1,
+        'Y' => 163.063_32,
+        'W' => 186.079_32,
         'O' => 237.147_73,
         _   => 113.956,
     }
@@ -344,6 +344,22 @@ pub fn mass_fragments(seq: &str) -> Vec<f64> {
 
     return mz_frags;
 }
+/// Return the fragment indexes
+/// @param seq
+/// The peptide sequence string
+/// @param tolerance
+/// The numerical float for mass tolerance in Th
+/// @export
+/// @examples
+/// index_fragments('SA[M15.99]PLER')
+#[extendr]
+pub fn indef_fragments(seq: &str) -> Vec<i64> {
+    let indexes = mass_fragments(&seq)
+                 .iter()
+                 .map(|x| (x * 0.9995216 + 1.79998) as i64)
+                 .collect::<Vec<_>>();
+    return indexes;
+}
 
 /// Return the fragment indexes
 /// @param seq
@@ -355,11 +371,11 @@ pub fn mass_fragments(seq: &str) -> Vec<f64> {
 /// index_fragments('SA[M15.99]PLER', 0.05)
 #[extendr]
 pub fn index_fragments(seq: &str, tolerance: f64) -> Vec<i64> {
-    let i_frag = mass_fragments(&seq)
+    let indexes = mass_fragments(&seq)
                  .iter()
                  .map(|x| (x / tolerance) as i64)
                  .collect::<Vec<_>>();
-    return i_frag;
+    return indexes;
 }
 
 /// Return a mass indexes.
@@ -645,6 +661,7 @@ extendr_module! {
     fn mass_ladder;
     fn mass_fragments;
 
+    fn indef_fragments;
     fn index_fragments;
     fn index_mass;
 

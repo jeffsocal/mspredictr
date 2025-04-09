@@ -4,12 +4,14 @@
 \alias{spectrum_extract}
 \title{A helper function to extract just the spectrum of the spectra data object}
 \usage{
-spectrum_extract(spectra = NULL, filter = FALSE, isotopes = FALSE)
+spectrum_extract(spectra = NULL, precursor = FALSE, isotopes = FALSE)
 }
 \arguments{
 \item{spectra}{A spectra data object}
 
-\item{filter}{A boolean to indicate spectrum filtering should happen}
+\item{precursor}{A boolean to indicate spectrum filtering should happen}
+
+\item{isotopes}{A boolean to remove isotopes.}
 }
 \description{
 A helper function to extract just the spectrum of the spectra data object
