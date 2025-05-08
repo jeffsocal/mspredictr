@@ -12,7 +12,7 @@ peptide(s) sequences."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
     
     <a class="navbar-brand me-2" href="../index.html">mspredictr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,6 +67,14 @@ peptide(s) sequences.</p>
 separate facets for comparison.</p></dd>
 
 
+<dt>rm_precursor</dt>
+<dd><p>A boolean to remove the precursor.</p></dd>
+
+
+<dt>rm_isotopes</dt>
+<dd><p>A boolean to remove isotopes.</p></dd>
+
+
 <dt>label_size</dt>
 <dd><p>A value used to increase or decrease the assigned labels.</p></dd>
 
@@ -89,7 +97,12 @@ precursor peaks, isotopes peaks and any low-level noise.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span> <span class="co"># using the supplied spectrum from the msreadr package</span></span></span>
 <span class="r-in"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">msreadr</span><span class="op">)</span></span></span>
-<span class="r-in"><span> <span class="va">mzml</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/msreadr/man/path_to_example.html" class="external-link">path_to_example</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘msreadr’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:mspredictr’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     path_to_example</span>
+<span class="r-in"><span> <span class="va">mzml</span> <span class="op">&lt;-</span> <span class="fu"><a href="path_to_example.html">path_to_example</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>         <span class="fu"><a href="https://rdrr.io/pkg/msreadr/man/read_spectra.html" class="external-link">read_spectra</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Parsing mzML file example.ms2.mzML</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>mzR has been built against a different Rcpp version (1.0.11)</span>
@@ -98,7 +111,7 @@ precursor peaks, isotopes peaks and any low-level noise.</p></dd>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> including the output of sessionInfo() to the Bioc support forum at </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> https://support.bioconductor.org/. For details see also</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> https://github.com/sneumann/mzR/wiki/mzR-Rcpp-compiler-linker-issue.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Parsing mzML file example.ms2.mzML <span style="color: #B2B2B2;">[270ms]</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Parsing mzML file example.ms2.mzML <span style="color: #B2B2B2;">[273ms]</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span> <span class="va">mzml</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">spectrum_num</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>

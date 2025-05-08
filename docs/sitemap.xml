@@ -34,6 +34,9 @@
     <loc>https://jeffsocal.github.io/mspredictr/reference/id_unqiue.html</loc>
   </url>
   <url>
+    <loc>https://jeffsocal.github.io/mspredictr/reference/indef_fragments.html</loc>
+  </url>
+  <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/index.html</loc>
   </url>
   <url>
@@ -88,6 +91,9 @@
     <loc>https://jeffsocal.github.io/mspredictr/reference/pairwise_delta.html</loc>
   </url>
   <url>
+    <loc>https://jeffsocal.github.io/mspredictr/reference/path_to_example.html</loc>
+  </url>
+  <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/peptide_length.html</loc>
   </url>
   <url>
@@ -110,6 +116,9 @@
   </url>
   <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/sim_spectrum_noise.html</loc>
+  </url>
+  <url>
+    <loc>https://jeffsocal.github.io/mspredictr/reference/specdist.html</loc>
   </url>
   <url>
     <loc>https://jeffsocal.github.io/mspredictr/reference/spectrum_accuracy.html</loc>
