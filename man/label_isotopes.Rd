@@ -2,7 +2,8 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{label_isotopes}
 \alias{label_isotopes}
-\title{Helper function that provides the isotopic assignment given the output from group_isotopes()}
+\title{Helper function that provides the isotopic assignment given the output
+from group_isotopes()}
 \usage{
 label_isotopes(vec_iso)
 }
@@ -10,10 +11,13 @@ label_isotopes(vec_iso)
 \item{vec_iso}{A vector of numerical floats representing the isotopic groups}
 }
 \description{
-Helper function that provides the isotopic assignment given the output from group_isotopes()
+Helper function that provides the isotopic assignment given the output
+from group_isotopes()
 }
 \examples{
-group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
-               c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741)) |>
+group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137,
+                 291.164, 292.177, 293.124, 296.135, 298.139),
+               c(218487, 44736, 29195, 1021168, 46029,
+                 104552, 21997, 15262, 19908, 61741)) |>
   label_isotopes()
 }

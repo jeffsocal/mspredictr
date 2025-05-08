@@ -16,6 +16,8 @@ sim_spectrum_noise(
 \arguments{
 \item{df}{a data frame}
 
+\item{peak_range}{a tuple representing the min and max peak intensities}
+
 \item{n_peaks}{total number of peaks, including noise, the spectrum should have}
 
 \item{noise_mean}{the level at which to inject noise, left NULL the Nth quantile will be used}

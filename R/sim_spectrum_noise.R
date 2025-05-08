@@ -4,6 +4,7 @@
 #' `sim_spectrum_noise()` Generates a named variable
 #'
 #' @param df a data frame
+#' @param peak_range a tuple representing the min and max peak intensities
 #' @param n_peaks total number of peaks, including noise, the spectrum should have
 #' @param noise_mean the level at which to inject noise, left NULL the Nth quantile will be used
 #' @param noise_quantile the Nth quantile used to assess noise

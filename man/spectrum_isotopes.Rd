@@ -14,12 +14,9 @@ spectrum_isotopes(spectrum = NULL)
 sequence with the mass spectrum.
 }
 \examples{
- # using the supplied spectrum from the msreadr package
- library(msreadr)
- mzml <- path_to_example() |>
-         read_spectra()
- mzml |>
-   subset(spectrum_num == 1) |>
-   spectrum_extract()
+ tbl <- path_to_example() |>
+         readr::read_csv()
+ tbl |>
+   spectrum_isotopes()
 
 }

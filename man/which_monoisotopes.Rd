@@ -2,7 +2,8 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{which_monoisotopes}
 \alias{which_monoisotopes}
-\title{A Helper function that returns the array index of the monoisotopes given group_isotopes()}
+\title{A Helper function that returns the array index of the monoisotopes given
+group_isotopes()}
 \usage{
 which_monoisotopes(vec_iso)
 }
@@ -10,10 +11,13 @@ which_monoisotopes(vec_iso)
 \item{vec_iso}{A vector of numerical floats representing the isotopic groups}
 }
 \description{
-A Helper function that returns the array index of the monoisotopes given group_isotopes()
+A Helper function that returns the array index of the monoisotopes given
+group_isotopes()
 }
 \examples{
-group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
-               c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741)) |>
+group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137,
+                 291.164, 292.177, 293.124, 296.135, 298.139),
+               c(218487, 44736, 29195, 1021168, 46029,
+                 104552, 21997, 15262, 19908, 61741)) |>
   which_monoisotopes()
 }

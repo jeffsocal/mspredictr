@@ -1,6 +1,6 @@
 test_that("import and match peaks in spectra", {
 
-  library('msreadr')
+  library('readr')
 
   expect_no_error(
     suppressMessages(

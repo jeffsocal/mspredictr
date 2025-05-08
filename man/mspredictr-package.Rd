@@ -4,7 +4,7 @@
 \name{mspredictr-package}
 \alias{mspredictr}
 \alias{mspredictr-package}
-\title{mspredictr: A lightweight package for predicting peptide fragment mass values and plotting mass spectra with assignments.}
+\title{mspredictr: A Lightweight Package for Predicting Peptide Fragment Mass Values and Plotting Mass Spectra with Assignments}
 \description{
 An R package for calculating peptide sequence and fragment masses relevant to mass spectrometry, along with some peptide string manipulation tools. Some of the functions with mass calculations and string manipulations have been written in Rust for a speed advantage.
 }

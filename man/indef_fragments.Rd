@@ -8,12 +8,10 @@ indef_fragments(seq)
 }
 \arguments{
 \item{seq}{The peptide sequence string}
-
-\item{tolerance}{The numerical float for mass tolerance in Th}
 }
 \description{
 Return the fragment indexes
 }
 \examples{
-index_fragments('SA[M15.99]PLER')
+indef_fragments('SA[M15.99]PLER')
 }

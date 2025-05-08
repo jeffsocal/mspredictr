@@ -21,6 +21,8 @@ spectrum_denoise <- function(
     isotopes = FALSE
 ){
 
+  isotope_num <- NULL
+
   if(is.null(spectrum)) { cli::cli_abort("`spectrum` must not be null")}
   if(!is.null(precursor) & !is.numeric(precursor)) { cli::cli_abort("`precursor` must be a numeric")}
   if(!is.logical(isotopes)) { cli::cli_abort("`isotopes` must be a T/F")}

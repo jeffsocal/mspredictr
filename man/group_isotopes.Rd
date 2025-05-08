@@ -3,22 +3,25 @@
 \name{group_isotopes}
 \alias{group_isotopes}
 \title{Returns the isotopic grouping for a given mass spectrum take in only mz, rt,
-and abundance as vectors then build the Vec\if{html}{\out{<IsotopeFeature>}} this gets around
+and abundance as vectors then build the Vec-IsotopeFeature- this gets around
 the use of data.frame in R}
 \usage{
 group_isotopes(vec_mz, vec_int)
 }
 \arguments{
-\item{vec_mz}{A vector of numerical floats representing the mz component (both vectors must be sorted on this value)}
+\item{vec_mz}{A vector of numerical floats representing the mz component
+(both vectors must be sorted on this value)}
 
 \item{vec_int}{A vector of numerical floats representing the ion intensity component}
 }
 \description{
 Returns the isotopic grouping for a given mass spectrum take in only mz, rt,
-and abundance as vectors then build the Vec\if{html}{\out{<IsotopeFeature>}} this gets around
+and abundance as vectors then build the Vec-IsotopeFeature- this gets around
 the use of data.frame in R
 }
 \examples{
-group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
-               c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741))
+group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137,
+                 291.164, 292.177, 293.124, 296.135, 298.139),
+               c(218487, 44736, 29195, 1021168, 46029,
+                 104552, 21997, 15262, 19908, 61741))
 }

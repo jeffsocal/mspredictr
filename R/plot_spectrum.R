@@ -7,9 +7,6 @@
 #' @param spectrum
 #' as data frame cols = `[mz, i]`
 #'
-#' @param filter
-#' A boolean to determine if the spectrum should be filtered to remove residual
-#' precursor peaks, isotopes peaks and any low-level noise.
 #'
 #' @param peptides
 #' An optional vector of peptide sequences that will result in plotting each in
@@ -33,12 +30,9 @@
 #' @export
 #'
 #' @examples
-#'  # using the supplied spectrum from the msreadr package
-#'  library(msreadr)
-#'  mzml <- path_to_example() |>
-#'          read_spectra()
-#'  mzml |>
-#'    subset(spectrum_num == 1) |>
+#'  tbl <- path_to_example() |>
+#'          readr::read_csv()
+#'  tbl |>
 #'    plot_spectrum('HAVSEGTK')
 #'
 plot_spectrum <- function(
@@ -52,7 +46,7 @@ plot_spectrum <- function(
 ){
 
   # visible bindings
-  mz <- int <- type <- ion <- NULL
+  mz <- int <- type <- ion <- intensity <- NULL
 
   spectrum <- spectrum |> spectrum_extract(rm_precursor, rm_isotopes)
 

@@ -104,11 +104,9 @@ mass_fragments <- function(seq) .Call(wrap__mass_fragments, seq)
 #' Return the fragment indexes
 #' @param seq
 #' The peptide sequence string
-#' @param tolerance
-#' The numerical float for mass tolerance in Th
 #' @export
 #' @examples
-#' index_fragments('SA[M15.99]PLER')
+#' indef_fragments('SA[M15.99]PLER')
 indef_fragments <- function(seq) .Call(wrap__indef_fragments, seq)
 
 #' Return the fragment indexes
@@ -159,36 +157,45 @@ which_top_n <- function(f, n) .Call(wrap__which_top_n, f, n)
 #' which_xprecursor(c(123.45, 234.56, 345.67), 233.61)
 which_xprecursor <- function(f, mz) .Call(wrap__which_xprecursor, f, mz)
 
-#' A Helper function that returns the array index of the monoisotopes given group_isotopes()
+#' A Helper function that returns the array index of the monoisotopes given
+#' group_isotopes()
 #' @param vec_iso
 #' A vector of numerical floats representing the isotopic groups
 #' @export
 #' @examples
-#' group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
-#'                c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741)) |>
+#' group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137,
+#'                  291.164, 292.177, 293.124, 296.135, 298.139),
+#'                c(218487, 44736, 29195, 1021168, 46029,
+#'                  104552, 21997, 15262, 19908, 61741)) |>
 #'   which_monoisotopes()
 which_monoisotopes <- function(vec_iso) .Call(wrap__which_monoisotopes, vec_iso)
 
 #' Returns the isotopic grouping for a given mass spectrum take in only mz, rt,
-#' and abundance as vectors then build the Vec<IsotopeFeature> this gets around
+#' and abundance as vectors then build the Vec-IsotopeFeature- this gets around
 #' the use of data.frame in R
 #' @param vec_mz
-#' A vector of numerical floats representing the mz component (both vectors must be sorted on this value)
+#' A vector of numerical floats representing the mz component
+#' (both vectors must be sorted on this value)
 #' @param vec_int
 #' A vector of numerical floats representing the ion intensity component
 #' @export
 #' @examples
-#' group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
-#'                c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741))
+#' group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137,
+#'                  291.164, 292.177, 293.124, 296.135, 298.139),
+#'                c(218487, 44736, 29195, 1021168, 46029,
+#'                  104552, 21997, 15262, 19908, 61741))
 group_isotopes <- function(vec_mz, vec_int) .Call(wrap__group_isotopes, vec_mz, vec_int)
 
-#' Helper function that provides the isotopic assignment given the output from group_isotopes()
+#' Helper function that provides the isotopic assignment given the output
+#' from group_isotopes()
 #' @param vec_iso
 #' A vector of numerical floats representing the isotopic groups
 #' @export
 #' @examples
-#' group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
-#'                c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741)) |>
+#' group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137,
+#'                  291.164, 292.177, 293.124, 296.135, 298.139),
+#'                c(218487, 44736, 29195, 1021168, 46029,
+#'                  104552, 21997, 15262, 19908, 61741)) |>
 #'   label_isotopes()
 label_isotopes <- function(vec_iso) .Call(wrap__label_isotopes, vec_iso)
 

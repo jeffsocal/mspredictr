@@ -29,21 +29,15 @@ separate facets for comparison.}
 \item{tolerance}{The tolerance in Th to allow predicted fragments to match observed values.}
 
 \item{...}{Flow-through parameters to \code{assign_sepectrum()}}
-
-\item{filter}{A boolean to determine if the spectrum should be filtered to remove residual
-precursor peaks, isotopes peaks and any low-level noise.}
 }
 \description{
 \code{plot_spectrum()} generates a plot of a given mass spectrum, w/o matching
 peptide(s) sequences.
 }
 \examples{
- # using the supplied spectrum from the msreadr package
- library(msreadr)
- mzml <- path_to_example() |>
-         read_spectra()
- mzml |>
-   subset(spectrum_num == 1) |>
+ tbl <- path_to_example() |>
+         readr::read_csv()
+ tbl |>
    plot_spectrum('HAVSEGTK')
 
 }

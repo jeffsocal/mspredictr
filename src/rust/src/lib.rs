@@ -347,11 +347,9 @@ pub fn mass_fragments(seq: &str) -> Vec<f64> {
 /// Return the fragment indexes
 /// @param seq
 /// The peptide sequence string
-/// @param tolerance
-/// The numerical float for mass tolerance in Th
 /// @export
 /// @examples
-/// index_fragments('SA[M15.99]PLER')
+/// indef_fragments('SA[M15.99]PLER')
 #[extendr]
 pub fn indef_fragments(seq: &str) -> Vec<i64> {
     let indexes = mass_fragments(&seq)
@@ -474,16 +472,19 @@ struct IsotopicFit {
 
 
 /// Returns the isotopic grouping for a given mass spectrum take in only mz, rt,
-/// and abundance as vectors then build the Vec<IsotopeFeature> this gets around
+/// and abundance as vectors then build the Vec-IsotopeFeature- this gets around
 /// the use of data.frame in R
 /// @param vec_mz
-/// A vector of numerical floats representing the mz component (both vectors must be sorted on this value)
+/// A vector of numerical floats representing the mz component
+/// (both vectors must be sorted on this value)
 /// @param vec_int
 /// A vector of numerical floats representing the ion intensity component
 /// @export
 /// @examples
-/// group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
-///                c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741))
+/// group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137,
+///                  291.164, 292.177, 293.124, 296.135, 298.139),
+///                c(218487, 44736, 29195, 1021168, 46029,
+///                  104552, 21997, 15262, 19908, 61741))
 #[extendr]
 fn group_isotopes(vec_mz: Vec<f64>,
                   vec_int: Vec<f64>) -> Vec<i64> {
@@ -596,13 +597,16 @@ fn group_isotopes(vec_mz: Vec<f64>,
     points.iter().map(|x| x.cluster).collect()
 }
 
-/// A Helper function that returns the array index of the monoisotopes given group_isotopes()
+/// A Helper function that returns the array index of the monoisotopes given
+/// group_isotopes()
 /// @param vec_iso
 /// A vector of numerical floats representing the isotopic groups
 /// @export
 /// @examples
-/// group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
-///                c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741)) |>
+/// group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137,
+///                  291.164, 292.177, 293.124, 296.135, 298.139),
+///                c(218487, 44736, 29195, 1021168, 46029,
+///                  104552, 21997, 15262, 19908, 61741)) |>
 ///   which_monoisotopes()
 #[extendr]
 fn which_monoisotopes(vec_iso: Vec<f64>) -> Vec<i64> {
@@ -620,13 +624,16 @@ fn which_monoisotopes(vec_iso: Vec<f64>) -> Vec<i64> {
 }
 
 
-/// Helper function that provides the isotopic assignment given the output from group_isotopes()
+/// Helper function that provides the isotopic assignment given the output
+/// from group_isotopes()
 /// @param vec_iso
 /// A vector of numerical floats representing the isotopic groups
 /// @export
 /// @examples
-/// group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137, 291.164, 292.177, 293.124, 296.135, 298.139),
-///                c(218487, 44736, 29195, 1021168, 46029, 104552, 21997, 15262, 19908, 61741)) |>
+/// group_isotopes(c(287.171, 288.119, 288.174, 290.161, 291.137,
+///                  291.164, 292.177, 293.124, 296.135, 298.139),
+///                c(218487, 44736, 29195, 1021168, 46029,
+///                  104552, 21997, 15262, 19908, 61741)) |>
 ///   label_isotopes()
 #[extendr]
 fn label_isotopes(vec_iso: Vec<f64>) -> Vec<f64> {
