@@ -1,10 +1,12 @@
 Package: mspredictr
 Type: Package
-Title: A lightweight package for predicting peptide fragment mass values 
+Title: A lightweight package for predicting peptide fragment mass values and plotting
+   mass spectra with assignments.
 Version: 0.2.1
 Authors@R: 
     person("Jeff", "Jones", , "jeffj@caltech.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7142-2222"))
+Maintainer: Jeff Jones <jeffj@caltech.edu>
 Description: 
    An R package for calculating peptide sequence and fragment masses relevant to
    mass spectrometry, along with some peptide string manipulation tools. Some of
